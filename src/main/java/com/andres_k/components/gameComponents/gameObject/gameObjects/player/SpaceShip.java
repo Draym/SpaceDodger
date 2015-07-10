@@ -1,12 +1,10 @@
-package com.andres_k.components.gameComponents.gameObject.gameObjects;
+package com.andres_k.components.gameComponents.gameObject.gameObjects.player;
 
 import com.andres_k.components.gameComponents.animations.Animator;
 import com.andres_k.components.gameComponents.animations.EnumAnimation;
 import com.andres_k.components.gameComponents.gameObject.GameObject;
 import com.andres_k.components.graphicComponents.input.EnumInput;
 import com.andres_k.utils.configs.GlobalVariable;
-import com.andres_k.utils.stockage.Pair;
-import com.andres_k.utils.tools.Debug;
 import org.newdawn.slick.Graphics;
 
 /**
@@ -15,11 +13,7 @@ import org.newdawn.slick.Graphics;
 public class SpaceShip extends GameObject {
 
     public SpaceShip(Animator animator, float x, float y) {
-        this.animator = animator;
-        this.positions = new Pair<>(x, y);
-        Debug.debug("player created in " + x + ", " + y);
-        this.moveTo = new Pair<>(0f, 0f);
-        this.move = false;
+        super(animator, x, y, 1, 0);
     }
 
     @Override
@@ -34,10 +28,7 @@ public class SpaceShip extends GameObject {
 
     @Override
     public void update() {
-        if (this.move) {
-            this.positions.setV1(this.positions.getV1() + this.moveTo.getV1());
-            this.positions.setV2(this.positions.getV2() + this.moveTo.getV2());
-        }
+        this.move();
     }
 
     @Override
@@ -77,11 +68,4 @@ public class SpaceShip extends GameObject {
         }
     }
 
-    public float graphicalX() {
-        return this.positions.getV1() - (this.animator.currentAnimation().getWidth() / 2);
-    }
-
-    public float graphicalY() {
-        return this.positions.getV2() - (this.animator.currentAnimation().getHeight() / 2);
-    }
 }

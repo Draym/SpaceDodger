@@ -1,6 +1,7 @@
 package com.andres_k.components.gameComponents.animations;
 
 import org.newdawn.slick.Animation;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
@@ -35,6 +36,13 @@ public class AnimatorGameFactory extends AnimatorFactory {
             animation.addFrame(spriteSheetR.getSprite(0, 0).copy(), 300);
             animation.addFrame(spriteSheetR.getSprite(1, 0).copy(), 300);
             animation.setLooping(true);
+
+            animator.addAnimation(EnumAnimation.BASIC, animation);
+        } else if (index == EnumSprites.BARRIER){
+            Animation animation = new Animation();
+            animation.addFrame(new Image("image/game/barrier1.png"), 200);
+            animation.addFrame(new Image("image/game/barrier2.png"), 200);
+            animation.addFrame(new Image("image/game/barrier3.png"), 200);
 
             animator.addAnimation(EnumAnimation.BASIC, animation);
         }

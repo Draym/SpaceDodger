@@ -39,15 +39,14 @@ public class InterfaceOverlay extends Overlay {
     public InterfaceOverlay() throws JSONException {
         super();
 
-        WindowConfig.initWindow1();
         this.initElements();
         this.initPreference();
     }
 
     @Override
     public void initElements() {
-        float menuX = (WindowConfig.getSizeX() / 2) - 150;
-        float menuY = (WindowConfig.getSizeY() / 2) - 150;
+        float menuX = (WindowConfig.w1_sX / 2) - 150;
+        float menuY = (WindowConfig.w1_sY / 2) - 150;
 
         this.elements.put(EnumOverlayElement.TABLE_MENU_CONTROLS, new TableMenuElement(EnumOverlayElement.TABLE_MENU_CONTROLS, this.genericSendTask,
                 new BodyRect(new Rectangle(menuX, menuY, 400, 300), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREY))));

@@ -18,7 +18,7 @@ public enum EnumSprites {
     NEW(MENU.getIndex()), GO(MENU.getIndex()), SAVE(MENU.getIndex()), SCORE(MENU.getIndex()),
 
     //game
-    SPACESHIP(ITEM.getIndex()), ASTEROID(ITEM.getIndex());
+    SPACESHIP(ITEM.getIndex()), ASTEROID(ITEM.getIndex()), BARRIER(ITEM.getIndex());
 
     private final int index;
 

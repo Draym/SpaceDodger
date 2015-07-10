@@ -70,10 +70,9 @@ public class WindowInterface extends WindowBasedGame {
         this.container.setVSync(false);
 
         MusicController.loop(EnumSound.BACKGROUND);
-        WindowConfig.initWindow1();
         this.overlay.enter();
         this.controller.enter();
-        GlobalVariable.appGameContainer.setDisplayMode(WindowConfig.getIntSizeX(), WindowConfig.getIntSizeY(), false);
+        GlobalVariable.appGameContainer.setDisplayMode(WindowConfig.getW1SizeX(), WindowConfig.getW1SizeY(), false);
 
     }
 

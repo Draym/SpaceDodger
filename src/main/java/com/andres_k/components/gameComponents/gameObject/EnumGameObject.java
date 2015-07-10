@@ -8,6 +8,8 @@ public enum EnumGameObject {
     NULL("null"),
     UNBREAKABLE("unbreakable"),
 
+    BARRIER("barrier"),
+
     SPACESHIP("spaceship"),
     ASTEROID("asteroid");
 

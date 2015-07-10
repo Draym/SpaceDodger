@@ -26,10 +26,10 @@ public class BackgroundSliding {
         Image background = new Image(path);
 
         this.backgroundSizeY = background.getHeight();
-        int number = (int) (WindowConfig.getSizeY() / this.backgroundSizeY) + 2;
+        int number = (int) (WindowConfig.w2_sY / this.backgroundSizeY) + 2;
 
         float x = 0;
-        float y = WindowConfig.getSizeY() - this.backgroundSizeY;
+        float y = WindowConfig.w2_sY - this.backgroundSizeY;
 
         y = (y < 0 ? 0 : y);
          for (int i = 0; i < number; ++i) {
@@ -50,7 +50,7 @@ public class BackgroundSliding {
             pos.setV2(pos.getV2() + (GlobalVariable.gameSpeed / 2));
         }
         for (int i = 0; i < this.positions.size(); ++i){
-            if (this.positions.get(i).getV2() > WindowConfig.getSizeY()){
+            if (this.positions.get(i).getV2() > WindowConfig.w2_sY){
                 int posPrev = i - 1;
                 posPrev = (posPrev < 0 ? this.positions.size() - 1 : posPrev);
 

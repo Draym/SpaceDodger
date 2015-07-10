@@ -25,6 +25,7 @@ public class AnimatorGameData {
     public void initItem() throws SlickException {
         this.addItemAnimator(this.animatorFactory.getAnimator(EnumSprites.SPACESHIP), EnumGameObject.SPACESHIP);
         this.addItemAnimator(this.animatorFactory.getAnimator(EnumSprites.ASTEROID), EnumGameObject.ASTEROID);
+        this.addItemAnimator(this.animatorFactory.getAnimator(EnumSprites.BARRIER), EnumGameObject.BARRIER);
     }
 
     public void addItemAnimator(Animator roundAnimator, EnumGameObject type) {

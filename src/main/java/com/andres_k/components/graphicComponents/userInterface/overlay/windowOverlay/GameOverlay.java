@@ -44,7 +44,6 @@ public class GameOverlay extends Overlay {
     public GameOverlay() throws JSONException {
         super();
 
-        WindowConfig.initWindow2();
         this.initElements();
         this.initPreference();
     }
@@ -52,17 +51,17 @@ public class GameOverlay extends Overlay {
     @Override
     public void initElements() {
         this.elements.put(EnumOverlayElement.TABLE_ROUND_NEW, new TableAppearElement(EnumOverlayElement.TABLE_ROUND_NEW,
-                new BodyRect(new Rectangle((WindowConfig.getSizeX() / 2) - 200, (WindowConfig.getSizeY() / 2) - 250, 400, 200))));
+                new BodyRect(new Rectangle((WindowConfig.w2_sX / 2) - 200, (WindowConfig.w2_sY / 2) - 250, 400, 200))));
         this.elements.put(EnumOverlayElement.TABLE_ROUND_END, new TableAppearElement(EnumOverlayElement.TABLE_ROUND_END,
-                new BodyRect(new Rectangle((WindowConfig.getSizeX() / 2) - 200, (WindowConfig.getSizeY() / 2) - 250, 400, 200))));
+                new BodyRect(new Rectangle((WindowConfig.w2_sX / 2) - 200, (WindowConfig.w2_sY / 2) - 250, 400, 200))));
 
         this.elements.put(EnumOverlayElement.TABLE_MENU_CONTROLS, new TableMenuElement(EnumOverlayElement.TABLE_MENU_CONTROLS, this.genericSendTask,
-                new BodyRect(new Rectangle((WindowConfig.getSizeX() / 2) - 150, (WindowConfig.getSizeY() / 2) - 300, 400, 300), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREYBLUE))));
+                new BodyRect(new Rectangle((WindowConfig.w2_sX / 2) - 150, (WindowConfig.w2_sY / 2) - 300, 400, 300), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREYBLUE))));
         this.elements.put(EnumOverlayElement.TABLE_MENU_SETTINGS, new GenericElement(EnumOverlayElement.TABLE_MENU_SETTINGS,
-                new BodyRect(new Rectangle((WindowConfig.getSizeX() / 2) - 150, (WindowConfig.getSizeY() / 2) - 300, 300, 310), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREYBLUE)), new Pair<>(false, true), false, new boolean[]{true, true}));
+                new BodyRect(new Rectangle((WindowConfig.w2_sX / 2) - 150, (WindowConfig.w2_sY / 2) - 300, 300, 310), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREYBLUE)), new Pair<>(false, true), false, new boolean[]{true, true}));
 
         this.elements.put(EnumOverlayElement.TABLE_MENU, new GenericElement(EnumOverlayElement.TABLE_MENU, this.genericSendTask,
-                new BodyRect(new Rectangle((WindowConfig.getSizeX() / 2) - 150, (WindowConfig.getSizeY() / 2) - 300, 300, 310), ColorTools.get(ColorTools.Colors.TRANSPARENT_BLACK)), new Pair<>(true, true), false, new boolean[]{true, true}));
+                new BodyRect(new Rectangle((WindowConfig.w2_sX / 2) - 150, (WindowConfig.w2_sY / 2) - 300, 300, 310), ColorTools.get(ColorTools.Colors.TRANSPARENT_BLACK)), new Pair<>(true, true), false, new boolean[]{true, true}));
     }
 
     @Override

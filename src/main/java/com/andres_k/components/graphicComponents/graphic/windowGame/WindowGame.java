@@ -10,9 +10,7 @@ import com.andres_k.components.taskComponent.GenericSendTask;
 import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.configs.WindowConfig;
 import org.codehaus.jettison.json.JSONException;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.SlickException;
+import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
 
 /**
@@ -65,10 +63,9 @@ public class WindowGame extends WindowBasedGame {
         this.container.setAlwaysRender(false);
         this.container.setVSync(false);
 
-        WindowConfig.initWindow2();
         this.overlay.enter();
         this.controller.enter();
-        GlobalVariable.appGameContainer.setDisplayMode(WindowConfig.getIntSizeX(), WindowConfig.getIntSizeY(), false);
+        GlobalVariable.appGameContainer.setDisplayMode(WindowConfig.getW2SizeX(), WindowConfig.getW2SizeY(), false);
     }
 
 

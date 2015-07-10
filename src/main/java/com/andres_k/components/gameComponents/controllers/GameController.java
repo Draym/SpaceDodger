@@ -3,7 +3,8 @@ package com.andres_k.components.gameComponents.controllers;
 import com.andres_k.components.gameComponents.animations.AnimatorGameData;
 import com.andres_k.components.gameComponents.gameObject.EnumGameObject;
 import com.andres_k.components.gameComponents.gameObject.GameObject;
-import com.andres_k.components.gameComponents.gameObject.gameObjects.SpaceShip;
+import com.andres_k.components.gameComponents.gameObject.gameObjects.obstacles.ObstaclesController;
+import com.andres_k.components.gameComponents.gameObject.gameObjects.player.SpaceShip;
 import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.components.graphicComponents.input.EnumInput;
 import com.andres_k.components.graphicComponents.input.InputGame;
@@ -29,6 +30,7 @@ import java.util.Observable;
 public class GameController extends WindowController {
     private AnimatorGameData animatorGameData;
     private List<GameObject> players;
+    private ObstaclesController obstacles;
     private InputGame inputGame;
 
     public GameController() throws JSONException {
@@ -36,6 +38,7 @@ public class GameController extends WindowController {
 
         this.players = new ArrayList<>();
         this.inputGame = new InputGame();
+        this.obstacles = new ObstaclesController();
     }
 
     @Override
@@ -48,11 +51,13 @@ public class GameController extends WindowController {
             player.clear();
         }
         this.players.clear();
+        this.obstacles.leave();
     }
 
     @Override
     public void init() throws SlickException {
         this.animatorGameData.init();
+        this.obstacles.init(this.animatorGameData);
     }
 
     @Override
@@ -60,6 +65,7 @@ public class GameController extends WindowController {
         for (GameObject player : this.players) {
             player.draw(g);
         }
+        this.obstacles.draw(g);
     }
 
     @Override
@@ -67,6 +73,7 @@ public class GameController extends WindowController {
         for (GameObject player : this.players) {
             player.update();
         }
+        this.obstacles.update();
     }
 
     @Override
@@ -110,10 +117,9 @@ public class GameController extends WindowController {
                     int nbr = Integer.valueOf((String) ((MessageGameNew) received.getV3()).getObjects().get(0));
                     float newSpeed = Float.valueOf((String)((MessageGameNew) received.getV3()).getObjects().get(1));
 
-                    WindowConfig.initWindow2();
                     for (int i = 0; i < nbr && i < 2; ++i){
-                        int randomX = RandomTools.getInt(WindowConfig.getIntSizeX() - 200) + 100;
-                        this.players.add(new SpaceShip(this.animatorGameData.getAnimator(EnumGameObject.SPACESHIP), randomX, WindowConfig.getSizeY() - 100));
+                        int randomX = RandomTools.getInt(WindowConfig.getW2SizeX() - 200) + 100;
+                        this.players.add(new SpaceShip(this.animatorGameData.getAnimator(EnumGameObject.SPACESHIP), randomX, WindowConfig.w2_sY - 100));
                     }
                     if (newSpeed >= 1) {
                         GlobalVariable.gameSpeed = newSpeed;
