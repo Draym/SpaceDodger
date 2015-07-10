@@ -6,7 +6,10 @@ package com.andres_k.components.gameComponents.gameObject;
 public enum EnumGameObject {
     /* Admin */
     NULL("null"),
-    UNBREAKABLE("unbreakable");
+    UNBREAKABLE("unbreakable"),
+
+    SPACESHIP("spaceship"),
+    ASTEROID("asteroid");
 
 
     private final String value;

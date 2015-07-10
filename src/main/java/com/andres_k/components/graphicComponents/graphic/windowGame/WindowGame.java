@@ -8,6 +8,7 @@ import com.andres_k.components.graphicComponents.input.EnumInput;
 import com.andres_k.components.graphicComponents.input.InputData;
 import com.andres_k.components.graphicComponents.userInterface.overlay.windowOverlay.GameOverlay;
 import com.andres_k.components.taskComponent.GenericSendTask;
+import com.andres_k.utils.configs.Config;
 import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.configs.WindowConfig;
 import org.codehaus.jettison.json.JSONException;
@@ -29,7 +30,7 @@ public class WindowGame extends WindowBasedGame {
         interfaceTask.addObserver(this.controller);
         this.controller.addObserver(interfaceTask);
 
-        InputData inputData = new InputData("configInput.json");
+        InputData inputData = new InputData(Config.input);
         this.overlay = new GameOverlay(inputData);
         interfaceTask.addObserver(this.overlay);
         this.overlay.addObserver(interfaceTask);

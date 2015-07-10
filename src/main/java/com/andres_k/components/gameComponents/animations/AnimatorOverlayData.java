@@ -62,15 +62,15 @@ public class AnimatorOverlayData {
 
     // GETTERS
     public Animator getRoundAnimator(EnumOverlayElement index) {
-        return this.roundAnimator.get(index);
+        return new Animator(this.roundAnimator.get(index));
     }
 
     public Animator getIconAnimator(EnumOverlayElement index) {
-        return this.iconAnimator.get(index);
+        return new Animator(this.iconAnimator.get(index));
     }
 
     public Animator getMenuAnimator(EnumOverlayElement index) {
-        return this.menuAnimator.get(index);
+        return new Animator(this.menuAnimator.get(index));
     }
 }
 

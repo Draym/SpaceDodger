@@ -17,6 +17,7 @@ public abstract class WindowController extends Observable implements Observer {
     protected WindowBasedGame window;
 
     public abstract void enter();
+
     public abstract void leave();
 
     public abstract void init() throws SlickException;

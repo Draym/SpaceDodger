@@ -6,5 +6,9 @@ package com.andres_k.components.gameComponents.animations;
  */
 public enum EnumAnimation {
     BASIC,
-    EXPLODE
+    EXPLODE,
+
+    IDDLE,
+    MOVE_RIGHT,
+    MOVE_LEFT
 }

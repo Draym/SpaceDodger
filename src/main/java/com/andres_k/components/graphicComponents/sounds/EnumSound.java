@@ -8,7 +8,7 @@ import com.andres_k.components.gameComponents.gameObject.EnumGameObject;
 public enum EnumSound {
     NOTHING(""),
     //music
-    BACKGROUND(""), SELECT("");
+    BACKGROUND("music/background.ogg"), SELECT("");
 
     private String path;
     private EnumGameObject object;

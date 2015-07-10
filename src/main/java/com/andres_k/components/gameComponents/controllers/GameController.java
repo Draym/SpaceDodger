@@ -1,12 +1,21 @@
 package com.andres_k.components.gameComponents.controllers;
 
+import com.andres_k.components.gameComponents.animations.AnimatorGameData;
+import com.andres_k.components.gameComponents.gameObject.EnumGameObject;
+import com.andres_k.components.gameComponents.gameObject.GameObject;
+import com.andres_k.components.gameComponents.gameObject.gameObjects.SpaceShip;
 import com.andres_k.components.graphicComponents.graphic.EnumWindow;
+import com.andres_k.components.graphicComponents.input.InputData;
+import com.andres_k.components.graphicComponents.input.InputGame;
 import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverlayElement;
 import com.andres_k.components.taskComponent.EnumTargetTask;
+import com.andres_k.utils.configs.Config;
+import com.andres_k.utils.configs.WindowConfig;
 import com.andres_k.utils.stockage.Tuple;
 import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
 
 import java.util.Observable;
 
@@ -14,8 +23,14 @@ import java.util.Observable;
  * Created by andres_k on 08/07/2015.
  */
 public class GameController extends WindowController {
+    private AnimatorGameData animatorGameData;
+    private GameObject player;
+    private InputGame inputGame;
 
     public GameController() throws JSONException {
+        this.animatorGameData = new AnimatorGameData();
+
+        this.inputGame = new InputGame(new InputData(Config.input));
     }
 
     @Override
@@ -27,19 +42,25 @@ public class GameController extends WindowController {
     }
 
     @Override
-    public void init() {
+    public void init() throws SlickException {
+        this.animatorGameData.init();
+
+        this.player = new SpaceShip(this.animatorGameData.getItemAnimator(EnumGameObject.SPACESHIP), WindowConfig.getSizeX() / 2, 800);
     }
 
     @Override
     public void renderWindow(Graphics g) {
+        this.player.draw(g);
     }
 
     @Override
     public void updateWindow(GameContainer gameContainer) {
+        this.player.update();
     }
 
     @Override
     public void keyPressed(int key, char c) {
+
     }
 
     @Override
