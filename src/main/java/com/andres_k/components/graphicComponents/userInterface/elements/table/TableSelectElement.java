@@ -135,6 +135,9 @@ public class TableSelectElement extends InterfaceElement {
                 Object result = entry.getValue().isOnFocus(x, y);
                 if (result != null) {
                     if (result instanceof Element) {
+                        if (this.selected != null){
+                            this.selected.setBodyColor(null);
+                        }
                         this.selected = (Element) result;
                         this.selected.setBodyColor(ColorTools.get(ColorTools.Colors.TRANSPARENT_YELLOW));
                         //TODO a remplacer par l'envois de ce que tu veux get
