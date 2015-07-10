@@ -134,24 +134,7 @@ public class GenericElement extends InterfaceElement {
                 Object result = element.isOnFocus(x, y);
                 if (result != null) {
                     if (result instanceof EnumOverlayElement) {
-                        if (result == EnumOverlayElement.GO) {
-                            // TODO à remplacer par ce que tu veux créer
-                            //MessageFileNew task = new MessageFileNew("admin", "admin", EnumOverlayElement.GO);
-
-                            for (Element tmp : this.elements) {
-                                if (tmp.getType() == EnumOverlayElement.SELECT_FIELD) {
-
-                                    // TODO ce que tu envois tu le remplis ici
-                                    //task.addObject(tmp.toString());
-                                    tmp.doTask(new Pair<>("setCurrent", ""));
-                                }
-                            }
-                            if (this.genericSendTask != null) {
-                                //TODO là tu envois à l'overlay qui l'envois à ta cible
-                                //this.genericSendTask.sendTask(new Pair<>(this.type, task));
-                                this.eventReleased(Input.KEY_ESCAPE, 'e');
-                            }
-                        } else if (this.genericSendTask != null) {
+                        if (this.genericSendTask != null) {
                             this.genericSendTask.sendTask(new Pair<>(this.type, result));
                         }
                         return result;

@@ -6,6 +6,7 @@ import com.andres_k.components.graphicComponents.sounds.MusicController;
 import com.andres_k.components.graphicComponents.sounds.SoundController;
 import com.andres_k.components.taskComponent.EnumTargetTask;
 import com.andres_k.components.taskComponent.GenericSendTask;
+import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.configs.WindowConfig;
 import com.andres_k.utils.stockage.Tuple;
 import org.codehaus.jettison.json.JSONException;
@@ -23,13 +24,12 @@ public class MasterGame implements Observer {
     private Windows windows;
 
     public MasterGame() throws SlickException, JSONException {
-        WindowConfig.init();
         SoundController.init();
         MusicController.init();
 
         this.masterTask = new GenericSendTask();
         this.masterTask.addObserver(this);
-        this.windows = new Windows("Standard Game", this.masterTask);
+        this.windows = new Windows("Space Dodger", this.masterTask);
     }
 
     public void start() {
@@ -43,17 +43,21 @@ public class MasterGame implements Observer {
     }
 
     private void startGame() throws SlickException, JSONException {
+
         AppGameContainer appGame = new AppGameContainer(this.windows);
+        WindowConfig.initWindow1();
         appGame.setDisplayMode(WindowConfig.getIntSizeX(), WindowConfig.getIntSizeY(), false);
+        GlobalVariable.appGameContainer = appGame;
         appGame.start();
     }
+
 
     @Override
     public void update(Observable o, Object arg) {
         Tuple<EnumTargetTask, EnumTargetTask, Object> task = (Tuple<EnumTargetTask, EnumTargetTask, Object>) arg;
 
         //Debug.debug("masterTask " + task);
-        if (task.getV2().isIn(EnumTargetTask.WINDOWS)){
+        if (task.getV2().isIn(EnumTargetTask.WINDOWS)) {
             this.windows.doTask(o, task);
         }
     }

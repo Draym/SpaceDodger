@@ -73,6 +73,11 @@ public class InterfaceController extends WindowController {
                     if (received.getV3() == EnumOverlayElement.EXIT) {
                         this.window.quit();
                     }
+                    if (received.getV3() == EnumOverlayElement.GO) {
+                        if (this.stateWindow != null) {
+                            this.stateWindow.enterState(EnumWindow.GAME.getValue());
+                        }
+                    }
                 }
             }
         }

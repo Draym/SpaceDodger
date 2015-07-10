@@ -49,12 +49,7 @@ public class Windows extends StateBasedGame implements Observer {
         this.addState(this.windowInterface);
         this.addState(this.windowGame);
 
-        Debug.debug("states: " + this.getStateCount());
-    }
-
-    @Override
-    public boolean closeRequested() {
-        return false;
+        this.enterState(EnumWindow.INTERFACE.getValue());
     }
 
     public void update(Observable o, Object arg) {

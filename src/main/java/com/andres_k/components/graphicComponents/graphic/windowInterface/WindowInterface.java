@@ -7,6 +7,8 @@ import com.andres_k.components.graphicComponents.input.EnumInput;
 import com.andres_k.components.graphicComponents.input.InputData;
 import com.andres_k.components.graphicComponents.userInterface.overlay.windowOverlay.InterfaceOverlay;
 import com.andres_k.components.taskComponent.GenericSendTask;
+import com.andres_k.utils.configs.GlobalVariable;
+import com.andres_k.utils.configs.WindowConfig;
 import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
@@ -17,6 +19,7 @@ import org.newdawn.slick.state.StateBasedGame;
 public class WindowInterface extends WindowBasedGame {
 
     private Animation background;
+    private Image logo;
 
     public WindowInterface(int idWindow, GenericSendTask interfaceTask) throws JSONException, SlickException {
         this.idWindow = idWindow;
@@ -55,6 +58,7 @@ public class WindowInterface extends WindowBasedGame {
         this.background = new Animation();
         this.background.addFrame(new Image("image/background/background1.png"), 300);
         this.background.setLooping(false);
+        this.logo = new Image("image/background/logo.png");
     }
 
 
@@ -65,7 +69,10 @@ public class WindowInterface extends WindowBasedGame {
         this.container.setAlwaysRender(false);
         this.container.setVSync(false);
 
+
+        WindowConfig.initWindow1();
         this.controller.enter();
+        GlobalVariable.appGameContainer.setDisplayMode(WindowConfig.getIntSizeX(), WindowConfig.getIntSizeY(), false);
     }
 
 
@@ -78,6 +85,7 @@ public class WindowInterface extends WindowBasedGame {
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
         graphics.drawAnimation(this.background, 0, 0);
+        graphics.drawImage(this.logo, 20, 100);
         this.controller.renderWindow(graphics);
         this.overlay.draw(graphics);
     }

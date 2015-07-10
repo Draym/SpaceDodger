@@ -8,13 +8,12 @@ import com.andres_k.components.graphicComponents.input.EnumInput;
 import com.andres_k.components.graphicComponents.input.InputData;
 import com.andres_k.components.graphicComponents.userInterface.overlay.windowOverlay.GameOverlay;
 import com.andres_k.components.taskComponent.GenericSendTask;
+import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.configs.WindowConfig;
 import org.codehaus.jettison.json.JSONException;
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
 
 /**
@@ -63,7 +62,9 @@ public class WindowGame extends WindowBasedGame {
         this.container.setAlwaysRender(false);
         this.container.setVSync(false);
 
+        WindowConfig.initWindow2();
         this.controller.enter();
+        GlobalVariable.appGameContainer.setDisplayMode(768, 1000, false);
     }
 
 
@@ -75,8 +76,6 @@ public class WindowGame extends WindowBasedGame {
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
-        graphics.setColor(new Color(0.3f, 0.3f, 0.3f));
-        graphics.fill(new Rectangle(0, 0, WindowConfig.getSizeX(), WindowConfig.getSizeY()));
         this.controller.renderWindow(graphics);
         this.overlay.draw(graphics);
     }

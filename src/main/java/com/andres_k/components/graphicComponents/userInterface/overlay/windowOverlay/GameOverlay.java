@@ -44,6 +44,7 @@ public class GameOverlay extends Overlay {
     public GameOverlay(InputData inputData) throws JSONException {
         super(inputData);
 
+        WindowConfig.initWindow2();
         this.initElements();
         this.initPreference();
     }
@@ -61,7 +62,7 @@ public class GameOverlay extends Overlay {
                 new BodyRect(new Rectangle((WindowConfig.getSizeX() / 2) - 150, (WindowConfig.getSizeY() / 2) - 300, 300, 310), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREYBLUE)), new Pair<>(false, true), false, new boolean[]{true, true}));
 
         this.elements.put(EnumOverlayElement.TABLE_MENU, new GenericElement(EnumOverlayElement.TABLE_MENU, this.genericSendTask,
-                new BodyRect(new Rectangle((WindowConfig.getSizeX() / 2) - 150, (WindowConfig.getSizeY() / 2) - 300, 300, 310), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREY)), new Pair<>(true, true), false, new boolean[]{true, true}));
+                new BodyRect(new Rectangle((WindowConfig.getSizeX() / 2) - 150, (WindowConfig.getSizeY() / 2) - 300, 300, 310), ColorTools.get(ColorTools.Colors.TRANSPARENT_BLACK)), new Pair<>(true, true), false, new boolean[]{true, true}));
     }
 
     @Override
@@ -89,13 +90,13 @@ public class GameOverlay extends Overlay {
 
     private void initTableMenu() {
         InterfaceElement tableMenu = this.elements.get(EnumOverlayElement.TABLE_MENU);
-        tableMenu.doTask(new ButtonElement(new ImageElement(new BodyRect(new Rectangle(tableMenu.getBody().getMinX() + 20, tableMenu.getBody().getMinY() + 20, tableMenu.getBody().getSizeX() - 40, 60), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREYBLUE)),
+        tableMenu.doTask(new ButtonElement(new ImageElement(new BodyRect(new Rectangle(tableMenu.getBody().getMinX() + 20, tableMenu.getBody().getMinY() + 20, tableMenu.getBody().getSizeX() - 40, 60), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREY)),
                 this.animatorOverlayData.getMenuAnimator(EnumOverlayElement.SAVE), Element.PositionInBody.MIDDLE_MID), EnumOverlayElement.SAVE));
-        tableMenu.doTask(new ButtonElement(new ImageElement(new BodyRect(new Rectangle(tableMenu.getBody().getMinX() + 20, tableMenu.getBody().getMinY() + 90, tableMenu.getBody().getSizeX() - 40, 60), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREYBLUE)),
+        tableMenu.doTask(new ButtonElement(new ImageElement(new BodyRect(new Rectangle(tableMenu.getBody().getMinX() + 20, tableMenu.getBody().getMinY() + 90, tableMenu.getBody().getSizeX() - 40, 60), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREY)),
                 this.animatorOverlayData.getMenuAnimator(EnumOverlayElement.CONTROLS), Element.PositionInBody.MIDDLE_MID), EnumOverlayElement.TABLE_MENU_CONTROLS));
-        tableMenu.doTask(new ButtonElement(new ImageElement(new BodyRect(new Rectangle(tableMenu.getBody().getMinX() + 20, tableMenu.getBody().getMinY() + 160, tableMenu.getBody().getSizeX() - 40, 60), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREYBLUE)),
+        tableMenu.doTask(new ButtonElement(new ImageElement(new BodyRect(new Rectangle(tableMenu.getBody().getMinX() + 20, tableMenu.getBody().getMinY() + 160, tableMenu.getBody().getSizeX() - 40, 60), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREY)),
                 this.animatorOverlayData.getMenuAnimator(EnumOverlayElement.SETTINGS), Element.PositionInBody.MIDDLE_MID), EnumOverlayElement.TABLE_MENU_SETTINGS));
-        tableMenu.doTask(new ButtonElement(new ImageElement(new BodyRect(new Rectangle(tableMenu.getBody().getMinX() + 20, tableMenu.getBody().getMinY() + 230, tableMenu.getBody().getSizeX() - 40, 60), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREYBLUE)),
+        tableMenu.doTask(new ButtonElement(new ImageElement(new BodyRect(new Rectangle(tableMenu.getBody().getMinX() + 20, tableMenu.getBody().getMinY() + 230, tableMenu.getBody().getSizeX() - 40, 60), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREY)),
                 this.animatorOverlayData.getMenuAnimator(EnumOverlayElement.EXIT), Element.PositionInBody.MIDDLE_MID), EnumOverlayElement.EXIT));
     }
 

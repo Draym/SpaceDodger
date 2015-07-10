@@ -27,8 +27,8 @@ public class ColorTools {
     public static void init(){
         colors = new HashMap<>();
         colors.put(Colors.TRANSPARENT_GREYBLUE, new Color(0.1f, 0.2f, 0.3f, 0.5f));
-        colors.put(Colors.TRANSPARENT_GREY, new Color(0.6f, 0.6f, 0.6f, 0.5f));
-        colors.put(Colors.TRANSPARENT_GREYBLACK, new Color(0.2f, 0.2f, 0.2f, 0.7f));
+        colors.put(Colors.TRANSPARENT_GREY, new Color(0.5f, 0.5f, 0.5f, 0.5f));
+        colors.put(Colors.TRANSPARENT_GREYBLACK, new Color(0.2f, 0.2f, 0.2f, 0.6f));
         colors.put(Colors.TRANSPARENT_BLACK, new Color(0f, 0f, 0f, 0.7f));
         colors.put(Colors.SOFT_BLACK, new Color(0f, 0f, 0f, 0.95f));
         colors.put(Colors.TRANSPARENT_RED, new Color(1f, 0f, 0f, 0.5f));

@@ -94,6 +94,12 @@ public class AnimatorOverlayFactory extends AnimatorFactory {
             animation.addFrame(img, 150);
             animation.setLooping(false);
             animator.addAnimation(EnumAnimation.BASIC, animation);
+        }else if (index == EnumSprites.SCORE) {
+            Animation animation = new Animation();
+            Image img = new Image("image/overlay/score.png");
+            animation.addFrame(img, 150);
+            animation.setLooping(false);
+            animator.addAnimation(EnumAnimation.BASIC, animation);
         }
 
         return animator;
