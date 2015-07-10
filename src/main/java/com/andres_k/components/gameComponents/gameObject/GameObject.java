@@ -14,6 +14,8 @@ public abstract class GameObject {
     protected Pair<Float, Float> moveTo;
     protected boolean move;
 
+    public abstract void clear();
+
     public abstract void draw(Graphics g);
 
     public abstract void update();

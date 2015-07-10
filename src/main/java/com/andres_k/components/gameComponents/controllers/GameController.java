@@ -6,12 +6,10 @@ import com.andres_k.components.gameComponents.gameObject.GameObject;
 import com.andres_k.components.gameComponents.gameObject.gameObjects.SpaceShip;
 import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.components.graphicComponents.input.EnumInput;
-import com.andres_k.components.graphicComponents.input.InputData;
 import com.andres_k.components.graphicComponents.input.InputGame;
 import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverlayElement;
 import com.andres_k.components.networkComponents.messages.MessageGameNew;
 import com.andres_k.components.taskComponent.EnumTargetTask;
-import com.andres_k.utils.configs.Config;
 import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.configs.WindowConfig;
 import com.andres_k.utils.stockage.Tuple;
@@ -36,8 +34,8 @@ public class GameController extends WindowController {
     public GameController() throws JSONException {
         this.animatorGameData = new AnimatorGameData();
 
-        this.inputGame = new InputGame(new InputData(Config.input));
         this.players = new ArrayList<>();
+        this.inputGame = new InputGame();
     }
 
     @Override
@@ -46,6 +44,10 @@ public class GameController extends WindowController {
 
     @Override
     public void leave() {
+        for (GameObject player : this.players){
+            player.clear();
+        }
+        this.players.clear();
     }
 
     @Override
@@ -69,22 +71,20 @@ public class GameController extends WindowController {
 
     @Override
     public void keyPressed(int key, char c) {
-        int result = this.inputGame.checkInput(key, EnumInput.PRESSED);
-/*
-        if (result >= EnumInput.MOVE_LEFT.getIndex() && result <= EnumInput.MOVE_RIGHT.getIndex()){
-            this.player.eventPressed(EnumInput.getEnumByIndex(result));
+        EnumInput result = this.inputGame.checkInput(key, EnumInput.PRESSED);
+
+        if (result.getIndex() >= 0 && result.getIndex() < this.players.size()){
+            this.players.get(result.getIndex()).eventPressed(result);
         }
-        */
     }
 
     @Override
     public void keyReleased(int key, char c) {
-        int result = this.inputGame.checkInput(key, EnumInput.RELEASED);
-        /*
-        if (result >= EnumInput.MOVE_LEFT.getIndex() && result <= EnumInput.MOVE_RIGHT.getIndex()){
-            this.player.eventReleased(EnumInput.getEnumByIndex(result));
+        EnumInput result = this.inputGame.checkInput(key, EnumInput.RELEASED);
+
+        if (result.getIndex() >= 0 && result.getIndex() < this.players.size()){
+            this.players.get(result.getIndex()).eventReleased(result);
         }
-        */
     }
 
     @Override
@@ -108,12 +108,16 @@ public class GameController extends WindowController {
                     }
                 } else if (received.getV3() instanceof MessageGameNew){
                     int nbr = Integer.valueOf((String) ((MessageGameNew) received.getV3()).getObjects().get(0));
+                    float newSpeed = Float.valueOf((String)((MessageGameNew) received.getV3()).getObjects().get(1));
 
+                    WindowConfig.initWindow2();
                     for (int i = 0; i < nbr && i < 2; ++i){
                         int randomX = RandomTools.getInt(WindowConfig.getIntSizeX() - 200) + 100;
-                        this.players.add(new SpaceShip(this.animatorGameData.getAnimator(EnumGameObject.SPACESHIP), randomX, 800));
+                        this.players.add(new SpaceShip(this.animatorGameData.getAnimator(EnumGameObject.SPACESHIP), randomX, WindowConfig.getSizeY() - 100));
                     }
-                    GlobalVariable.gameSpeed = Float.valueOf((String)((MessageGameNew) received.getV3()).getObjects().get(1));
+                    if (newSpeed >= 1) {
+                        GlobalVariable.gameSpeed = newSpeed;
+                    }
                     this.stateWindow.enterState(EnumWindow.GAME.getValue());
                 }
             }

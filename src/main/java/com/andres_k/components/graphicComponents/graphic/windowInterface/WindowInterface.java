@@ -4,12 +4,10 @@ import com.andres_k.components.gameComponents.animations.AnimatorOverlayData;
 import com.andres_k.components.gameComponents.controllers.InterfaceController;
 import com.andres_k.components.graphicComponents.graphic.WindowBasedGame;
 import com.andres_k.components.graphicComponents.input.EnumInput;
-import com.andres_k.components.graphicComponents.input.InputData;
 import com.andres_k.components.graphicComponents.sounds.EnumSound;
 import com.andres_k.components.graphicComponents.sounds.MusicController;
 import com.andres_k.components.graphicComponents.userInterface.overlay.windowOverlay.InterfaceOverlay;
 import com.andres_k.components.taskComponent.GenericSendTask;
-import com.andres_k.utils.configs.Config;
 import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.configs.WindowConfig;
 import org.codehaus.jettison.json.JSONException;
@@ -33,8 +31,7 @@ public class WindowInterface extends WindowBasedGame {
         interfaceTask.addObserver(this.controller);
         this.controller.addObserver(interfaceTask);
 
-        InputData inputData = new InputData(Config.input);
-        this.overlay = new InterfaceOverlay(inputData);
+        this.overlay = new InterfaceOverlay();
         interfaceTask.addObserver(this.overlay);
         this.overlay.addObserver(interfaceTask);
     }
@@ -59,7 +56,7 @@ public class WindowInterface extends WindowBasedGame {
         this.controller.init();
 
         this.background = new Animation();
-        this.background.addFrame(new Image("image/background/background1.png"), 300);
+        this.background.addFrame(new Image("image/background/backgroundHome.png"), 300);
         this.background.setLooping(false);
         this.logo = new Image("image/background/logo.png");
     }
@@ -74,6 +71,7 @@ public class WindowInterface extends WindowBasedGame {
 
         MusicController.loop(EnumSound.BACKGROUND);
         WindowConfig.initWindow1();
+        this.overlay.enter();
         this.controller.enter();
         GlobalVariable.appGameContainer.setDisplayMode(WindowConfig.getIntSizeX(), WindowConfig.getIntSizeY(), false);
 

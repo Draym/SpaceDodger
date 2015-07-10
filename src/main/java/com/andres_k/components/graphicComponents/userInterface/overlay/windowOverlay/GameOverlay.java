@@ -41,8 +41,8 @@ import java.util.Observable;
 public class GameOverlay extends Overlay {
 
 
-    public GameOverlay(InputData inputData) throws JSONException {
-        super(inputData);
+    public GameOverlay() throws JSONException {
+        super();
 
         WindowConfig.initWindow2();
         this.initElements();
@@ -77,6 +77,11 @@ public class GameOverlay extends Overlay {
         this.initTableMenuSettings();
     }
 
+    @Override
+    public void enter() {
+        this.initTableMenuControls();
+    }
+
     private void initTableNewRound() {
         InterfaceElement tableNewRound = this.elements.get(EnumOverlayElement.TABLE_ROUND_NEW);
         tableNewRound.doTask(new ImageElement(this.animatorOverlayData.getAnimator(EnumOverlayElement.NEW_GAME), EnumOverlayElement.NEW_GAME.getValue() + ":" + EnumOverlayElement.NEW_GAME.getValue(), Element.PositionInBody.MIDDLE_UP));
@@ -106,7 +111,8 @@ public class GameOverlay extends Overlay {
         tableMenuControls.doTask(new ButtonElement(new StringElement(new StringTimer("Controls"), Color.black,
                 EnumOverlayElement.CONTROLS.getValue() + ":" + EnumOverlayElement.CONTROLS.getValue(), Element.PositionInBody.MIDDLE_MID), EnumOverlayElement.BUTTON));
 
-        for (Map.Entry<EnumInput, String> entry : this.inputData.getAvailableInput().entrySet()) {
+        tableMenuControls.doTask(new Pair<>("clear", EnumOverlayElement.CONTROLS.getValue() + ":" + EnumOverlayElement.CONTROLS.getValue()));
+        for (Map.Entry<EnumInput, String> entry : InputData.getAvailableInput().entrySet()) {
             tableMenuControls.doTask(new ButtonElement(new StringElement(new StringTimer(entry.getKey().getValue() + ":" +
                     StringTools.duplicateString(" ", 14 - entry.getKey().getValue().length()) + entry.getValue() +
                     StringTools.duplicateString(" ", 18 - entry.getValue().length())), Color.black,
@@ -229,7 +235,7 @@ public class GameOverlay extends Overlay {
                     if (task.getV1() instanceof EnumInput && task.getV2() instanceof String) {
 
                         Debug.debug("change input");
-                        if (this.inputData.setAvailableInput((EnumInput) task.getV1(), (String) task.getV2())) {
+                        if (InputData.setAvailableInput((EnumInput) task.getV1(), (String) task.getV2())) {
                             this.elements.get(EnumOverlayElement.TABLE_MENU_CONTROLS).doTask(task.getV2());
                         }
                     }

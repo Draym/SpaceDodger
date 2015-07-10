@@ -25,7 +25,7 @@ public class AnimatorGameFactory extends AnimatorFactory {
             SpriteSheet spriteSheetL = new SpriteSheet("image/game/redShipLEFT.png", 52, 57);
             SpriteSheet spriteSheetR = new SpriteSheet("image/game/redShipRIGHT.png", 52, 57);
 
-            animator.addAnimation(EnumAnimation.BASIC, this.loadAnimation(new SpriteSheet("image/game/redShip.png", 52, 57), false, 0, 1, 0, 1, 100));
+ //           animator.addAnimation(EnumAnimation.BASIC, this.loadAnimation(new SpriteSheet("image/game/redShip.png", 52, 57), false, 0, 1, 0, 1, 100));
             animator.addAnimation(EnumAnimation.MOVE_LEFT, this.loadAnimation(spriteSheetL, false, 0, 3, 0, 1, 400));
             animator.addAnimation(EnumAnimation.MOVE_RIGHT, this.loadAnimation(spriteSheetR, false, 0, 3, 0, 1, 400));
 
@@ -36,7 +36,7 @@ public class AnimatorGameFactory extends AnimatorFactory {
             animation.addFrame(spriteSheetR.getSprite(1, 0).copy(), 300);
             animation.setLooping(true);
 
-            animator.addAnimation(EnumAnimation.IDDLE, animation);
+            animator.addAnimation(EnumAnimation.BASIC, animation);
         }
         return animator;
     }
