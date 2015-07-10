@@ -7,35 +7,55 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by andres_k on 10/07/2015.
  */
 public class BackgroundSliding {
-    private Image img1;
-    private Image img2;
-    private Pair<Float, Float> pos1;
-    private Pair<Float, Float> pos2;
+
+    private List<Image> images;
+    private List<Pair<Float, Float>> positions;
+    private float backgroundSizeY;
 
     public BackgroundSliding(String path) throws SlickException {
-        this.img1 = new Image(path);
-        this.img2 = new Image(path);
-        this.pos1 = new Pair<>(0f, 0f);
-        this.pos2 = new Pair<>(0f, -WindowConfig.getSizeY());
+
+        this.images = new ArrayList<>();
+        this.positions = new ArrayList<>();
+        Image background = new Image(path);
+
+        this.backgroundSizeY = background.getHeight();
+        int number = (int) (WindowConfig.getSizeY() / this.backgroundSizeY) + 2;
+
+        float x = 0;
+        float y = WindowConfig.getSizeY() - this.backgroundSizeY;
+
+        y = (y < 0 ? 0 : y);
+         for (int i = 0; i < number; ++i) {
+            this.images.add(background.copy());
+            this.positions.add(new Pair<>(x, y));
+            y -= this.backgroundSizeY - 1;
+        }
     }
 
-    public void draw(Graphics g){
-        g.drawImage(this.img1, this.pos1.getV1(), this.pos1.getV2());
-        g.drawImage(this.img2, this.pos2.getV1(), this.pos2.getV2());
+    public void draw(Graphics g) {
+        for (int i = 0; i < this.images.size(); ++i) {
+            g.drawImage(this.images.get(i), this.positions.get(i).getV1(), this.positions.get(i).getV2());
+        }
     }
 
-    public void update(){
-        if (this.pos1.getV2() == WindowConfig.getSizeY()){
-            this.pos1 = new Pair<>(0f, -WindowConfig.getSizeY());
+    public void update() {
+        for (Pair<Float, Float> pos : this.positions){
+            pos.setV2(pos.getV2() + (GlobalVariable.gameSpeed / 2));
         }
-        if (this.pos2.getV2() == WindowConfig.getSizeY()){
-            this.pos2 = new Pair<>(0f, -WindowConfig.getSizeY());
+        for (int i = 0; i < this.positions.size(); ++i){
+            if (this.positions.get(i).getV2() > WindowConfig.getSizeY()){
+                int posPrev = i - 1;
+                posPrev = (posPrev < 0 ? this.positions.size() - 1 : posPrev);
+
+                this.positions.get(i).setV2(this.positions.get(posPrev).getV2() - this.backgroundSizeY);
+            }
         }
-        this.pos1.setV2(this.pos1.getV2() + GlobalVariable.gameSpeed);
-        this.pos2.setV2(this.pos2.getV2() + GlobalVariable.gameSpeed);
     }
 }
