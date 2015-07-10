@@ -20,12 +20,12 @@ public class AnimatorOverlayFactory extends AnimatorFactory {
     public Animator getRoundAnimator(EnumSprites index) throws SlickException {
         Animator animator = new Animator();
 
-        if (index == EnumSprites.NEW_ROUND) {
+        if (index == EnumSprites.NEW_GAME) {
             Animation animation = new Animation();
-            Image img = new Image("image/overlay/newRound.png");
+            Image img = new Image("image/overlay/newGame.png");
             animation.addFrame(img, 150);
             animator.addAnimation(EnumAnimation.BASIC, animation);
-        } else if (index == EnumSprites.END_ROUND) {
+        } else if (index == EnumSprites.END_GAME) {
             Animation animation = new Animation();
             Image img = new Image("image/overlay/victory.png");
             animation.addFrame(img, 150);
@@ -94,14 +94,13 @@ public class AnimatorOverlayFactory extends AnimatorFactory {
             animation.addFrame(img, 150);
             animation.setLooping(false);
             animator.addAnimation(EnumAnimation.BASIC, animation);
-        }else if (index == EnumSprites.SCORE) {
+        } else if (index == EnumSprites.SCORE) {
             Animation animation = new Animation();
             Image img = new Image("image/overlay/score.png");
             animation.addFrame(img, 150);
             animation.setLooping(false);
             animator.addAnimation(EnumAnimation.BASIC, animation);
         }
-
         return animator;
     }
 }

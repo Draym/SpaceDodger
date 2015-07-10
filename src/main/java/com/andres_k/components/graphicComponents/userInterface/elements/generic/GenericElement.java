@@ -7,10 +7,12 @@ import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverl
 import com.andres_k.components.graphicComponents.userInterface.tools.elements.Element;
 import com.andres_k.components.graphicComponents.userInterface.tools.items.BodyRect;
 import com.andres_k.components.networkComponents.messages.MessageChat;
+import com.andres_k.components.networkComponents.messages.MessageGameNew;
 import com.andres_k.components.taskComponent.GenericSendTask;
 import com.andres_k.utils.configs.CurrentUser;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.stockage.Tuple;
+import com.andres_k.utils.tools.Debug;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 
@@ -57,12 +59,13 @@ public class GenericElement extends InterfaceElement {
                 if (received.getV1() < this.reachable.length) {
                     this.reachable[received.getV1()] = received.getV2();
                 }
-            } else if (((Pair) task).getV1() instanceof EnumOverlayElement) {
-                Pair<EnumOverlayElement, Object> received = (Pair<EnumOverlayElement, Object>) task;
+            }else if (((Pair) task).getV1() instanceof String) {
+                Pair<String, Object> received = (Pair<String, Object>) task;
 
-                if (!received.getV1().getValue().equals("")) {
+                Debug.debug("GENERIC ELEMENT: " + task);
+                if (!received.getV1().equals("")) {
                     for (Element element : this.elements) {
-                        if (element.getId().contains(received.getV1().getValue())) {
+                        if (element.getId().contains(received.getV1())) {
                             element.doTask(received.getV2());
                         }
                     }
@@ -126,6 +129,13 @@ public class GenericElement extends InterfaceElement {
     }
 
     @Override
+    public void stop() {
+        if (this.canBeActivate.getV2()) {
+            super.stop();
+        }
+    }
+
+    @Override
     public Object isOnFocus(int x, int y) {
         boolean onFocus = false;
 
@@ -134,7 +144,20 @@ public class GenericElement extends InterfaceElement {
                 Object result = element.isOnFocus(x, y);
                 if (result != null) {
                     if (result instanceof EnumOverlayElement) {
-                        if (this.genericSendTask != null) {
+                        if (result == EnumOverlayElement.GO) {
+                            MessageGameNew task = new MessageGameNew("admin", "admin", EnumOverlayElement.GO);
+
+                            for (Element tmp : this.elements) {
+                                if (tmp.getType() == EnumOverlayElement.SELECT_FIELD) {
+                                    task.addObject(tmp.toString());
+                                    tmp.doTask(new Pair<>("setCurrent", ""));
+                                }
+                            }
+                            if (this.genericSendTask != null) {
+                                this.genericSendTask.sendTask(new Pair<>(this.type, task));
+                                this.eventReleased(Input.KEY_ESCAPE, 'e');
+                            }
+                        } else if (this.genericSendTask != null) {
                             this.genericSendTask.sendTask(new Pair<>(this.type, result));
                         }
                         return result;

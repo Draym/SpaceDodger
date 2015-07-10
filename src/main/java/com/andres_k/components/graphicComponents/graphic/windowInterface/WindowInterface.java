@@ -76,6 +76,7 @@ public class WindowInterface extends WindowBasedGame {
         WindowConfig.initWindow1();
         this.controller.enter();
         GlobalVariable.appGameContainer.setDisplayMode(WindowConfig.getIntSizeX(), WindowConfig.getIntSizeY(), false);
+
     }
 
 

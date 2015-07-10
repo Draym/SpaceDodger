@@ -70,7 +70,7 @@ public class WindowGame extends WindowBasedGame {
 
         WindowConfig.initWindow2();
         this.controller.enter();
-        GlobalVariable.appGameContainer.setDisplayMode(768, 1000, false);
+        GlobalVariable.appGameContainer.setDisplayMode(WindowConfig.getIntSizeX(), WindowConfig.getIntSizeY(), false);
     }
 
 

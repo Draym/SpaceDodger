@@ -17,6 +17,7 @@ public enum EnumOverlayElement {
     GENERIC("generic", 4),
 
     // index
+
     TABLE_ROUND(TABLE.value + "Round", TABLE.index),
     TABLE_ROUND_NEW(TABLE_ROUND.value + "New", TABLE_ROUND.index),
     TABLE_ROUND_END(TABLE_ROUND.value + "END", TABLE_ROUND.index),
@@ -28,7 +29,8 @@ public enum EnumOverlayElement {
     GENERIC_USER_STAT(GENERIC.value + "UserStat", GENERIC.index),
 
     TABLE_MENU(TABLE.value + "Menu", TABLE.index),
-    TABLE_MENU_NEW(TABLE.value + " New", TABLE.index),
+    TABLE_MENU_HOME(TABLE.value + " Home", TABLE.index),
+    TABLE_MENU_NEWGAME(TABLE.value + " NewGame", TABLE.index),
     TABLE_MENU_SETTINGS(TABLE_MENU.value + "Settings", TABLE_MENU.index),
     TABLE_MENU_CONTROLS(TABLE_MENU.value + "Controls", TABLE_MENU.index),
     TABLE_MENU_SCREEN(TABLE_MENU.value + "Screen", TABLE_MENU.index),
@@ -45,7 +47,7 @@ public enum EnumOverlayElement {
     SCORE("score"),
 
     // roundAnimator
-    NEW_ROUND("newRound"), END_ROUND("endRound"), TIMER("stat"),
+    NEW_GAME("newGame"), END_GAME("endGame"), TIMER("stat"),
 
     // menuAnimator
     EXIT("exit"), SETTINGS("settings"), CONTROLS("controls"), SCREEN("screen"), NEW("new"),

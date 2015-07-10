@@ -29,22 +29,20 @@ public class MusicController {
     }
 
     public static boolean play(EnumSound value) {
-        if (needInit == false) {
-            if (musics.containsKey(value)){
-                if (musics.get(value).playing()){
-                    musics.get(value).resume();
-                } else {
-                    musics.get(value).play(pitch, volume);
-                }
-                return true;
+        if (needInit == false && musics.containsKey(value)) {
+            if (musics.get(value).playing()) {
+                musics.get(value).resume();
+            } else {
+                musics.get(value).play(pitch, volume);
             }
+            return true;
         }
         return false;
     }
 
     public static boolean loop(EnumSound value) {
-        if (needInit == false) {
-            if (musics.get(value).playing()){
+        if (needInit == false && musics.containsKey(value)) {
+            if (musics.get(value).playing()) {
                 musics.get(value).resume();
             } else {
                 musics.get(value).loop(pitch, volume);
@@ -54,29 +52,27 @@ public class MusicController {
         return false;
     }
 
-    public static boolean stop(EnumSound value){
-        if (needInit == false) {
-            if (musics.containsKey(value)){
-                musics.get(value).stop();
-                return true;
-            }
+    public static boolean stop(EnumSound value) {
+        if (needInit == false && musics.containsKey(value)) {
+            musics.get(value).stop();
+            return true;
         }
         return false;
     }
 
-    public static void changeVolume(float value){
+    public static void changeVolume(float value) {
         volume = value;
 
-        for (Map.Entry<EnumSound, Music> entry : musics.entrySet()){
+        for (Map.Entry<EnumSound, Music> entry : musics.entrySet()) {
             entry.getValue().setVolume(volume);
         }
     }
 
-    public static float getVolume(){
+    public static float getVolume() {
         return volume;
     }
 
-    public static float getMaxVolume(){
+    public static float getMaxVolume() {
         return maxVolume;
     }
 }

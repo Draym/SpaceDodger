@@ -79,25 +79,25 @@ public class GameOverlay extends Overlay {
 
     private void initTableNewRound() {
         InterfaceElement tableNewRound = this.elements.get(EnumOverlayElement.TABLE_ROUND_NEW);
-        tableNewRound.doTask(new ImageElement(this.animatorOverlayData.getRoundAnimator(EnumOverlayElement.NEW_ROUND), EnumOverlayElement.NEW_ROUND.getValue() + ":" + EnumOverlayElement.NEW_ROUND.getValue(), Element.PositionInBody.MIDDLE_UP));
-        tableNewRound.doTask(new ImageElement(this.animatorOverlayData.getRoundAnimator(EnumOverlayElement.TIMER), EnumOverlayElement.NEW_ROUND.getValue() + ":" + EnumOverlayElement.TIMER.getValue(), Element.PositionInBody.MIDDLE_MID));
+        tableNewRound.doTask(new ImageElement(this.animatorOverlayData.getAnimator(EnumOverlayElement.NEW_GAME), EnumOverlayElement.NEW_GAME.getValue() + ":" + EnumOverlayElement.NEW_GAME.getValue(), Element.PositionInBody.MIDDLE_UP));
+        tableNewRound.doTask(new ImageElement(this.animatorOverlayData.getAnimator(EnumOverlayElement.TIMER), EnumOverlayElement.NEW_GAME.getValue() + ":" + EnumOverlayElement.TIMER.getValue(), Element.PositionInBody.MIDDLE_MID));
     }
 
     private void initTableEndRound() {
         InterfaceElement tableNewRound = this.elements.get(EnumOverlayElement.TABLE_ROUND_END);
-        tableNewRound.doTask(new ImageElement(this.animatorOverlayData.getRoundAnimator(EnumOverlayElement.END_ROUND), EnumOverlayElement.END_ROUND.getValue() + ":" + EnumOverlayElement.END_ROUND.getValue(), Element.PositionInBody.MIDDLE_UP));
+        tableNewRound.doTask(new ImageElement(this.animatorOverlayData.getAnimator(EnumOverlayElement.END_GAME), EnumOverlayElement.END_GAME.getValue() + ":" + EnumOverlayElement.END_GAME.getValue(), Element.PositionInBody.MIDDLE_UP));
     }
 
     private void initTableMenu() {
         InterfaceElement tableMenu = this.elements.get(EnumOverlayElement.TABLE_MENU);
         tableMenu.doTask(new ButtonElement(new ImageElement(new BodyRect(new Rectangle(tableMenu.getBody().getMinX() + 20, tableMenu.getBody().getMinY() + 20, tableMenu.getBody().getSizeX() - 40, 60), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREY)),
-                this.animatorOverlayData.getMenuAnimator(EnumOverlayElement.SAVE), Element.PositionInBody.MIDDLE_MID), EnumOverlayElement.SAVE));
+                this.animatorOverlayData.getAnimator(EnumOverlayElement.SAVE), Element.PositionInBody.MIDDLE_MID), EnumOverlayElement.SAVE));
         tableMenu.doTask(new ButtonElement(new ImageElement(new BodyRect(new Rectangle(tableMenu.getBody().getMinX() + 20, tableMenu.getBody().getMinY() + 90, tableMenu.getBody().getSizeX() - 40, 60), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREY)),
-                this.animatorOverlayData.getMenuAnimator(EnumOverlayElement.CONTROLS), Element.PositionInBody.MIDDLE_MID), EnumOverlayElement.TABLE_MENU_CONTROLS));
+                this.animatorOverlayData.getAnimator(EnumOverlayElement.CONTROLS), Element.PositionInBody.MIDDLE_MID), EnumOverlayElement.TABLE_MENU_CONTROLS));
         tableMenu.doTask(new ButtonElement(new ImageElement(new BodyRect(new Rectangle(tableMenu.getBody().getMinX() + 20, tableMenu.getBody().getMinY() + 160, tableMenu.getBody().getSizeX() - 40, 60), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREY)),
-                this.animatorOverlayData.getMenuAnimator(EnumOverlayElement.SETTINGS), Element.PositionInBody.MIDDLE_MID), EnumOverlayElement.TABLE_MENU_SETTINGS));
+                this.animatorOverlayData.getAnimator(EnumOverlayElement.SETTINGS), Element.PositionInBody.MIDDLE_MID), EnumOverlayElement.TABLE_MENU_SETTINGS));
         tableMenu.doTask(new ButtonElement(new ImageElement(new BodyRect(new Rectangle(tableMenu.getBody().getMinX() + 20, tableMenu.getBody().getMinY() + 230, tableMenu.getBody().getSizeX() - 40, 60), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREY)),
-                this.animatorOverlayData.getMenuAnimator(EnumOverlayElement.EXIT), Element.PositionInBody.MIDDLE_MID), EnumOverlayElement.EXIT));
+                this.animatorOverlayData.getAnimator(EnumOverlayElement.EXIT), Element.PositionInBody.MIDDLE_MID), EnumOverlayElement.EXIT));
     }
 
     private void initTableMenuControls() {
