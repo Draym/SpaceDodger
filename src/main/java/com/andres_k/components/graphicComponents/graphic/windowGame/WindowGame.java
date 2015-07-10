@@ -12,15 +12,16 @@ import com.andres_k.utils.configs.Config;
 import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.configs.WindowConfig;
 import org.codehaus.jettison.json.JSONException;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.SlickException;
+import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
 
 /**
  * Created by andres_k on 08/07/2015.
  */
 public class WindowGame extends WindowBasedGame {
+
+    private Animation background;
+
     public WindowGame(int idWindow, GenericSendTask interfaceTask) throws JSONException {
         this.idWindow = idWindow;
 
@@ -53,6 +54,10 @@ public class WindowGame extends WindowBasedGame {
 
         this.controller.init();
         this.overlay.initElementsComponent(this.animatorOverlay);
+
+        this.background = new Animation();
+        this.background.addFrame(new Image("image/background/backgroundGame.png"), 100);
+        this.background.setLooping(false);
     }
 
 
@@ -77,6 +82,7 @@ public class WindowGame extends WindowBasedGame {
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
+        graphics.drawAnimation(this.background, 0, 0);
         this.controller.renderWindow(graphics);
         this.overlay.draw(graphics);
     }

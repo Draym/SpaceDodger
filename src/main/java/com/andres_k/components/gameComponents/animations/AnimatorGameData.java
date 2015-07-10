@@ -1,6 +1,7 @@
 package com.andres_k.components.gameComponents.animations;
 
 import com.andres_k.components.gameComponents.gameObject.EnumGameObject;
+import com.andres_k.utils.tools.Debug;
 import org.newdawn.slick.SlickException;
 
 import java.util.HashMap;
@@ -34,6 +35,8 @@ public class AnimatorGameData {
 
     // GETTERS
     public Animator getItemAnimator(EnumGameObject index) {
+        Debug.debug("size: " + this.itemAnimator.size());
+        Debug.debug("need: " + index + " = " + this.itemAnimator.containsKey(index));
         return new Animator(this.itemAnimator.get(index));
     }
 

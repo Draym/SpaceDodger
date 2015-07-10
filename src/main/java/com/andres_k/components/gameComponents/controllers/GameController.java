@@ -5,6 +5,7 @@ import com.andres_k.components.gameComponents.gameObject.EnumGameObject;
 import com.andres_k.components.gameComponents.gameObject.GameObject;
 import com.andres_k.components.gameComponents.gameObject.gameObjects.SpaceShip;
 import com.andres_k.components.graphicComponents.graphic.EnumWindow;
+import com.andres_k.components.graphicComponents.input.EnumInput;
 import com.andres_k.components.graphicComponents.input.InputData;
 import com.andres_k.components.graphicComponents.input.InputGame;
 import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverlayElement;
@@ -60,11 +61,18 @@ public class GameController extends WindowController {
 
     @Override
     public void keyPressed(int key, char c) {
-
+        int result = this.inputGame.checkInput(key, EnumInput.PRESSED);
+        if (result >= EnumInput.MOVE_LEFT.getIndex() && result <= EnumInput.MOVE_RIGHT.getIndex()){
+            this.player.eventPressed(EnumInput.getEnumByIndex(result));
+        }
     }
 
     @Override
     public void keyReleased(int key, char c) {
+        int result = this.inputGame.checkInput(key, EnumInput.RELEASED);
+        if (result >= EnumInput.MOVE_LEFT.getIndex() && result <= EnumInput.MOVE_RIGHT.getIndex()){
+            this.player.eventReleased(EnumInput.getEnumByIndex(result));
+        }
     }
 
     @Override
