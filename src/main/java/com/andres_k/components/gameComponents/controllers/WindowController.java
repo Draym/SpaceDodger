@@ -1,6 +1,7 @@
 package com.andres_k.components.gameComponents.controllers;
 
 import com.andres_k.components.graphicComponents.graphic.WindowBasedGame;
+import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -20,7 +21,7 @@ public abstract class WindowController extends Observable implements Observer {
 
     public abstract void leave();
 
-    public abstract void init() throws SlickException;
+    public abstract void init() throws SlickException, JSONException;
 
     public abstract void renderWindow(Graphics g);
 

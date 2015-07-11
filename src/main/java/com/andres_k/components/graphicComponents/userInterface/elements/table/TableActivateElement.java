@@ -3,7 +3,7 @@ package com.andres_k.components.graphicComponents.userInterface.elements.table;
 import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverlayElement;
 import com.andres_k.components.graphicComponents.userInterface.tools.elements.Element;
 import com.andres_k.components.graphicComponents.userInterface.tools.elements.StringElement;
-import com.andres_k.components.graphicComponents.userInterface.tools.items.BodyRect;
+import com.andres_k.components.graphicComponents.userInterface.tools.items.ColorRect;
 import com.andres_k.components.graphicComponents.userInterface.tools.items.StringTimer;
 import com.andres_k.components.networkComponents.messages.MessageRoundScore;
 import com.andres_k.utils.stockage.Pair;
@@ -16,7 +16,7 @@ import org.newdawn.slick.Input;
 public class TableActivateElement extends TableElement {
     private int toActivate;
 
-    public TableActivateElement(EnumOverlayElement type, BodyRect body, int toActivate) {
+    public TableActivateElement(EnumOverlayElement type, ColorRect body, int toActivate) {
         super(type, body, false, new boolean[]{true, true});
         this.toActivate = toActivate;
     }

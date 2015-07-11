@@ -3,7 +3,7 @@ package com.andres_k.components.graphicComponents.userInterface.elements.slider;
 import com.andres_k.components.graphicComponents.userInterface.elements.InterfaceElement;
 import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverlayElement;
 import com.andres_k.components.graphicComponents.userInterface.tools.elements.Element;
-import com.andres_k.components.graphicComponents.userInterface.tools.items.BodyRect;
+import com.andres_k.components.graphicComponents.userInterface.tools.items.ColorRect;
 import com.andres_k.components.graphicComponents.userInterface.tools.listElements.ListElement;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.tools.Debug;
@@ -158,7 +158,7 @@ public class SliderElement extends InterfaceElement {
     }
 
     @Override
-    public BodyRect getBody() {
+    public ColorRect getBody() {
         return this.interfaceElement.getBody();
     }
 

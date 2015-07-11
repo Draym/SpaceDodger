@@ -1,7 +1,7 @@
 package com.andres_k.components.graphicComponents.userInterface.tools.elements;
 
 import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverlayElement;
-import com.andres_k.components.graphicComponents.userInterface.tools.items.BodyRect;
+import com.andres_k.components.graphicComponents.userInterface.tools.items.ColorRect;
 import com.andres_k.components.graphicComponents.userInterface.tools.items.StringTimer;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.tools.StringTools;
@@ -27,13 +27,13 @@ public class StringElement extends Element {
         this.color = color;
     }
 
-    public StringElement(BodyRect body, StringTimer stringTimer, Color color, PositionInBody position) {
+    public StringElement(ColorRect body, StringTimer stringTimer, Color color, PositionInBody position) {
         this.init(body, "", position, EnumOverlayElement.STRING);
         this.stringTimer = stringTimer;
         this.color = color;
     }
 
-    public StringElement(BodyRect body, StringTimer stringTimer, Color color, String id, PositionInBody position) {
+    public StringElement(ColorRect body, StringTimer stringTimer, Color color, String id, PositionInBody position) {
         this.init(body, id, position, EnumOverlayElement.STRING);
         this.stringTimer = stringTimer;
         this.color = color;
@@ -61,7 +61,7 @@ public class StringElement extends Element {
     }
 
     @Override
-    public void draw(Graphics g, BodyRect body) {
+    public void draw(Graphics g, ColorRect body) {
         int begin = this.stringTimer.getValue().length() - (int) (body.getSizeX() / StringTools.charSizeX());
         begin = (begin < 0 ? 0 : begin);
 
@@ -69,7 +69,7 @@ public class StringElement extends Element {
 
         Pair<Float, Float> position = this.getChoicePosition(body, value);
 
-        BodyRect tmp = new BodyRect(body.getBody(), body.getColor());
+        ColorRect tmp = new ColorRect(body.getBody(), body.getColor());
         if (this.body != null && tmp.getColor() == null) {
             tmp.setColor(this.body.getColor());
         }
@@ -79,7 +79,7 @@ public class StringElement extends Element {
         g.drawString(value, position.getV1(), position.getV2());
     }
 
-    private Pair<Float, Float> getChoicePosition(BodyRect body, String value) {
+    private Pair<Float, Float> getChoicePosition(ColorRect body, String value) {
         float x = body.getMinX();
         float y = body.getMinY();
 

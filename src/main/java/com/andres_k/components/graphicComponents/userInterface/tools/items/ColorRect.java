@@ -7,18 +7,18 @@ import org.newdawn.slick.geom.Rectangle;
 /**
  * Created by andres_k on 27/06/2015.
  */
-public class BodyRect {
+public class ColorRect {
     private Rectangle body;
     private Color color;
     private boolean printable;
 
-    public BodyRect(Rectangle body) {
+    public ColorRect(Rectangle body) {
         this.body = body;
         this.color = null;
         this.printable = true;
     }
 
-    public BodyRect(Rectangle body, Color color) {
+    public ColorRect(Rectangle body, Color color) {
         this.body = body;
         this.color = color;
         this.printable = true;

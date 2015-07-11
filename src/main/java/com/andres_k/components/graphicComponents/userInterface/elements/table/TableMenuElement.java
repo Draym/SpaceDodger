@@ -3,7 +3,7 @@ package com.andres_k.components.graphicComponents.userInterface.elements.table;
 import com.andres_k.components.graphicComponents.input.EnumInput;
 import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverlayElement;
 import com.andres_k.components.graphicComponents.userInterface.tools.elements.Element;
-import com.andres_k.components.graphicComponents.userInterface.tools.items.BodyRect;
+import com.andres_k.components.graphicComponents.userInterface.tools.items.ColorRect;
 import com.andres_k.components.graphicComponents.userInterface.tools.listElements.ListElement;
 import com.andres_k.components.taskComponent.GenericSendTask;
 import com.andres_k.utils.stockage.Pair;
@@ -20,7 +20,7 @@ public class TableMenuElement extends TableElement {
     private GenericSendTask genericSendTask;
     private Element focusedElement;
 
-    public TableMenuElement(EnumOverlayElement type, GenericSendTask genericSendTask, BodyRect body) {
+    public TableMenuElement(EnumOverlayElement type, GenericSendTask genericSendTask, ColorRect body) {
         super(type, body, false, new boolean[]{true, true});
         this.genericSendTask = genericSendTask;
         this.focusedElement = null;
@@ -47,7 +47,7 @@ public class TableMenuElement extends TableElement {
             }
         } else if (task instanceof Integer) {
             int i = 0;
-            for (Map.Entry<String, Pair<BodyRect, BodyRect>> entry : this.positionBody.entrySet()) {
+            for (Map.Entry<String, Pair<ColorRect, ColorRect>> entry : this.positionBody.entrySet()) {
                 if ((Integer) task == i) {
                     entry.getValue().getV1().setColor(ColorTools.get(ColorTools.Colors.TRANSPARENT_YELLOW));
                 } else {

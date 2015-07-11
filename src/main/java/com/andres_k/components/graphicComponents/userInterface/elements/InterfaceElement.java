@@ -2,20 +2,20 @@ package com.andres_k.components.graphicComponents.userInterface.elements;
 
 import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverlayElement;
 import com.andres_k.components.graphicComponents.userInterface.tools.items.ActivatedTimer;
-import com.andres_k.components.graphicComponents.userInterface.tools.items.BodyRect;
+import com.andres_k.components.graphicComponents.userInterface.tools.items.ColorRect;
 import org.newdawn.slick.Graphics;
 
 /**
  * Created by andres_k on 23/06/2015.
  */
 public abstract class InterfaceElement {
-    protected BodyRect body;
+    protected ColorRect body;
     protected ActivatedTimer activatedTimer;
     protected boolean reachable[];
     protected EnumOverlayElement type;
 
     // FUNCTION
-    protected void parentInit(BodyRect body, EnumOverlayElement type, boolean activated, boolean reachable[]){
+    protected void parentInit(ColorRect body, EnumOverlayElement type, boolean activated, boolean reachable[]){
         this.body = body;
         this.activatedTimer = new ActivatedTimer(activated);
         this.type = type;
@@ -63,7 +63,7 @@ public abstract class InterfaceElement {
         return this.type;
     }
 
-    public BodyRect getBody(){
+    public ColorRect getBody(){
         return this.body;
     }
 

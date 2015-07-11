@@ -1,6 +1,7 @@
 package com.andres_k.components.gameComponents.animations;
 
 import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverlayElement;
+import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.SlickException;
 
 import java.util.HashMap;
@@ -22,13 +23,13 @@ public class AnimatorOverlayData {
         this.menuAnimator = new HashMap<>();
     }
 
-    public void init() throws SlickException {
+    public void init() throws SlickException, JSONException {
         this.initRound();
         this.initIcon();
         this.initMenu();
     }
 
-    public void initRound() throws SlickException {
+    public void initRound() throws SlickException, JSONException {
         this.addRoundAnimator(this.animatorFactory.getAnimator(EnumSprites.NEW_GAME), EnumOverlayElement.NEW_GAME);
         this.addRoundAnimator(this.animatorFactory.getAnimator(EnumSprites.END_GAME), EnumOverlayElement.END_GAME);
         this.addRoundAnimator(this.animatorFactory.getAnimator(EnumSprites.TIMER), EnumOverlayElement.TIMER);
@@ -37,7 +38,7 @@ public class AnimatorOverlayData {
     public void initIcon() throws SlickException {
     }
 
-    public void initMenu() throws SlickException {
+    public void initMenu() throws SlickException, JSONException {
         this.addMenuAnimator(this.animatorFactory.getAnimator(EnumSprites.EXIT), EnumOverlayElement.EXIT);
         this.addMenuAnimator(this.animatorFactory.getAnimator(EnumSprites.SETTINGS), EnumOverlayElement.SETTINGS);
         this.addMenuAnimator(this.animatorFactory.getAnimator(EnumSprites.CONTROLS), EnumOverlayElement.CONTROLS);

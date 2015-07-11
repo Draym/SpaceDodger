@@ -2,7 +2,7 @@ package com.andres_k.components.graphicComponents.userInterface.tools.elements;
 
 import com.andres_k.components.gameComponents.animations.Animator;
 import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverlayElement;
-import com.andres_k.components.graphicComponents.userInterface.tools.items.BodyRect;
+import com.andres_k.components.graphicComponents.userInterface.tools.items.ColorRect;
 import com.andres_k.utils.stockage.Pair;
 import org.newdawn.slick.Graphics;
 
@@ -13,19 +13,19 @@ public class ImageElement extends Element {
     private Animator animator;
     private float sizeXMAX;
 
-    public ImageElement(BodyRect body, Animator animator, PositionInBody position) {
+    public ImageElement(ColorRect body, Animator animator, PositionInBody position) {
         this.init(body, "", position, EnumOverlayElement.IMAGE);
         this.animator = animator;
         this.sizeXMAX = body.getSizeX();
     }
 
-    public ImageElement(BodyRect body, Animator animator, String id, PositionInBody position) {
+    public ImageElement(ColorRect body, Animator animator, String id, PositionInBody position) {
         this.init(body, id, position, EnumOverlayElement.IMAGE);
         this.animator = animator;
         this.sizeXMAX = body.getSizeX();
     }
 
-    public ImageElement(BodyRect body, String id, PositionInBody position) {
+    public ImageElement(ColorRect body, String id, PositionInBody position) {
         this.init(body, id, position, EnumOverlayElement.IMAGE);
         this.animator = null;
         this.sizeXMAX = body.getSizeX();
@@ -54,7 +54,7 @@ public class ImageElement extends Element {
     }
 
     @Override
-    public void draw(Graphics g, BodyRect body) {
+    public void draw(Graphics g, ColorRect body) {
         if (body.getMinX() != -1) {
             if (this.body != null && body.getColor() == null) {
                 body.setColor(this.body.getColor());
@@ -67,7 +67,7 @@ public class ImageElement extends Element {
         }
     }
 
-    private Pair<Float, Float> getChoicePosition(BodyRect body) {
+    private Pair<Float, Float> getChoicePosition(ColorRect body) {
         float x = body.getMinX();
         float y = body.getMinY();
 
@@ -215,7 +215,7 @@ public class ImageElement extends Element {
     }
 
     // SETTERS
-    public void setBody(BodyRect body) {
+    public void setBody(ColorRect body) {
         if (this.body != null) {
             if (body.getColor() == null) {
                 body.setColor(this.body.getColor());

@@ -1,7 +1,7 @@
 package com.andres_k.components.graphicComponents.userInterface.tools.listElements;
 
 import com.andres_k.components.graphicComponents.userInterface.tools.elements.Element;
-import com.andres_k.components.graphicComponents.userInterface.tools.items.BodyRect;
+import com.andres_k.components.graphicComponents.userInterface.tools.items.ColorRect;
 import org.newdawn.slick.Graphics;
 
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.List;
  */
 public abstract class ListElement {
     protected List<Element> elements;
-    protected BodyRect body;
+    protected ColorRect body;
     protected float border;
 
     public void leave() {
@@ -99,12 +99,12 @@ public abstract class ListElement {
     }
 
     // GETTERS
-    public BodyRect getBody() {
+    public ColorRect getBody() {
         return this.body;
     }
 
     // SETTERS
-    public void setBody(BodyRect body) {
+    public void setBody(ColorRect body) {
         this.body = body;
         this.updatePosition();
     }

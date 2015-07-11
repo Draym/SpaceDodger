@@ -24,6 +24,7 @@ public class SpaceShip extends GameObject {
     @Override
     public void draw(Graphics g) {
         g.drawAnimation(this.animator.currentAnimation(), this.graphicalX(), this.graphicalY());
+        this.animator.currentBodyAnimation().draw(g, this.animator.currentFrame(), this.getPosX(), this.getPosY());
     }
 
     @Override

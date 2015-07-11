@@ -1,6 +1,7 @@
 package com.andres_k.components.gameComponents.animations;
 
 import com.andres_k.components.gameComponents.gameObject.EnumGameObject;
+import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.SlickException;
 
 import java.util.HashMap;
@@ -18,11 +19,11 @@ public class AnimatorGameData {
         this.itemAnimator = new HashMap<>();
     }
 
-    public void init() throws SlickException {
+    public void init() throws SlickException, JSONException {
         this.initItem();
     }
 
-    public void initItem() throws SlickException {
+    public void initItem() throws SlickException, JSONException {
         this.addItemAnimator(this.animatorFactory.getAnimator(EnumSprites.SPACESHIP), EnumGameObject.SPACESHIP);
         this.addItemAnimator(this.animatorFactory.getAnimator(EnumSprites.ASTEROID), EnumGameObject.ASTEROID);
         this.addItemAnimator(this.animatorFactory.getAnimator(EnumSprites.BARRIER), EnumGameObject.BARRIER);

@@ -5,7 +5,7 @@ import com.andres_k.components.graphicComponents.sounds.SoundController;
 import com.andres_k.components.graphicComponents.userInterface.elements.InterfaceElement;
 import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverlayElement;
 import com.andres_k.components.graphicComponents.userInterface.tools.elements.Element;
-import com.andres_k.components.graphicComponents.userInterface.tools.items.BodyRect;
+import com.andres_k.components.graphicComponents.userInterface.tools.items.ColorRect;
 import com.andres_k.components.networkComponents.messages.MessageChat;
 import com.andres_k.components.networkComponents.messages.MessageGameNew;
 import com.andres_k.components.taskComponent.GenericSendTask;
@@ -28,12 +28,12 @@ public class GenericElement extends InterfaceElement {
     private Pair<Boolean, Boolean> canBeActivate;
     private Pair<Float, Float> saves;
 
-    public GenericElement(EnumOverlayElement type, GenericSendTask genericSendTask, BodyRect body, Pair<Boolean, Boolean> canBeActivate, boolean activated, boolean[] needActivated) {
+    public GenericElement(EnumOverlayElement type, GenericSendTask genericSendTask, ColorRect body, Pair<Boolean, Boolean> canBeActivate, boolean activated, boolean[] needActivated) {
         this.parentInit(body, type, activated, needActivated);
         this.childInit(genericSendTask, canBeActivate);
     }
 
-    public GenericElement(EnumOverlayElement type, BodyRect body, Pair<Boolean, Boolean> canBeActivate, boolean activated, boolean[] needActivated) {
+    public GenericElement(EnumOverlayElement type, ColorRect body, Pair<Boolean, Boolean> canBeActivate, boolean activated, boolean[] needActivated) {
         this.parentInit(body, type, activated, needActivated);
         this.childInit(null, canBeActivate);
     }

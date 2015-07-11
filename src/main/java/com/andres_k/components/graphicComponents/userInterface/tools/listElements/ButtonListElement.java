@@ -1,7 +1,7 @@
 package com.andres_k.components.graphicComponents.userInterface.tools.listElements;
 
 import com.andres_k.components.graphicComponents.userInterface.tools.elements.Element;
-import com.andres_k.components.graphicComponents.userInterface.tools.items.BodyRect;
+import com.andres_k.components.graphicComponents.userInterface.tools.items.ColorRect;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Rectangle;
 
@@ -14,7 +14,7 @@ import java.util.List;
 public class ButtonListElement extends ListElement {
     private boolean changed;
 
-    public ButtonListElement(BodyRect body, float border) {
+    public ButtonListElement(ColorRect body, float border) {
         this.body = body;
         this.border = border;
         this.elements = new ArrayList<>();
@@ -106,9 +106,9 @@ public class ButtonListElement extends ListElement {
                 Element element = this.elements.get(i);
                 if (currentY + element.getAbsoluteHeight() <= this.body.getMaxY()) {
                     currentY += element.getAbsoluteHeight() + this.border;
-                    element.setBody(new BodyRect(new Rectangle(currentX, currentY, this.body.getSizeX(), element.getAbsoluteHeight())));
+                    element.setBody(new ColorRect(new Rectangle(currentX, currentY, this.body.getSizeX(), element.getAbsoluteHeight())));
                 } else {
-                    element.setBody(new BodyRect(new Rectangle(-1f, -1f, this.body.getSizeX(), element.getAbsoluteHeight())));
+                    element.setBody(new ColorRect(new Rectangle(-1f, -1f, this.body.getSizeX(), element.getAbsoluteHeight())));
                 }
             }
             this.changed = false;

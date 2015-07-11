@@ -3,7 +3,7 @@ package com.andres_k.components.graphicComponents.userInterface.elements.pop;
 import com.andres_k.components.graphicComponents.userInterface.elements.InterfaceElement;
 import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverlayElement;
 import com.andres_k.components.graphicComponents.userInterface.tools.elements.Element;
-import com.andres_k.components.graphicComponents.userInterface.tools.items.BodyRect;
+import com.andres_k.components.graphicComponents.userInterface.tools.items.ColorRect;
 import com.andres_k.components.graphicComponents.userInterface.tools.listElements.StringListElement;
 import com.andres_k.components.networkComponents.messages.MessageRoundKill;
 import com.andres_k.utils.configs.CurrentUser;
@@ -19,7 +19,7 @@ import org.newdawn.slick.Input;
 public class StringPopElement extends InterfaceElement {
     private StringListElement stringListElement;
 
-    public StringPopElement(EnumOverlayElement type, BodyRect body) {
+    public StringPopElement(EnumOverlayElement type, ColorRect body) {
         this.parentInit(body, type, true, new boolean[]{true, true});
         this.childInit();
     }

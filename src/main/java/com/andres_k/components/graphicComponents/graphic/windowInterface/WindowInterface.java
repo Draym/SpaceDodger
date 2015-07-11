@@ -46,14 +46,22 @@ public class WindowInterface extends WindowBasedGame {
         this.container = gameContainer;
         this.stateWindow = stateBasedGame;
 
-        this.animatorOverlay.init();
+        try {
+            this.animatorOverlay.init();
+        } catch (JSONException e) {
+            throw new SlickException(e.getMessage());
+        }
 
 
         this.overlay.initElementsComponent(this.animatorOverlay);
 
         this.controller.setStateWindow(this.stateWindow);
         this.controller.setWindow(this);
-        this.controller.init();
+        try {
+            this.controller.init();
+        } catch (JSONException e) {
+            throw new SlickException(e.getMessage());
+        }
 
         this.background = new Animation();
         this.background.addFrame(new Image("image/background/backgroundHome.png"), 300);

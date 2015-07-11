@@ -44,12 +44,20 @@ public class WindowGame extends WindowBasedGame {
         this.container = gameContainer;
         this.stateWindow = stateBasedGame;
 
-        this.animatorOverlay.init();
+        try {
+            this.animatorOverlay.init();
+        } catch (JSONException e) {
+            throw new SlickException(e.getMessage());
+        }
 
         this.controller.setStateWindow(this.stateWindow);
         this.controller.setWindow(this);
 
-        this.controller.init();
+        try {
+            this.controller.init();
+        } catch (JSONException e) {
+            throw new SlickException(e.getMessage());
+        }
         this.overlay.initElementsComponent(this.animatorOverlay);
 
         this.background = new BackgroundSliding("image/background/backgroundGame.png");

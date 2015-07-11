@@ -24,10 +24,9 @@ public class ObstaclesController {
     // INIT
     public void init(AnimatorGameData animatorGameData){
         this.animatorGameData = animatorGameData;
-        this.initWorld();
     }
 
-    private void initWorld(){
+    public void initWorld(){
         this.obstacles.add(new Obstacle(this.animatorGameData.getAnimator(EnumGameObject.BARRIER), 14, 450, 1, 1));
         this.obstacles.add(new Obstacle(this.animatorGameData.getAnimator(EnumGameObject.BARRIER), WindowConfig.w2_sX - 14, 450, 1, 1));
     }

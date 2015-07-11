@@ -1,7 +1,7 @@
 package com.andres_k.components.graphicComponents.userInterface.tools.elements;
 
 import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverlayElement;
-import com.andres_k.components.graphicComponents.userInterface.tools.items.BodyRect;
+import com.andres_k.components.graphicComponents.userInterface.tools.items.ColorRect;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
@@ -29,7 +29,7 @@ public class ButtonElement extends Element {
     }
 
     @Override
-    public void draw(Graphics g, BodyRect body) {
+    public void draw(Graphics g, ColorRect body) {
         this.element.draw(g, body);
     }
 
@@ -82,7 +82,7 @@ public class ButtonElement extends Element {
     }
 
     @Override
-    public BodyRect getBody() {
+    public ColorRect getBody() {
         return this.element.getBody();
     }
 
@@ -97,7 +97,7 @@ public class ButtonElement extends Element {
 
     // SETTERS
     @Override
-    public void setBody(BodyRect body) {
+    public void setBody(ColorRect body) {
         this.element.setBody(body);
     }
 

@@ -7,7 +7,7 @@ import com.andres_k.components.graphicComponents.userInterface.tools.elements.El
 import com.andres_k.components.graphicComponents.userInterface.tools.elements.SelectionField;
 import com.andres_k.components.graphicComponents.userInterface.tools.elements.StringElement;
 import com.andres_k.components.graphicComponents.userInterface.tools.items.ActivatedTimer;
-import com.andres_k.components.graphicComponents.userInterface.tools.items.BodyRect;
+import com.andres_k.components.graphicComponents.userInterface.tools.items.ColorRect;
 import com.andres_k.components.graphicComponents.userInterface.tools.items.StringTimer;
 import com.andres_k.components.graphicComponents.userInterface.tools.listElements.ListElement;
 import com.andres_k.components.graphicComponents.userInterface.tools.listElements.StringListElement;
@@ -30,14 +30,14 @@ public class ChatElement extends InterfaceElement {
     private ListElement stringListElement;
     private SelectionField selectionField;
 
-    public ChatElement(EnumOverlayElement type, BodyRect body) {
+    public ChatElement(EnumOverlayElement type, ColorRect body) {
         this.parentInit(body, type, false, new boolean[]{true, true});
         this.childInit();
     }
 
     // INIT
     @Override
-    protected void parentInit(BodyRect body, EnumOverlayElement type, boolean activated, boolean[] needActivatedParent) {
+    protected void parentInit(ColorRect body, EnumOverlayElement type, boolean activated, boolean[] needActivatedParent) {
         this.body = body;
         this.reachable = needActivatedParent;
         this.activatedTimer = new ActivatedTimer(activated, false, 7000);
@@ -45,10 +45,10 @@ public class ChatElement extends InterfaceElement {
     }
 
     private void childInit() {
-        this.selectionField = new SelectionField(new BodyRect(new Rectangle(this.body.getMinX() + 20, this.body.getMinY() + 170, 300, StringTools.charSizeY()), new Color(0.2f, 0.2f, 0.3f, 0.6f)),
+        this.selectionField = new SelectionField(new ColorRect(new Rectangle(this.body.getMinX() + 20, this.body.getMinY() + 170, 300, StringTools.charSizeY()), new Color(0.2f, 0.2f, 0.3f, 0.6f)),
                 new StringElement(new StringTimer(""), Color.white, Element.PositionInBody.LEFT_MID), EnumOverlayElement.SELECT_FIELD.getValue() + "chat", true);
         float chatSizeY = 170;
-        this.stringListElement = new StringListElement(new BodyRect(new Rectangle(this.body.getMinX(), this.body.getMinY(), this.body.getSizeX(), chatSizeY)));
+        this.stringListElement = new StringListElement(new ColorRect(new Rectangle(this.body.getMinX(), this.body.getMinY(), this.body.getSizeX(), chatSizeY)));
     }
 
     // FUNCTIONS

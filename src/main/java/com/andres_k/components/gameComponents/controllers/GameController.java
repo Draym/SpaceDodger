@@ -43,6 +43,7 @@ public class GameController extends WindowController {
 
     @Override
     public void enter() {
+        this.obstacles.initWorld();
     }
 
     @Override
@@ -55,7 +56,7 @@ public class GameController extends WindowController {
     }
 
     @Override
-    public void init() throws SlickException {
+    public void init() throws SlickException, JSONException {
         this.animatorGameData.init();
         this.obstacles.init(this.animatorGameData);
     }

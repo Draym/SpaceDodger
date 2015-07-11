@@ -1,7 +1,10 @@
 package com.andres_k.components.gameComponents.animations;
 
+import com.andres_k.components.gameComponents.collisions.BodyAnimation;
+import com.andres_k.components.gameComponents.collisions.BodyRect;
 import com.andres_k.components.graphicComponents.userInterface.tools.items.ActivatedTimer;
 import com.andres_k.utils.stockage.Pair;
+import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 
@@ -11,6 +14,11 @@ import java.util.*;
  * Created by andres_k on 13/03/2015.
  */
 public class Animator implements Observer {
+
+    // collisions
+    private HashMap<EnumAnimation, List<BodyAnimation>> collisions;
+
+    // animations
     private HashMap<EnumAnimation, List<Animation>> animations;
     private ActivatedTimer activatedTimer;
     private EnumAnimation current;
@@ -23,6 +31,7 @@ public class Animator implements Observer {
 
     public Animator() {
         this.animations = new HashMap<>();
+        this.collisions = new HashMap<>();
         this.current = EnumAnimation.BASIC;
         this.printable = true;
         this.deleted = false;
@@ -34,15 +43,19 @@ public class Animator implements Observer {
 
     public Animator(Animator animator) {
         this.animations = new HashMap<>();
-        for (Map.Entry entry : animator.animations.entrySet()) {
-            EnumAnimation type = (EnumAnimation) entry.getKey();
-            List<Animation> values = (ArrayList<Animation>) entry.getValue();
+        for (Map.Entry<EnumAnimation, List<Animation>> entry : animator.animations.entrySet()) {
+            EnumAnimation type = entry.getKey();
+            List<Animation> values = entry.getValue();
             List<Animation> newValues = new ArrayList<>();
             for (Animation value : values) {
                 newValues.add(value.copy());
             }
-            this.addElement(type, newValues);
+            this.addListAnimation(type, newValues);
         }
+
+        this.collisions = new HashMap<>();
+        this.collisions.putAll(animator.collisions);
+
         this.current = animator.current;
         this.index = animator.index;
         this.printable = animator.printable;
@@ -75,9 +88,19 @@ public class Animator implements Observer {
         }
     }
 
-    public void addElement(EnumAnimation type, List<Animation> animation) {
+    public void addListAnimation(EnumAnimation type, List<Animation> animation) {
         for (Animation anAnimation : animation) {
             this.addAnimation(type, anAnimation);
+        }
+    }
+
+    public void addCollision(EnumAnimation type, String jsonValue) throws JSONException {
+        if (this.collisions.containsKey(type)) {
+            this.collisions.get(type).add(new BodyAnimation(jsonValue));
+        } else {
+            List<BodyAnimation> values = new ArrayList<>();
+            values.add(new BodyAnimation(jsonValue));
+            this.collisions.put(type, values);
         }
     }
 
@@ -107,8 +130,28 @@ public class Animator implements Observer {
     }
 
     // GETTERS
+
+    public int currentFrame(){
+        return this.currentAnimation().getFrame();
+    }
+
     public Animation currentAnimation() {
         return this.animations.get(this.current).get(this.index);
+    }
+
+    public List<BodyRect> currentCollisions() {
+        int currentFrame = this.currentFrame();
+        if (this.collisions.containsKey(this.current)) {
+            return this.collisions.get(this.current).get(this.index).getCurrentCollisions(currentFrame);
+        }
+        return null;
+    }
+
+    public BodyAnimation currentBodyAnimation() {
+        if (this.collisions.containsKey(this.current)) {
+            return this.collisions.get(this.current).get(this.index);
+        }
+        return null;
     }
 
     public Pair<Float, Float> currentSizeAnimation() {

@@ -3,7 +3,7 @@ package com.andres_k.components.graphicComponents.userInterface.elements.table;
 import com.andres_k.components.graphicComponents.userInterface.elements.InterfaceElement;
 import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverlayElement;
 import com.andres_k.components.graphicComponents.userInterface.tools.elements.Element;
-import com.andres_k.components.graphicComponents.userInterface.tools.items.BodyRect;
+import com.andres_k.components.graphicComponents.userInterface.tools.items.ColorRect;
 import com.andres_k.components.graphicComponents.userInterface.tools.listElements.ButtonListElement;
 import com.andres_k.components.graphicComponents.userInterface.tools.listElements.ImageListElement;
 import com.andres_k.components.graphicComponents.userInterface.tools.listElements.ListElement;
@@ -23,16 +23,16 @@ import java.util.Map;
  */
 public class TableSelectElement extends InterfaceElement {
     protected Map<Element, ListElement> table;
-    protected Map<String, Pair<BodyRect, BodyRect>> positionBody;
+    protected Map<String, Pair<ColorRect, ColorRect>> positionBody;
     protected Element selected;
     protected GenericSendTask genericSendTask;
 
-    public TableSelectElement(EnumOverlayElement type, BodyRect body, boolean activated, boolean[] needActivatedParent) {
+    public TableSelectElement(EnumOverlayElement type, ColorRect body, boolean activated, boolean[] needActivatedParent) {
         this.parentInit(body, type, activated, needActivatedParent);
         this.childInit(null);
     }
 
-    public TableSelectElement(EnumOverlayElement type, BodyRect body, GenericSendTask genericSendTask) {
+    public TableSelectElement(EnumOverlayElement type, ColorRect body, GenericSendTask genericSendTask) {
         this.parentInit(body, type, true, new boolean[]{true, true});
         this.childInit(genericSendTask);
     }
@@ -248,14 +248,14 @@ public class TableSelectElement extends InterfaceElement {
             float widthWithBorder = width - (border * 2);
             widthWithBorder = (widthWithBorder < 0 ? 0 : widthWithBorder);
             if (entry.getKey().getType() == EnumOverlayElement.IMAGE) {
-                this.positionBody.put(entry.getKey().getId(), new Pair<>(new BodyRect(new Rectangle(currentX, currentY, widthWithBorder, entry.getKey().getAbsoluteHeight())),
-                        new BodyRect(new Rectangle(currentX + border, currentY + entry.getKey().getAbsoluteHeight(), widthWithBorder, height))));
+                this.positionBody.put(entry.getKey().getId(), new Pair<>(new ColorRect(new Rectangle(currentX, currentY, widthWithBorder, entry.getKey().getAbsoluteHeight())),
+                        new ColorRect(new Rectangle(currentX + border, currentY + entry.getKey().getAbsoluteHeight(), widthWithBorder, height))));
             } else if (entry.getKey().getType() == EnumOverlayElement.STRING) {
-                this.positionBody.put(entry.getKey().getId(), new Pair<>(new BodyRect(new Rectangle(currentX + border, currentY, widthWithBorder, entry.getKey().getAbsoluteHeight())),
-                        new BodyRect(new Rectangle(currentX + border, currentY + entry.getKey().getAbsoluteHeight(), widthWithBorder, height), entry.getKey().getBodyColor())));
+                this.positionBody.put(entry.getKey().getId(), new Pair<>(new ColorRect(new Rectangle(currentX + border, currentY, widthWithBorder, entry.getKey().getAbsoluteHeight())),
+                        new ColorRect(new Rectangle(currentX + border, currentY + entry.getKey().getAbsoluteHeight(), widthWithBorder, height), entry.getKey().getBodyColor())));
             } else if (entry.getKey().getType() == EnumOverlayElement.BUTTON) {
-                this.positionBody.put(entry.getKey().getId(), new Pair<>(new BodyRect(new Rectangle(currentX + border, currentY, widthWithBorder, entry.getKey().getAbsoluteHeight())),
-                        new BodyRect(new Rectangle(currentX + border, currentY + entry.getKey().getAbsoluteHeight(), widthWithBorder, height), entry.getKey().getBodyColor())));
+                this.positionBody.put(entry.getKey().getId(), new Pair<>(new ColorRect(new Rectangle(currentX + border, currentY, widthWithBorder, entry.getKey().getAbsoluteHeight())),
+                        new ColorRect(new Rectangle(currentX + border, currentY + entry.getKey().getAbsoluteHeight(), widthWithBorder, height), entry.getKey().getBodyColor())));
             }
             currentX += width;
         }

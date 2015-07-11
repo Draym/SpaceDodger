@@ -2,7 +2,7 @@ package com.andres_k.components.graphicComponents.userInterface.tools.listElemen
 
 import com.andres_k.components.graphicComponents.userInterface.tools.elements.Element;
 import com.andres_k.components.graphicComponents.userInterface.tools.elements.StringElement;
-import com.andres_k.components.graphicComponents.userInterface.tools.items.BodyRect;
+import com.andres_k.components.graphicComponents.userInterface.tools.items.ColorRect;
 import com.andres_k.components.graphicComponents.userInterface.tools.items.StringTimer;
 import com.andres_k.utils.stockage.Tuple;
 import com.andres_k.utils.tools.Debug;
@@ -18,7 +18,7 @@ import java.util.List;
  * Created by andres_k on 27/06/2015.
  */
 public class StringListElement extends ListElement {
-    private List<BodyRect> positionMessages;
+    private List<ColorRect> positionMessages;
     private int maxLength;
     private int toPrint;
 
@@ -28,7 +28,7 @@ public class StringListElement extends ListElement {
         this.positionMessages = new ArrayList<>();
     }
 
-    public StringListElement(BodyRect body) {
+    public StringListElement(ColorRect body) {
         this.body = body;
         this.elements = new ArrayList<>();
         this.positionMessages = new ArrayList<>();
@@ -45,7 +45,7 @@ public class StringListElement extends ListElement {
 
             int line = border;
             for (int i = 0; i < this.toPrint; ++i) {
-                this.positionMessages.add(0, new BodyRect(new Rectangle(this.body.getMinX() + border, this.body.getMinY() + line, this.body.getSizeX() - StringTools.charSizeX(), StringTools.charSizeY())));
+                this.positionMessages.add(0, new ColorRect(new Rectangle(this.body.getMinX() + border, this.body.getMinY() + line, this.body.getSizeX() - StringTools.charSizeX(), StringTools.charSizeY())));
                 line += StringTools.charSizeY();
             }
         }

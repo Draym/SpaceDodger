@@ -1,7 +1,7 @@
 package com.andres_k.components.gameComponents.animations;
 
-import org.newdawn.slick.Animation;
-import org.newdawn.slick.Image;
+import com.andres_k.utils.tools.StringTools;
+import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
@@ -9,42 +9,30 @@ import org.newdawn.slick.SpriteSheet;
  * Created by andres_k on 13/03/2015.
  */
 public class AnimatorGameFactory extends AnimatorFactory {
-    public Animator getAnimator(EnumSprites index) throws SlickException {
+    public Animator getAnimator(EnumSprites index) throws SlickException, JSONException {
         if (index.getIndex() == EnumSprites.ITEM.getIndex()) {
             return this.getItemAnimator(index);
         }
         return null;
     }
 
-    public Animator getItemAnimator(EnumSprites index) throws SlickException {
+    public Animator getItemAnimator(EnumSprites index) throws SlickException, JSONException {
         Animator animator = new Animator();
         if (index == EnumSprites.ASTEROID) {
             SpriteSheet spriteSheet = new SpriteSheet("image/game/asteroid.png", 101, 105);
             animator.addAnimation(EnumAnimation.BASIC, this.loadAnimation(spriteSheet, true, 0, 3, 0, 1, 100));
         } else if (index == EnumSprites.SPACESHIP) {
 
-            SpriteSheet spriteSheetL = new SpriteSheet("image/game/redShipLEFT.png", 52, 57);
-            SpriteSheet spriteSheetR = new SpriteSheet("image/game/redShipRIGHT.png", 52, 57);
+            animator.addAnimation(EnumAnimation.MOVE_LEFT, this.loadAnimation(new SpriteSheet("image/game/redShipLEFT.png", 52, 57), false, 0, 3, 0, 1, 400));
+            animator.addAnimation(EnumAnimation.MOVE_RIGHT, this.loadAnimation(new SpriteSheet("image/game/redShipRIGHT.png", 52, 57), false, 0, 3, 0, 1, 400));
+            animator.addAnimation(EnumAnimation.BASIC, this.loadAnimation(new SpriteSheet("image/game/redShipIDLE.png", 52, 57), true, 0, 4, 0, 1, 300));
+            animator.addCollision(EnumAnimation.MOVE_LEFT, StringTools.readFile("json/redShipLEFT.json"));
+            animator.addCollision(EnumAnimation.MOVE_RIGHT, StringTools.readFile("json/redShipRIGHT.json"));
+            animator.addCollision(EnumAnimation.BASIC, StringTools.readFile("json/redShipIDLE.json"));
 
- //           animator.addAnimation(EnumAnimation.BASIC, this.loadAnimation(new SpriteSheet("image/game/redShip.png", 52, 57), false, 0, 1, 0, 1, 100));
-            animator.addAnimation(EnumAnimation.MOVE_LEFT, this.loadAnimation(spriteSheetL, false, 0, 3, 0, 1, 400));
-            animator.addAnimation(EnumAnimation.MOVE_RIGHT, this.loadAnimation(spriteSheetR, false, 0, 3, 0, 1, 400));
-
-            Animation animation = new Animation();
-            animation.addFrame(spriteSheetL.getSprite(0, 0).copy(), 300);
-            animation.addFrame(spriteSheetL.getSprite(1, 0).copy(), 300);
-            animation.addFrame(spriteSheetR.getSprite(0, 0).copy(), 300);
-            animation.addFrame(spriteSheetR.getSprite(1, 0).copy(), 300);
-            animation.setLooping(true);
-
-            animator.addAnimation(EnumAnimation.BASIC, animation);
         } else if (index == EnumSprites.BARRIER){
-            Animation animation = new Animation();
-            animation.addFrame(new Image("image/game/barrier1.png"), 200);
-            animation.addFrame(new Image("image/game/barrier2.png"), 200);
-            animation.addFrame(new Image("image/game/barrier3.png"), 200);
-
-            animator.addAnimation(EnumAnimation.BASIC, animation);
+            animator.addAnimation(EnumAnimation.BASIC, this.loadAnimation(new SpriteSheet("image/game/barrier.png", 28, 900), true, 0, 3, 0, 1, 200));
+            animator.addCollision(EnumAnimation.BASIC, StringTools.readFile("json/barrier.json"));
         }
         return animator;
     }

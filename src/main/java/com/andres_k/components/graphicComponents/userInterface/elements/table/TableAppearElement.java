@@ -2,7 +2,7 @@ package com.andres_k.components.graphicComponents.userInterface.elements.table;
 
 import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverlayElement;
 import com.andres_k.components.graphicComponents.userInterface.tools.elements.Element;
-import com.andres_k.components.graphicComponents.userInterface.tools.items.BodyRect;
+import com.andres_k.components.graphicComponents.userInterface.tools.items.ColorRect;
 import com.andres_k.components.networkComponents.messages.MessageRoundEnd;
 import com.andres_k.components.networkComponents.messages.MessageRoundStart;
 import com.andres_k.utils.configs.CurrentUser;
@@ -14,7 +14,7 @@ import com.andres_k.utils.tools.Debug;
  */
 public class TableAppearElement extends TableElement {
 
-    public TableAppearElement(EnumOverlayElement type, BodyRect body) {
+    public TableAppearElement(EnumOverlayElement type, ColorRect body) {
         super(type, body, false, new boolean[]{true, true});
     }
 

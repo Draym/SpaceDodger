@@ -1,7 +1,7 @@
 package com.andres_k.components.graphicComponents.userInterface.tools.listElements;
 
 import com.andres_k.components.graphicComponents.userInterface.tools.elements.Element;
-import com.andres_k.components.graphicComponents.userInterface.tools.items.BodyRect;
+import com.andres_k.components.graphicComponents.userInterface.tools.items.ColorRect;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Rectangle;
 
@@ -14,7 +14,7 @@ import java.util.List;
 public class ImageListElement extends ListElement {
     private boolean changed;
 
-    public ImageListElement(BodyRect body) {
+    public ImageListElement(ColorRect body) {
         this.body = body;
         this.elements = new ArrayList<>();
         this.changed = false;
@@ -106,9 +106,9 @@ public class ImageListElement extends ListElement {
             for (Element element : this.elements) {
                 if (currentY - element.getAbsoluteHeight() >= this.body.getMinY()) {
                     currentY -= element.getAbsoluteHeight();
-                    element.setBody(new BodyRect(new Rectangle(currentX, currentY, this.body.getSizeX(), element.getAbsoluteHeight())));
+                    element.setBody(new ColorRect(new Rectangle(currentX, currentY, this.body.getSizeX(), element.getAbsoluteHeight())));
                 } else {
-                    element.setBody(new BodyRect(new Rectangle(-1f, -1f, this.body.getSizeX(), element.getAbsoluteHeight())));
+                    element.setBody(new ColorRect(new Rectangle(-1f, -1f, this.body.getSizeX(), element.getAbsoluteHeight())));
                 }
             }
             this.changed = false;

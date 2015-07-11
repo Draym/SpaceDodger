@@ -1,7 +1,7 @@
 package com.andres_k.components.graphicComponents.userInterface.tools.elements;
 
 import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverlayElement;
-import com.andres_k.components.graphicComponents.userInterface.tools.items.BodyRect;
+import com.andres_k.components.graphicComponents.userInterface.tools.items.ColorRect;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.stockage.Tuple;
 import org.newdawn.slick.Graphics;
@@ -16,7 +16,7 @@ public class SelectionField extends Element {
     private boolean visible;
     private String target;
 
-    public SelectionField(BodyRect body, StringElement stringElement, String id, boolean visible) {
+    public SelectionField(ColorRect body, StringElement stringElement, String id, boolean visible) {
         this.stringElement = stringElement;
         this.body = body;
         this.focused = false;
@@ -34,13 +34,13 @@ public class SelectionField extends Element {
     public void draw(Graphics g) {
         if (this.focused){
             this.body.draw(g);
-            this.drawValue(g, new BodyRect(this.body.getBody()));
+            this.drawValue(g, new ColorRect(this.body.getBody()));
         } else if (this.visible){
-            this.drawValue(g, new BodyRect(this.body.getBody()));
+            this.drawValue(g, new ColorRect(this.body.getBody()));
         }
     }
 
-    private void drawValue(Graphics g, BodyRect body){
+    private void drawValue(Graphics g, ColorRect body){
         if (!this.stringElement.getValue().equals("")){
             this.stringElement.addToValue(0, ": ");
             this.stringElement.draw(g, body);
@@ -49,7 +49,7 @@ public class SelectionField extends Element {
     }
 
     @Override
-    public void draw(Graphics g, BodyRect body) {
+    public void draw(Graphics g, ColorRect body) {
         if (focused) {
             this.body.draw(g);
             this.drawValue(g, body);
