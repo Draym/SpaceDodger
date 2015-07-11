@@ -2,12 +2,15 @@ package com.andres_k.components.gameComponents.gameObject;
 
 import com.andres_k.components.gameComponents.animations.AnimatorGameData;
 import com.andres_k.components.gameComponents.gameObject.obstacles.Asteroid;
-import com.andres_k.components.gameComponents.gameObject.obstacles.Border;
+import com.andres_k.components.gameComponents.gameObject.obstacles.Barrier;
+import com.andres_k.components.gameComponents.gameObject.obstacles.SpaceShip;
 import com.andres_k.components.gameComponents.gameObject.obstacles.Stone;
 import com.andres_k.components.graphicComponents.input.EnumInput;
 import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.configs.WindowConfig;
+import com.andres_k.utils.tools.Debug;
 import com.andres_k.utils.tools.RandomTools;
+import com.andres_k.utils.tools.StringTools;
 import org.newdawn.slick.Graphics;
 
 import java.util.ArrayList;
@@ -38,10 +41,10 @@ public class GameObjectController {
     }
 
     public void initWorld() {
-        this.obstacles.add(new Border(this.animatorGameData.getAnimator(EnumGameObject.BARRIER), UUID.randomUUID().toString(), 14, 450));
-        this.obstacles.add(new Border(this.animatorGameData.getAnimator(EnumGameObject.BARRIER), UUID.randomUUID().toString(), WindowConfig.w2_sX - 14, 450));
-        this.obstacles.add(new Border(this.animatorGameData.getAnimator(EnumGameObject.BARRIER), UUID.randomUUID().toString(), 14, -450));
-        this.obstacles.add(new Border(this.animatorGameData.getAnimator(EnumGameObject.BARRIER), UUID.randomUUID().toString(), WindowConfig.w2_sX - 14, -450));
+        this.obstacles.add(new Barrier(this.animatorGameData.getAnimator(EnumGameObject.BARRIER), UUID.randomUUID().toString(), 14, 450));
+        this.obstacles.add(new Barrier(this.animatorGameData.getAnimator(EnumGameObject.BARRIER), UUID.randomUUID().toString(), WindowConfig.w2_sX - 14, 450));
+        this.obstacles.add(new Barrier(this.animatorGameData.getAnimator(EnumGameObject.BARRIER), UUID.randomUUID().toString(), 14, -450));
+        this.obstacles.add(new Barrier(this.animatorGameData.getAnimator(EnumGameObject.BARRIER), UUID.randomUUID().toString(), WindowConfig.w2_sX - 14, -450));
     }
 
     // FUNCTIONS
@@ -76,19 +79,20 @@ public class GameObjectController {
 
         if (this.updateIncrement == this.objectiveIncrement) {
             this.updateIncrement = 0;
-            for (float i = 0; i < GlobalVariable.gameSpeed && i < 20; ++i) {
+            for (float i = 0; i < GlobalVariable.gameSpeed; ++i) {
                 if (RandomTools.getBoolean()) {
                     this.popAnObstacle(EnumGameObject.ASTEROID);
                 } else {
                     this.popAnObstacle(EnumGameObject.STONE);
                 }
             }
-         //   Debug.debug("\n" + this.obstacles.size());
+ //           Debug.debug("\n" + this.obstacles.size());
             this.objectiveIncrement = (long) (10 + RandomTools.getInt((int) (50 / GlobalVariable.gameSpeed)) + (20 / GlobalVariable.gameSpeed));
         }
         for (int i = 0; i < this.players.size(); ++i) {
             this.players.get(i).update();
             if (this.players.get(i).isNeedDelete()) {
+                this.thisPlayerIsDead((SpaceShip)this.players.get(i));
                 this.players.remove(i);
                 --i;
             } else {
@@ -111,6 +115,7 @@ public class GameObjectController {
         }
     }
 
+    // EVENTS
     public void event(EnumInput event, EnumInput input) {
         if (event == EnumInput.KEY_RELEASED) {
             if (input.getIndex() >= 0 && input.getIndex() < this.players.size()) {
@@ -125,6 +130,13 @@ public class GameObjectController {
                 player.eventPressed(input);
             }
         }
+    }
+
+    public void thisPlayerIsDead(SpaceShip player){
+        String score = String.valueOf(player.getScore());
+
+        score = StringTools.addCharacterEach(score, " ", 3);
+        Debug.debug(player.getId() + " : '" + score + "' pts.");
     }
 
     // ADD

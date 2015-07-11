@@ -1,6 +1,7 @@
 package com.andres_k.components.gameComponents.gameObject.obstacles;
 
 import com.andres_k.components.gameComponents.animations.Animator;
+import com.andres_k.components.gameComponents.gameObject.EnumGameObject;
 import com.andres_k.utils.configs.GlobalVariable;
 
 /**
@@ -8,7 +9,7 @@ import com.andres_k.utils.configs.GlobalVariable;
  */
 public class Stone extends Obstacle {
     public Stone(Animator animator, String id, float posX, float posY) {
-        super(animator, id, posX, posY, 1, 1, 3);
+        super(animator, id, EnumGameObject.STONE, posX, posY, 1, 2, 3);
         this.move = true;
     }
 

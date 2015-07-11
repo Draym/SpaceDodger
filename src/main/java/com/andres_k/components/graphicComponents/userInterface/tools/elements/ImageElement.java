@@ -3,7 +3,9 @@ package com.andres_k.components.graphicComponents.userInterface.tools.elements;
 import com.andres_k.components.gameComponents.animations.Animator;
 import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverlayElement;
 import com.andres_k.components.graphicComponents.userInterface.tools.items.ColorRect;
+import com.andres_k.components.taskComponent.EnumTask;
 import com.andres_k.utils.stockage.Pair;
+import com.andres_k.utils.stockage.Tuple;
 import org.newdawn.slick.Graphics;
 
 /**
@@ -143,26 +145,33 @@ public class ImageElement extends Element {
 
     @Override
     public Object doTask(Object task) {
-        if (task instanceof String) {
-            String value = (String) task;
-            if (value.equals("start")) {
+        if (task instanceof EnumTask) {
+            if (task == EnumTask.START) {
                 this.start();
+            } else if (task == EnumTask.STOP) {
+                this.stop();
             }
         } else if (task instanceof Long) {
             this.animator.updateAnimator(false, false);
             this.animator.startTimer((Long) task);
-        } else if (task instanceof Pair) {
-            if (((Pair) task).getV1() instanceof String) {
-                if (((Pair) task).getV1().equals("newCurrentIndex") && ((Pair) task).getV2() instanceof Integer && this.animator != null) {
-                    this.animator.setIndex((Integer) ((Pair) task).getV2());
-                } else if (((Pair) task).getV1().equals("cutBody") && ((Pair) task).getV2() instanceof Float) {
-                    float percent = (Float) ((Pair) task).getV2();
-                    if (percent >= 1){
+
+        } else if (task instanceof Tuple && ((Tuple) task).getV1() instanceof EnumTask) {
+            EnumTask order = (EnumTask) ((Tuple) task).getV1();
+            Object target = ((Tuple) task).getV2();
+            Object value = ((Tuple) task).getV3();
+
+            if (order == EnumTask.SETTER) {
+                if (target.equals("index") && value instanceof Integer && this.animator != null) {
+                    this.animator.setIndex((Integer) value);
+                }
+            } else if (order == EnumTask.CUT) {
+                if (target.equals("body") && value instanceof Float) {
+                    float percent = (float) value;
+                    if (percent >= 1) {
                         this.body.setPrintable(true);
                         this.body.setSizes(this.sizeXMAX, this.body.getSizeY());
-                    }
-                    else if (percent > 0){
-                        if (!this.id.contains(EnumOverlayElement.BORDER.getValue())){
+                    } else if (percent > 0) {
+                        if (!this.id.contains(EnumOverlayElement.BORDER.getValue())) {
                             this.body.setPrintable(true);
                             this.body.setSizes(this.sizeXMAX * percent, this.body.getSizeY());
                         }
@@ -172,6 +181,7 @@ public class ImageElement extends Element {
                     }
                 }
             }
+
         }
         return null;
     }
@@ -181,7 +191,11 @@ public class ImageElement extends Element {
         return "imageType: " + (this.animator != null ? this.animator.getCurrentAnimation() : "");
     }
 
-    private void start(){
+    private void start() {
+        this.animator.restart();
+    }
+
+    private void stop() {
         this.animator.restart();
     }
 

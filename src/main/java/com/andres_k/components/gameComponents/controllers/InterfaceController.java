@@ -4,6 +4,7 @@ import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverlayElement;
 import com.andres_k.components.networkComponents.messages.MessageGameNew;
 import com.andres_k.components.taskComponent.EnumTargetTask;
+import com.andres_k.components.taskComponent.EnumTask;
 import com.andres_k.components.taskComponent.TaskFactory;
 import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.stockage.Pair;
@@ -27,9 +28,9 @@ public class InterfaceController extends WindowController {
     public void enter() {
         //init overlay value
         this.setChanged();
-        this.notifyObservers(TaskFactory.createTask(EnumTargetTask.INTERFACE, EnumTargetTask.INTERFACE_OVERLAY, new Pair<EnumOverlayElement, Pair>(EnumOverlayElement.TABLE_MENU_NEWGAME, new Pair<>(EnumOverlayElement.SELECT_FIELD.getValue() + EnumOverlayElement.NEW.getValue() + "nbPlayer",  new Pair<>("setCurrent", "1")))));
+        this.notifyObservers(TaskFactory.createTask(EnumTargetTask.INTERFACE, EnumTargetTask.INTERFACE_OVERLAY, new Pair<EnumOverlayElement, Pair>(EnumOverlayElement.TABLE_MENU_NEWGAME, new Pair<>(EnumOverlayElement.SELECT_FIELD.getValue() + EnumOverlayElement.NEW.getValue() + "nbPlayer",  new Tuple<>(EnumTask.SETTER, "current", "1")))));
         this.setChanged();
-        this.notifyObservers(TaskFactory.createTask(EnumTargetTask.INTERFACE, EnumTargetTask.INTERFACE_OVERLAY, new Pair<EnumOverlayElement, Pair>(EnumOverlayElement.TABLE_MENU_NEWGAME, new Pair<>(EnumOverlayElement.SELECT_FIELD.getValue() + EnumOverlayElement.NEW.getValue() + "speedGame", new Pair<>("setCurrent", String.valueOf(GlobalVariable.gameSpeed))))));
+        this.notifyObservers(TaskFactory.createTask(EnumTargetTask.INTERFACE, EnumTargetTask.INTERFACE_OVERLAY, new Pair<EnumOverlayElement, Pair>(EnumOverlayElement.TABLE_MENU_NEWGAME, new Pair<>(EnumOverlayElement.SELECT_FIELD.getValue() + EnumOverlayElement.NEW.getValue() + "speedGame", new Tuple<>(EnumTask.SETTER, "current", String.valueOf(GlobalVariable.gameSpeed))))));
 
     }
 

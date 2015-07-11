@@ -53,7 +53,6 @@ public class Windows extends StateBasedGame implements Observer {
     }
 
     public void update(Observable o, Object arg) {
-        Debug.debug("WINDOWS Received: " + arg);
         if (arg instanceof Tuple) {
             Tuple<EnumTargetTask, EnumTargetTask, Object> task = (Tuple<EnumTargetTask, EnumTargetTask, Object>) arg;
 

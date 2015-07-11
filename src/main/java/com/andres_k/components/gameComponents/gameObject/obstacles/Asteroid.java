@@ -1,6 +1,7 @@
 package com.andres_k.components.gameComponents.gameObject.obstacles;
 
 import com.andres_k.components.gameComponents.animations.Animator;
+import com.andres_k.components.gameComponents.gameObject.EnumGameObject;
 import com.andres_k.utils.configs.GlobalVariable;
 
 /**
@@ -8,10 +9,9 @@ import com.andres_k.utils.configs.GlobalVariable;
  */
 public class Asteroid extends Obstacle {
     public Asteroid(Animator animator, String id, float posX, float posY) {
-        super(animator, id, posX, posY, 3, 10, 2);
+        super(animator, id, EnumGameObject.ASTEROID, posX, posY, 15, 10, 2);
         this.move = true;
     }
-
 
     @Override
     public float calculateWithSpeed() {

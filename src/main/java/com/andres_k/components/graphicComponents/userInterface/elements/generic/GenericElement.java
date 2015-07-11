@@ -1,7 +1,7 @@
 package com.andres_k.components.graphicComponents.userInterface.elements.generic;
 
-import com.andres_k.components.graphicComponents.sounds.MusicController;
-import com.andres_k.components.graphicComponents.sounds.SoundController;
+import com.andres_k.components.soundComponents.MusicController;
+import com.andres_k.components.soundComponents.SoundController;
 import com.andres_k.components.graphicComponents.userInterface.elements.InterfaceElement;
 import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverlayElement;
 import com.andres_k.components.graphicComponents.userInterface.tools.elements.Element;
@@ -9,6 +9,7 @@ import com.andres_k.components.graphicComponents.userInterface.tools.items.Color
 import com.andres_k.components.networkComponents.messages.MessageGameNew;
 import com.andres_k.components.networkComponents.messages.MessageOverlayChat;
 import com.andres_k.components.networkComponents.messages.MessageOverlayMenu;
+import com.andres_k.components.taskComponent.EnumTask;
 import com.andres_k.components.taskComponent.GenericSendTask;
 import com.andres_k.utils.configs.CurrentUser;
 import com.andres_k.utils.stockage.Pair;
@@ -130,7 +131,7 @@ public class GenericElement extends InterfaceElement {
                 }
             }
         } else {
-            this.taskForAll(new Tuple<>("event", key, c));
+            this.taskForAll(new Tuple<>(EnumTask.EVENT, key, c));
         }
         return null;
     }
@@ -157,7 +158,7 @@ public class GenericElement extends InterfaceElement {
                             for (Element tmp : this.elements) {
                                 if (tmp.getType() == EnumOverlayElement.SELECT_FIELD) {
                                     task.addObject(tmp.toString());
-                                    tmp.doTask(new Pair<>("setCurrent", ""));
+                                    tmp.doTask(new Tuple<>(EnumTask.SETTER, "current", ""));
                                 }
                             }
                             if (this.genericSendTask != null) {
@@ -184,7 +185,7 @@ public class GenericElement extends InterfaceElement {
                                 MusicController.changeVolume(percent * MusicController.getMaxVolume());
 
                                 itemValue.doTask(String.valueOf((int) (MusicController.getVolume() * 100)));
-                                itemGraph.doTask(new Pair<>("cutBody", MusicController.getVolume() / MusicController.getMaxVolume()));
+                                itemGraph.doTask(new Tuple<>(EnumTask.CUT, "body", MusicController.getVolume() / MusicController.getMaxVolume()));
                             }
                         } else if (element.getId().equals(EnumOverlayElement.SOUNDS_GRAPH.getValue() + EnumOverlayElement.BORDER.getValue())) {
                             int graph = this.containId(EnumOverlayElement.SOUNDS_GRAPH.getValue());
@@ -199,7 +200,7 @@ public class GenericElement extends InterfaceElement {
                                 SoundController.changeVolume(percent * SoundController.getMaxVolume());
 
                                 itemValue.doTask(String.valueOf((int) (SoundController.getVolume() * 100)));
-                                itemGraph.doTask(new Pair<>("cutBody", SoundController.getVolume() / SoundController.getMaxVolume()));
+                                itemGraph.doTask(new Tuple<>(EnumTask.CUT, "body", SoundController.getVolume() / SoundController.getMaxVolume()));
                             }
                         }
                         onFocus = true;
@@ -252,11 +253,11 @@ public class GenericElement extends InterfaceElement {
     public Object checkAllForEnter() {
         for (Element element : this.elements) {
 
-            if (element.doTask(new Pair<>("check", "focus")) != null) {
-                element.doTask(new Pair<>("setFocus", false));
+            if (element.doTask(new Pair<>(EnumTask.GETTER, "focus")) != null) {
+                element.doTask(new Tuple<>(EnumTask.SETTER, "focus", false));
                 if (!element.toString().equals("")) {
                     MessageOverlayChat request = new MessageOverlayChat(CurrentUser.getPseudo(), CurrentUser.getId(), true, element.toString());
-                    element.doTask(new Pair<>("setCurrent", ""));
+                    element.doTask(new Tuple<>(EnumTask.SETTER, "current", ""));
                     return request;
                 }
             }

@@ -3,8 +3,8 @@ package com.andres_k.components.graphicComponents.userInterface.overlay.windowOv
 import com.andres_k.components.gameComponents.animations.AnimatorOverlayData;
 import com.andres_k.components.graphicComponents.input.EnumInput;
 import com.andres_k.components.graphicComponents.input.InputData;
-import com.andres_k.components.graphicComponents.sounds.MusicController;
-import com.andres_k.components.graphicComponents.sounds.SoundController;
+import com.andres_k.components.soundComponents.MusicController;
+import com.andres_k.components.soundComponents.SoundController;
 import com.andres_k.components.graphicComponents.userInterface.elements.InterfaceElement;
 import com.andres_k.components.graphicComponents.userInterface.elements.generic.GenericElement;
 import com.andres_k.components.graphicComponents.userInterface.elements.table.TableMenuElement;
@@ -15,6 +15,7 @@ import com.andres_k.components.graphicComponents.userInterface.tools.items.Color
 import com.andres_k.components.graphicComponents.userInterface.tools.items.StringTimer;
 import com.andres_k.components.networkComponents.MessageModel;
 import com.andres_k.components.taskComponent.EnumTargetTask;
+import com.andres_k.components.taskComponent.EnumTask;
 import com.andres_k.components.taskComponent.TaskFactory;
 import com.andres_k.utils.configs.WindowConfig;
 import com.andres_k.utils.stockage.Pair;
@@ -49,7 +50,7 @@ public class InterfaceOverlay extends Overlay {
         float menuY = (WindowConfig.w1_sY / 2) - 150;
 
         this.elements.put(EnumOverlayElement.TABLE_MENU_CONTROLS, new TableMenuElement(EnumOverlayElement.TABLE_MENU_CONTROLS, this.genericSendTask,
-                new ColorRect(new Rectangle(menuX, menuY, 400, 300), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREY))));
+                new ColorRect(new Rectangle(menuX, menuY, 400, 320), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREY))));
         this.elements.put(EnumOverlayElement.TABLE_MENU_SETTINGS, new GenericElement(EnumOverlayElement.TABLE_MENU_SETTINGS,
                 new ColorRect(new Rectangle(menuX, menuY, 300, 310), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREY)), new Pair<>(false, true), false, new boolean[]{true, true}));
 
@@ -158,8 +159,8 @@ public class InterfaceOverlay extends Overlay {
         tableMenuSettings.doTask(new ImageElement(new ColorRect(new Rectangle(posX + 10, posY + 4, 202, 12), ColorTools.get(ColorTools.Colors.TRANSPARENT_BLACK)), EnumOverlayElement.MUSICS_GRAPH.getValue() + EnumOverlayElement.BORDER.getValue(), Element.PositionInBody.LEFT_MID));
         tableMenuSettings.doTask(new ImageElement(new ColorRect(new Rectangle(posX + 11, posY + 5, 200, 10), ColorTools.get(ColorTools.Colors.TRANSPARENT_BLUE)), EnumOverlayElement.MUSICS_GRAPH.getValue(), Element.PositionInBody.LEFT_MID));
 
-        tableMenuSettings.doTask(new Pair<>(EnumOverlayElement.SOUNDS_GRAPH.getValue(), new Pair<>("cutBody", SoundController.getVolume() / SoundController.getMaxVolume())));
-        tableMenuSettings.doTask(new Pair<>(EnumOverlayElement.MUSICS_GRAPH.getValue(), new Pair<>("cutBody", MusicController.getVolume() / MusicController.getMaxVolume())));
+        tableMenuSettings.doTask(new Pair<>(EnumOverlayElement.SOUNDS_GRAPH.getValue(), new Tuple<>(EnumTask.CUT, "body", SoundController.getVolume() / SoundController.getMaxVolume())));
+        tableMenuSettings.doTask(new Pair<>(EnumOverlayElement.MUSICS_GRAPH.getValue(), new Tuple<>(EnumTask.CUT, "body", MusicController.getVolume() / MusicController.getMaxVolume())));
     }
 
     // TASK

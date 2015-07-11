@@ -5,7 +5,9 @@ import com.andres_k.components.graphicComponents.userInterface.tools.elements.El
 import com.andres_k.components.graphicComponents.userInterface.tools.items.ColorRect;
 import com.andres_k.components.networkComponents.messages.MessageRoundEnd;
 import com.andres_k.components.networkComponents.messages.MessageRoundStart;
+import com.andres_k.components.taskComponent.EnumTask;
 import com.andres_k.utils.stockage.Pair;
+import com.andres_k.utils.stockage.Tuple;
 import com.andres_k.utils.tools.Debug;
 
 /**
@@ -32,8 +34,8 @@ public class TableAppearElement extends TableElement {
             if (task instanceof MessageRoundStart) {
                 MessageRoundStart message = (MessageRoundStart) task;
 
-                if (message.isStarted() == true) {
-                    this.sendTaskToAll("start");
+                if (message.isStarted()) {
+                    this.sendTaskToAll(EnumTask.START);
                     this.activatedTimer.startTimer();
                 } else {
                     this.activatedTimer.stopTimer();
@@ -42,11 +44,11 @@ public class TableAppearElement extends TableElement {
         } else if (this.type == EnumOverlayElement.TABLE_ROUND_END) {
             if (task instanceof MessageRoundEnd) {
                 MessageRoundEnd message = (MessageRoundEnd) task;
-                this.sendTaskToAll("start");
+                this.sendTaskToAll(EnumTask.START);
                 if (message.getWinnerTeam().equals("ally")) {
-                    this.sendTaskToAll(new Pair<>("newCurrentIndex", 0));
+                    this.sendTaskToAll(new Tuple<>(EnumTask.SETTER, "index", 0));
                 } else {
-                    this.sendTaskToAll(new Pair<>("newCurrentIndex", 1));
+                    this.sendTaskToAll(new Tuple<>(EnumTask.SETTER, "index", 1));
                 }
                 this.activatedTimer.startTimer();
             } else if (task instanceof MessageRoundStart) {

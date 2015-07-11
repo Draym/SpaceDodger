@@ -3,9 +3,11 @@ package com.andres_k.components.gameComponents.gameObject.obstacles;
 import com.andres_k.components.gameComponents.animations.Animator;
 import com.andres_k.components.gameComponents.animations.EnumAnimation;
 import com.andres_k.components.gameComponents.collisions.BodyAnimation;
+import com.andres_k.components.gameComponents.gameObject.EnumGameObject;
 import com.andres_k.components.gameComponents.gameObject.GameObject;
 import com.andres_k.components.graphicComponents.input.EnumInput;
 import com.andres_k.utils.configs.WindowConfig;
+import com.andres_k.utils.stockage.Pair;
 import org.newdawn.slick.Graphics;
 
 /**
@@ -13,8 +15,8 @@ import org.newdawn.slick.Graphics;
  */
 public class Obstacle extends GameObject {
 
-    public Obstacle(Animator animator, String id, float posX, float posY, float life, float damage, float speed) {
-        super(animator, id, posX, posY, life, damage, speed);
+    public Obstacle(Animator animator, String id, EnumGameObject type, float posX, float posY, float life, float damage, float speed) {
+        super(animator, id, type,new Pair<>(posX, posY), life, damage, speed);
     }
 
     @Override
@@ -45,5 +47,10 @@ public class Obstacle extends GameObject {
 
     @Override
     public void eventReleased(EnumInput input) {
+    }
+
+    @Override
+    public Object doTask(Object task) {
+        return null;
     }
 }

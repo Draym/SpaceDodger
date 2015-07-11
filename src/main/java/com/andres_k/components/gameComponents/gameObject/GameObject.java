@@ -5,9 +5,11 @@ import com.andres_k.components.gameComponents.animations.EnumAnimation;
 import com.andres_k.components.gameComponents.collisions.BodyRect;
 import com.andres_k.components.gameComponents.collisions.BodySprite;
 import com.andres_k.components.graphicComponents.input.EnumInput;
+import com.andres_k.components.taskComponent.EnumTask;
 import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.configs.WindowConfig;
 import com.andres_k.utils.stockage.Pair;
+import com.andres_k.utils.tools.Debug;
 import org.newdawn.slick.Graphics;
 
 import java.util.List;
@@ -20,24 +22,33 @@ public abstract class GameObject {
     protected Pair<Float, Float> positions;
     protected Pair<Float, Float> moveTo;
     protected String id;
+    protected EnumGameObject type;
 
     protected boolean move;
+    protected boolean alive;
     protected float maxLife;
     protected float currentLife;
     protected float damage;
     protected float speed;
 
-    protected GameObject(Animator animator, String id, float posX, float posY, float life, float damage, float speed) {
-        this.positions = new Pair<>(posX, posY);
+    protected GameObject(Animator animator, String id, EnumGameObject type, Pair<Float, Float> pos, float life, float damage, float speed) {
+        this.positions = pos;
         this.moveTo = new Pair<>(0f, 0f);
         this.move = false;
+        this.alive = true;
 
+        this.type = type;
         this.id = id;
         this.animator = animator;
         this.maxLife = life;
         this.currentLife = life;
         this.damage = damage;
         this.speed = speed;
+    }
+
+    public void revive(){
+        this.alive = true;
+        this.currentLife = this.maxLife;
     }
 
     public abstract void clear();
@@ -49,6 +60,8 @@ public abstract class GameObject {
     public abstract void eventPressed(EnumInput input);
 
     public abstract void eventReleased(EnumInput input);
+
+    public abstract Object doTask(Object task);
 
     public void move() {
         if (this.move) {
@@ -65,9 +78,9 @@ public abstract class GameObject {
         }
     }
 
-    public boolean inTheMapAfterMove(){
+    public boolean inTheMapAfterMove() {
         Pair<Float, Float> pos = this.predictMove();
-        if (pos.getV1() > 0 && pos.getV1() < WindowConfig.w2_sX && pos.getV2() > 0 && pos.getV2() < WindowConfig.w2_sY){
+        if (pos.getV1() > 0 && pos.getV1() < WindowConfig.w2_sX && pos.getV2() > 0 && pos.getV2() < WindowConfig.w2_sY) {
             return true;
         }
         return false;
@@ -75,6 +88,7 @@ public abstract class GameObject {
 
     public void checkCollisionWith(GameObject enemy) {
         Pair<Float, Float> tmpPos = predictMove();
+        boolean collision = false;
 
         if (this.animator.getCurrentAnimation() != EnumAnimation.EXPLODE && enemy.animator.getCurrentAnimation() != EnumAnimation.EXPLODE) {
             BodySprite enemyBody = enemy.getBody();
@@ -87,24 +101,32 @@ public abstract class GameObject {
                 for (BodyRect mine : myBodies) {
                     for (BodyRect his : enemyBodies) {
                         if (mine.getBody(tmpPos.getV1(), tmpPos.getV2()).intersects(his.getBody(enemy.getPosX(), enemy.getPosY()))) {
+                            collision = true;
                             if (mine.getType() == EnumGameObject.ATTACK_BODY && his.getType() == EnumGameObject.DEFENSE_BODY) {
                                 enemy.getHit(this);
                             } else if (mine.getType() == EnumGameObject.DEFENSE_BODY && his.getType() == EnumGameObject.ATTACK_BODY) {
                                 this.getHit(enemy);
                             } else if (mine.getType() != EnumGameObject.ATTACK_BODY && his.getType() != EnumGameObject.ATTACK_BODY) {
-                                this.move = false;
+                                if (this.type == EnumGameObject.SPACESHIP)
+                                    this.move = false;
                             }
                         }
                     }
+                }
+                if (!collision && this.type == EnumGameObject.SPACESHIP && this.type != enemy.getType()) {
+                    this.doTask(new Pair<>(EnumTask.UPGRADE_SCORE, 1000));
                 }
             }
         }
     }
 
-    public void getHit(GameObject enemy){
+    public void getHit(GameObject enemy) {
+        Debug.debug("\nCURRENT LIFE [" + this.type + "] vs [" + enemy.type + "]: " + this.currentLife + " - " + enemy.getDamage() + " = " + (this.currentLife - enemy.getDamage()));
         this.currentLife -= enemy.getDamage();
-        if (this.currentLife <= 0){
+        if (this.currentLife <= 0) {
             this.animator.setCurrent(EnumAnimation.EXPLODE);
+            this.move = false;
+            this.alive = false;
         } else {
             this.animator.nextCurrentIndex();
         }
@@ -160,9 +182,18 @@ public abstract class GameObject {
         return this.id;
     }
 
+    public EnumGameObject getType() {
+        return this.type;
+    }
+
+    public boolean isAlive() {
+        return this.alive;
+    }
+
     // SETTERS
 
     public void setMove(boolean value) {
         this.move = value;
     }
+
 }

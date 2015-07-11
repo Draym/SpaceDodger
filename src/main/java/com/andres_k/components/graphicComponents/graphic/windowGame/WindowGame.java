@@ -6,6 +6,8 @@ import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.components.graphicComponents.graphic.WindowBasedGame;
 import com.andres_k.components.graphicComponents.input.EnumInput;
 import com.andres_k.components.graphicComponents.userInterface.overlay.windowOverlay.GameOverlay;
+import com.andres_k.components.soundComponents.EnumSound;
+import com.andres_k.components.soundComponents.MusicController;
 import com.andres_k.components.taskComponent.GenericSendTask;
 import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.configs.WindowConfig;
@@ -71,6 +73,7 @@ public class WindowGame extends WindowBasedGame {
         this.container.setAlwaysRender(false);
         this.container.setVSync(false);
 
+        MusicController.loop(EnumSound.BACKGROUND_GAME);
         this.overlay.enter();
         this.controller.enter();
         GlobalVariable.appGameContainer.setDisplayMode(WindowConfig.getW2SizeX(), WindowConfig.getW2SizeY(), false);
@@ -79,6 +82,7 @@ public class WindowGame extends WindowBasedGame {
 
     @Override
     public void leave(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
+        MusicController.stop(EnumSound.BACKGROUND_GAME);
         this.controller.leave();
         this.clean();
     }

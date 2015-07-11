@@ -2,6 +2,7 @@ package com.andres_k.components.graphicComponents.userInterface.tools.elements;
 
 import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverlayElement;
 import com.andres_k.components.graphicComponents.userInterface.tools.items.ColorRect;
+import com.andres_k.components.taskComponent.EnumTask;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.stockage.Tuple;
 import org.newdawn.slick.Graphics;
@@ -32,16 +33,16 @@ public class SelectionField extends Element {
     }
 
     public void draw(Graphics g) {
-        if (this.focused){
+        if (this.focused) {
             this.body.draw(g);
             this.drawValue(g, new ColorRect(this.body.getBody()));
-        } else if (this.visible){
+        } else if (this.visible) {
             this.drawValue(g, new ColorRect(this.body.getBody()));
         }
     }
 
-    private void drawValue(Graphics g, ColorRect body){
-        if (!this.stringElement.getValue().equals("")){
+    private void drawValue(Graphics g, ColorRect body) {
+        if (!this.stringElement.getValue().equals("")) {
             this.stringElement.addToValue(0, ": ");
             this.stringElement.draw(g, body);
             this.stringElement.deleteValue(0, 2);
@@ -53,7 +54,7 @@ public class SelectionField extends Element {
         if (focused) {
             this.body.draw(g);
             this.drawValue(g, body);
-        } else if (this.visible){
+        } else if (this.visible) {
             this.drawValue(g, body);
         }
     }
@@ -70,33 +71,43 @@ public class SelectionField extends Element {
 
     @Override
     public Object doTask(Object task) {
-        if (task instanceof Pair && ((Pair) task).getV1() instanceof String) {
-            String order = (String) ((Pair) task).getV1();
+        if (task instanceof Pair && ((Pair) task).getV1() instanceof EnumTask) {
+            EnumTask order = (EnumTask) ((Pair) task).getV1();
+            String value = (String) ((Pair) task).getV2();
 
-            if (order.equals("sendTo")) {
-                this.target = (String) ((Pair) task).getV2();
-            } else if (order.equals("setFocus")) {
-                this.focused = (boolean) ((Pair) task).getV2();
-            } else if (order.equals("setCurrent")) {
-                this.stringElement.setValue((String) ((Pair) task).getV2());
-            } else if (order.equals("check") && ((Pair) task).getV2().equals("focus")) {
-                if (this.focused) {
-                    return true;
-                } else {
-                    return null;
+            if (order == EnumTask.SEND_TO) {
+                this.target = value;
+            } else if (order == EnumTask.GETTER) {
+                if (value.equals("focus")) {
+                    if (this.focused) {
+                        return true;
+                    } else {
+                        return null;
+                    }
                 }
             }
-        } else if (task instanceof Tuple && ((Tuple) task).getV1() instanceof String) {
-            if (((Tuple) task).getV1().equals("event") && this.focused) {
-                int key = (int) ((Tuple) task).getV2();
-                char c = (char) ((Tuple) task).getV3();
+        } else if (task instanceof Tuple && ((Tuple) task).getV1() instanceof EnumTask) {
+            EnumTask order = (EnumTask) ((Tuple) task).getV1();
+            Object target = ((Tuple) task).getV2();
+            Object value = ((Tuple) task).getV3();
+
+            if (order == EnumTask.SETTER) {
+                if (target.equals("focus")) {
+                    this.focused = (boolean) value;
+                } else if (target.equals("current")) {
+                    this.stringElement.setValue((String) value);
+                }
+            } else if (order == EnumTask.EVENT && this.focused) {
+                int key = (int) target;
+                char c = (char) value;
                 if (key == Input.KEY_BACK) {
                     this.stringElement.deleteValue(this.stringElement.getValue().length() - 1, 1);
-                } else if (c >= 32 && c <= 126){
+                } else if (c >= 32 && c <= 126) {
                     this.stringElement.addToValue(this.stringElement.getValue().length(), String.valueOf(c));
                 }
             }
         }
+
         return null;
     }
 

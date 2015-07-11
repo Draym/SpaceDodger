@@ -3,8 +3,11 @@ package com.andres_k.components.gameComponents.gameObject.obstacles;
 import com.andres_k.components.gameComponents.animations.Animator;
 import com.andres_k.components.gameComponents.animations.EnumAnimation;
 import com.andres_k.components.gameComponents.collisions.BodyAnimation;
+import com.andres_k.components.gameComponents.gameObject.EnumGameObject;
 import com.andres_k.components.gameComponents.gameObject.GameObject;
 import com.andres_k.components.graphicComponents.input.EnumInput;
+import com.andres_k.components.taskComponent.EnumTask;
+import com.andres_k.utils.stockage.Pair;
 import org.newdawn.slick.Graphics;
 
 /**
@@ -12,9 +15,10 @@ import org.newdawn.slick.Graphics;
  */
 public class SpaceShip extends GameObject {
     private EnumInput current;
+    private long score;
 
     public SpaceShip(Animator animator, String id, float x, float y) {
-        super(animator, id, x, y, 1, 0, 3);
+        super(animator, id, EnumGameObject.SPACESHIP, new Pair<>(x, y), 1, 0, 3);
     }
 
     @Override
@@ -34,7 +38,7 @@ public class SpaceShip extends GameObject {
 
     @Override
     public void update() {
-
+        this.score += 1;
     }
 
     public void move() {
@@ -53,40 +57,62 @@ public class SpaceShip extends GameObject {
     @Override
     public void eventPressed(EnumInput input) {
 
-        if (input.isIn(EnumInput.MOVE_LEFT)) {
-            this.animator.setCurrent(EnumAnimation.MOVE_LEFT);
-            this.moveTo.setV1(-this.calculateWithSpeed());
-            this.moveTo.setV2(0f);
-            this.move = true;
-        } else if (input.isIn(EnumInput.MOVE_RIGHT)) {
-            this.animator.setCurrent(EnumAnimation.MOVE_RIGHT);
-            this.moveTo.setV1(this.calculateWithSpeed());
-            this.moveTo.setV2(0f);
-            this.move = true;
-        } else if (input.isIn(EnumInput.MOVE_UP)) {
-            this.animator.setCurrent(EnumAnimation.BASIC);
-            this.moveTo.setV1(0f);
-            this.moveTo.setV2(-this.calculateWithSpeed());
-            this.move = true;
-        } else if (input.isIn(EnumInput.MOVE_DOWN)) {
-            this.animator.setCurrent(EnumAnimation.BASIC);
-            this.moveTo.setV1(0f);
-            this.moveTo.setV2(this.calculateWithSpeed());
-            this.move = true;
-        }
-        if (this.move) {
-            this.current = input;
+        if (this.isAlive()) {
+            if (input.isIn(EnumInput.MOVE_LEFT)) {
+                this.animator.setCurrent(EnumAnimation.MOVE_LEFT);
+                this.moveTo.setV1(-this.calculateWithSpeed());
+                this.moveTo.setV2(0f);
+                this.move = true;
+            } else if (input.isIn(EnumInput.MOVE_RIGHT)) {
+                this.animator.setCurrent(EnumAnimation.MOVE_RIGHT);
+                this.moveTo.setV1(this.calculateWithSpeed());
+                this.moveTo.setV2(0f);
+                this.move = true;
+            } else if (input.isIn(EnumInput.MOVE_UP)) {
+                this.animator.setCurrent(EnumAnimation.BASIC);
+                this.moveTo.setV1(0f);
+                this.moveTo.setV2(-this.calculateWithSpeed());
+                this.move = true;
+            } else if (input.isIn(EnumInput.MOVE_DOWN)) {
+                this.animator.setCurrent(EnumAnimation.BASIC);
+                this.moveTo.setV1(0f);
+                this.moveTo.setV2(this.calculateWithSpeed());
+                this.move = true;
+            }
+            if (this.move) {
+                this.current = input;
+            }
         }
     }
 
     @Override
     public void eventReleased(EnumInput input) {
-        if (input == this.current) {
-            this.animator.setCurrent(EnumAnimation.BASIC);
-            this.moveTo.setV1(0f);
-            this.moveTo.setV2(0f);
-            this.move = false;
+        if (this.isAlive()) {
+            if (input == this.current) {
+                this.animator.setCurrent(EnumAnimation.BASIC);
+                this.moveTo.setV1(0f);
+                this.moveTo.setV2(0f);
+                this.move = false;
+            }
         }
+    }
+
+    @Override
+    public Object doTask(Object task) {
+        if (task instanceof Pair){
+            Pair<EnumTask, Object> received = (Pair<EnumTask, Object>) task;
+
+            if (received.getV1() == EnumTask.UPGRADE_SCORE && received.getV2() instanceof Integer){
+                this.score += (int)received.getV2();
+            }
+        }
+        return null;
+    }
+
+    // GETTERS
+
+    public long getScore(){
+        return this.score / 10;
     }
 
 }

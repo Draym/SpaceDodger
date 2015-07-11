@@ -12,6 +12,7 @@ import com.andres_k.components.graphicComponents.userInterface.tools.items.Strin
 import com.andres_k.components.graphicComponents.userInterface.tools.listElements.ListElement;
 import com.andres_k.components.graphicComponents.userInterface.tools.listElements.StringListElement;
 import com.andres_k.components.networkComponents.messages.MessageOverlayChat;
+import com.andres_k.components.taskComponent.EnumTask;
 import com.andres_k.utils.configs.CurrentUser;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.stockage.Tuple;
@@ -81,7 +82,7 @@ public class ChatElement extends InterfaceElement {
     }
 
     private boolean selectionFocused() {
-        if (this.selectionField.doTask(new Pair<>("check", "focus")) != null) {
+        if (this.selectionField.doTask(new Pair<>(EnumTask.GETTER, "focus")) != null) {
             return true;
         } else {
             return false;
@@ -89,7 +90,7 @@ public class ChatElement extends InterfaceElement {
     }
 
     private void setSelectionFocus(boolean value) {
-        this.selectionField.doTask(new Pair<>("setFocus", value));
+        this.selectionField.doTask(new Tuple<>(EnumTask.SETTER, "focus", value));
     }
 
     @Override
@@ -99,7 +100,7 @@ public class ChatElement extends InterfaceElement {
                 this.setSelectionFocus(false);
                 if (!this.selectionField.toString().equals("")) {
                     MessageOverlayChat request = new MessageOverlayChat(CurrentUser.getPseudo(), CurrentUser.getId(), true, this.selectionField.toString());
-                    this.selectionField.doTask(new Pair<>("setCurrent", ""));
+                    this.selectionField.doTask(new Tuple<>(EnumTask.SETTER, "current", ""));
                     return request;
                 }
             } else {
@@ -110,7 +111,7 @@ public class ChatElement extends InterfaceElement {
         } else if (key == Input.KEY_ESCAPE && this.selectionFocused()) {
             return true;
         } else if (this.selectionFocused()) {
-            this.selectionField.doTask(new Tuple("event", key, c));
+            this.selectionField.doTask(new Tuple<>(EnumTask.EVENT, key, c));
             this.activatedTimer.startTimer();
         } else {
             return null;
@@ -137,7 +138,7 @@ public class ChatElement extends InterfaceElement {
             if (result instanceof Element) {
                 //todo catach l'element et l'envoyer au selectField pour envois de message by id
                 Debug.debug("element CATCH");
-                this.selectionField.doTask(new Pair<>("sendTo", ((Element) result).getId()));
+                this.selectionField.doTask(new Pair<>(EnumTask.SEND_TO, ((Element) result).getId()));
                 return result;
             }
             if (this.selectionField.isOnFocus(x, y) != null) {

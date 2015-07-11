@@ -46,6 +46,17 @@ public class StringTools {
         return result;
     }
 
+    public static String addCharacterEach(String value, String character, int number){
+        StringBuilder result = new StringBuilder(value);
+        int pos = result.length() - number;
+
+        while (pos > 0){
+            result.insert(pos, character);
+            pos -= number;
+        }
+        return result.toString();
+    }
+
     public static float charSizeX(){
         return 9.2f;
     }

@@ -3,8 +3,8 @@ package com.andres_k.components.graphicComponents.userInterface.overlay.windowOv
 import com.andres_k.components.gameComponents.animations.AnimatorOverlayData;
 import com.andres_k.components.graphicComponents.input.EnumInput;
 import com.andres_k.components.graphicComponents.input.InputData;
-import com.andres_k.components.graphicComponents.sounds.MusicController;
-import com.andres_k.components.graphicComponents.sounds.SoundController;
+import com.andres_k.components.soundComponents.MusicController;
+import com.andres_k.components.soundComponents.SoundController;
 import com.andres_k.components.graphicComponents.userInterface.elements.InterfaceElement;
 import com.andres_k.components.graphicComponents.userInterface.elements.generic.GenericElement;
 import com.andres_k.components.graphicComponents.userInterface.elements.table.TableAppearElement;

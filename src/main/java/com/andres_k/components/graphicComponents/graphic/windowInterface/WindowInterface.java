@@ -4,8 +4,8 @@ import com.andres_k.components.gameComponents.animations.AnimatorOverlayData;
 import com.andres_k.components.gameComponents.controllers.InterfaceController;
 import com.andres_k.components.graphicComponents.graphic.WindowBasedGame;
 import com.andres_k.components.graphicComponents.input.EnumInput;
-import com.andres_k.components.graphicComponents.sounds.EnumSound;
-import com.andres_k.components.graphicComponents.sounds.MusicController;
+import com.andres_k.components.soundComponents.EnumSound;
+import com.andres_k.components.soundComponents.MusicController;
 import com.andres_k.components.graphicComponents.userInterface.overlay.windowOverlay.InterfaceOverlay;
 import com.andres_k.components.taskComponent.GenericSendTask;
 import com.andres_k.utils.configs.GlobalVariable;
@@ -77,7 +77,7 @@ public class WindowInterface extends WindowBasedGame {
         this.container.setAlwaysRender(false);
         this.container.setVSync(false);
 
-        MusicController.loop(EnumSound.BACKGROUND);
+        MusicController.loop(EnumSound.BACKGROUND_HOME);
         this.overlay.enter();
         this.controller.enter();
         GlobalVariable.appGameContainer.setDisplayMode(WindowConfig.getW1SizeX(), WindowConfig.getW1SizeY(), false);
@@ -87,7 +87,7 @@ public class WindowInterface extends WindowBasedGame {
 
     @Override
     public void leave(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        MusicController.stop(EnumSound.BACKGROUND);
+        MusicController.stop(EnumSound.BACKGROUND_HOME);
         this.controller.leave();
         this.clean();
     }
