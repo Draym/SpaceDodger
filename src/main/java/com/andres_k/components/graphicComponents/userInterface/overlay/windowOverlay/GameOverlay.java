@@ -17,7 +17,8 @@ import com.andres_k.components.graphicComponents.userInterface.tools.elements.Im
 import com.andres_k.components.graphicComponents.userInterface.tools.elements.StringElement;
 import com.andres_k.components.graphicComponents.userInterface.tools.items.ColorRect;
 import com.andres_k.components.graphicComponents.userInterface.tools.items.StringTimer;
-import com.andres_k.components.networkComponents.messages.MessageChat;
+import com.andres_k.components.networkComponents.MessageModel;
+import com.andres_k.components.networkComponents.messages.MessageOverlayChat;
 import com.andres_k.components.taskComponent.EnumTargetTask;
 import com.andres_k.components.taskComponent.TaskFactory;
 import com.andres_k.utils.configs.WindowConfig;
@@ -192,6 +193,9 @@ public class GameOverlay extends Overlay {
                     this.overlayConfigs.setAvailableInput(received.getV1(), this.elements.get(received.getV1()).getReachable());
                 }
             }
+        } else if (arg instanceof MessageModel){
+            this.setChanged();
+            this.notifyObservers(TaskFactory.createTask(EnumTargetTask.GAME_OVERLAY, EnumTargetTask.GAME, arg));
         }
     }
 
@@ -222,7 +226,7 @@ public class GameOverlay extends Overlay {
                 }
 
                 // TODO: A ENVOYER AUX AUTRE JOUEURS
-                if (result instanceof MessageChat) {
+                if (result instanceof MessageOverlayChat) {
                     this.setChanged();
                     this.notifyObservers(TaskFactory.createTask(EnumTargetTask.GAME_OVERLAY, EnumTargetTask.UNKNOWN, result));
                     return true;

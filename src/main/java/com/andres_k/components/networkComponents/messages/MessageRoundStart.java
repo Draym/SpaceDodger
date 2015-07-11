@@ -9,12 +9,9 @@ import com.andres_k.components.networkComponents.MessageModel;
 public class MessageRoundStart extends MessageModel {
     private boolean started;
 
-    public MessageRoundStart(){
-    }
-
     public MessageRoundStart(String pseudo, String id, boolean started) {
-        this.pseudo = pseudo;
-        this.id = id;
+        super(pseudo, id);
+
         this.started = started;
     }
 

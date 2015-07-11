@@ -9,6 +9,7 @@ import com.andres_k.components.graphicComponents.input.EnumInput;
 import com.andres_k.components.graphicComponents.input.InputGame;
 import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverlayElement;
 import com.andres_k.components.networkComponents.messages.MessageGameNew;
+import com.andres_k.components.networkComponents.messages.MessageOverlayMenu;
 import com.andres_k.components.networkComponents.messages.MessageRoundEnd;
 import com.andres_k.components.networkComponents.messages.MessageRoundStart;
 import com.andres_k.components.taskComponent.EnumTargetTask;
@@ -100,9 +101,6 @@ public class GameController extends WindowController {
 
     @Override
     public void keyPressed(int key, char c) {
-        if (key == Input.KEY_ESCAPE){
-            this.running = !this.running;
-        }
         if (this.running) {
             EnumInput result = this.inputGame.checkInput(key, EnumInput.PRESSED);
             this.gameObjectController.event(EnumInput.KEY_PRESSED, result);
@@ -149,6 +147,8 @@ public class GameController extends WindowController {
                         GlobalVariable.gameSpeed = newSpeed;
                     }
                     this.stateWindow.enterState(EnumWindow.GAME.getValue());
+                } else if (received.getV3() instanceof MessageOverlayMenu){
+                    this.running = !((MessageOverlayMenu) received.getV3()).isActivated();
                 }
             }
         }

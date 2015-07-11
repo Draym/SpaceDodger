@@ -11,8 +11,11 @@ public class MessageRoundKill extends MessageModel {
     private String killerTeam;
     private String targetTeam;
 
-    public MessageRoundKill(){
+    public MessageRoundKill(String pseudo, String id) {
+        super(pseudo, id);
     }
+
+
 
     // GETTERS
 

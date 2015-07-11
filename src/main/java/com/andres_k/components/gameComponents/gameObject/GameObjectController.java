@@ -7,7 +7,6 @@ import com.andres_k.components.gameComponents.gameObject.obstacles.Stone;
 import com.andres_k.components.graphicComponents.input.EnumInput;
 import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.configs.WindowConfig;
-import com.andres_k.utils.tools.Debug;
 import com.andres_k.utils.tools.RandomTools;
 import org.newdawn.slick.Graphics;
 
@@ -84,7 +83,7 @@ public class GameObjectController {
                     this.popAnObstacle(EnumGameObject.STONE);
                 }
             }
-            Debug.debug("\n" + this.obstacles.size());
+         //   Debug.debug("\n" + this.obstacles.size());
             this.objectiveIncrement = (long) (10 + RandomTools.getInt((int) (50 / GlobalVariable.gameSpeed)) + (20 / GlobalVariable.gameSpeed));
         }
         for (int i = 0; i < this.players.size(); ++i) {

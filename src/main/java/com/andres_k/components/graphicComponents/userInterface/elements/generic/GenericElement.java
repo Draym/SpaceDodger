@@ -6,8 +6,9 @@ import com.andres_k.components.graphicComponents.userInterface.elements.Interfac
 import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverlayElement;
 import com.andres_k.components.graphicComponents.userInterface.tools.elements.Element;
 import com.andres_k.components.graphicComponents.userInterface.tools.items.ColorRect;
-import com.andres_k.components.networkComponents.messages.MessageChat;
 import com.andres_k.components.networkComponents.messages.MessageGameNew;
+import com.andres_k.components.networkComponents.messages.MessageOverlayChat;
+import com.andres_k.components.networkComponents.messages.MessageOverlayMenu;
 import com.andres_k.components.taskComponent.GenericSendTask;
 import com.andres_k.utils.configs.CurrentUser;
 import com.andres_k.utils.stockage.Pair;
@@ -59,7 +60,7 @@ public class GenericElement extends InterfaceElement {
                 if (received.getV1() < this.reachable.length) {
                     this.reachable[received.getV1()] = received.getV2();
                 }
-            }else if (((Pair) task).getV1() instanceof String) {
+            } else if (((Pair) task).getV1() instanceof String) {
                 Pair<String, Object> received = (Pair<String, Object>) task;
 
                 Debug.debug("GENERIC ELEMENT: " + task);
@@ -118,9 +119,15 @@ public class GenericElement extends InterfaceElement {
         if (key == Input.KEY_ESCAPE) {
             if (!this.isActivated() && this.canBeActivate.getV1() == true) {
                 this.activatedTimer.startTimer();
+                if (this.genericSendTask != null) {
+                    this.genericSendTask.sendTask(new MessageOverlayMenu("admin", "admin", true));
+                }
                 return true;
             } else if (this.canBeActivate.getV2() == true) {
                 this.activatedTimer.stopTimer();
+                if (this.genericSendTask != null) {
+                    this.genericSendTask.sendTask(new MessageOverlayMenu("admin", "admin", false));
+                }
             }
         } else {
             this.taskForAll(new Tuple<>("event", key, c));
@@ -248,7 +255,7 @@ public class GenericElement extends InterfaceElement {
             if (element.doTask(new Pair<>("check", "focus")) != null) {
                 element.doTask(new Pair<>("setFocus", false));
                 if (!element.toString().equals("")) {
-                    MessageChat request = new MessageChat(CurrentUser.getPseudo(), CurrentUser.getId(), true, element.toString());
+                    MessageOverlayChat request = new MessageOverlayChat(CurrentUser.getPseudo(), CurrentUser.getId(), true, element.toString());
                     element.doTask(new Pair<>("setCurrent", ""));
                     return request;
                 }

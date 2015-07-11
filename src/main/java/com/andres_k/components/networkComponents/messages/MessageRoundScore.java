@@ -11,12 +11,9 @@ public class MessageRoundScore extends MessageModel {
     private EnumGameObject object;
     private int score;
 
-    public MessageRoundScore(){
-    }
-
     public MessageRoundScore(String pseudo, String id, String teamId, EnumGameObject object, int score){
-        this.pseudo = pseudo;
-        this.id = id;
+        super(pseudo, id);
+
         this.teamId = teamId;
         this.object = object;
         this.score = score;

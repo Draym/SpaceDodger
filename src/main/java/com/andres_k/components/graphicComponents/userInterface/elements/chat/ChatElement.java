@@ -11,7 +11,7 @@ import com.andres_k.components.graphicComponents.userInterface.tools.items.Color
 import com.andres_k.components.graphicComponents.userInterface.tools.items.StringTimer;
 import com.andres_k.components.graphicComponents.userInterface.tools.listElements.ListElement;
 import com.andres_k.components.graphicComponents.userInterface.tools.listElements.StringListElement;
-import com.andres_k.components.networkComponents.messages.MessageChat;
+import com.andres_k.components.networkComponents.messages.MessageOverlayChat;
 import com.andres_k.utils.configs.CurrentUser;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.stockage.Tuple;
@@ -98,7 +98,7 @@ public class ChatElement extends InterfaceElement {
             if (this.selectionFocused()) {
                 this.setSelectionFocus(false);
                 if (!this.selectionField.toString().equals("")) {
-                    MessageChat request = new MessageChat(CurrentUser.getPseudo(), CurrentUser.getId(), true, this.selectionField.toString());
+                    MessageOverlayChat request = new MessageOverlayChat(CurrentUser.getPseudo(), CurrentUser.getId(), true, this.selectionField.toString());
                     this.selectionField.doTask(new Pair<>("setCurrent", ""));
                     return request;
                 }
@@ -150,9 +150,9 @@ public class ChatElement extends InterfaceElement {
 
     @Override
     public void doTask(Object task) {
-        if (task instanceof MessageChat) {
+        if (task instanceof MessageOverlayChat) {
             this.activatedTimer.setActivated(true);
-            this.addMessage((MessageChat) task);
+            this.addMessage((MessageOverlayChat) task);
             this.activatedTimer.startTimer();
         } else if (task instanceof Pair) {
             Pair<Integer, Boolean> received = (Pair<Integer, Boolean>) task;
@@ -162,7 +162,7 @@ public class ChatElement extends InterfaceElement {
         }
     }
 
-    public void addMessage(MessageChat message) {
+    public void addMessage(MessageOverlayChat message) {
         this.stringListElement.addToPrint(new Tuple<>(Color.black, this.getMessageToPrint(message.getPseudo(), message.getMessage()), message.getId()), Element.PositionInBody.LEFT_MID);
     }
 

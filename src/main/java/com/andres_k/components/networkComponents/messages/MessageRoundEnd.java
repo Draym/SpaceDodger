@@ -9,12 +9,9 @@ import com.andres_k.components.networkComponents.MessageModel;
 public class MessageRoundEnd extends MessageModel {
     private String winnerTeam;
 
-    public MessageRoundEnd(){
-    }
-
     public MessageRoundEnd(String pseudo, String id, String winnerTeam){
-        this.pseudo = pseudo;
-        this.id = id;
+        super(pseudo, id);
+
         this.winnerTeam = winnerTeam;
     }
 

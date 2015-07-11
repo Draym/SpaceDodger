@@ -5,16 +5,12 @@ import com.andres_k.components.networkComponents.MessageModel;
 /**
  * Created by andres_k on 08/07/2015.
  */
-public class MessageChat extends MessageModel {
+public class MessageOverlayChat extends MessageModel {
     private boolean all;
     private String message;
 
-    public MessageChat() {
-    }
-
-    public MessageChat(String pseudo, String id, boolean all, String message) {
-        this.pseudo = pseudo;
-        this.id = id;
+    public MessageOverlayChat(String pseudo, String id, boolean all, String message) {
+        super(pseudo, id);
         this.all = all;
         this.message = message;
     }

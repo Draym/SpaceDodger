@@ -100,7 +100,7 @@ public class WindowGame extends WindowBasedGame {
     @Override
     public void keyPressed(int key, char c) {
         boolean absorbed = this.overlay.event(key, c, EnumInput.PRESSED);
-        if (!absorbed || key == Input.KEY_ESCAPE) {
+        if (!absorbed) {
             this.controller.keyPressed(key, c);
         }
     }
@@ -108,7 +108,7 @@ public class WindowGame extends WindowBasedGame {
     @Override
     public void keyReleased(int key, char c) {
         boolean absorbed = this.overlay.event(key, c, EnumInput.RELEASED);
-        if (!absorbed || key == Input.KEY_ESCAPE) {
+        if (!absorbed) {
             this.controller.keyReleased(key, c);
         }
     }

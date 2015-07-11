@@ -14,8 +14,8 @@ public class MessageGameNew extends MessageModel {
     List<Object> objects;
 
     public MessageGameNew(String pseudo, String id, EnumOverlayElement from){
-        this.pseudo = pseudo;
-        this.id = id;
+        super(pseudo, id);
+
         this.from = from;
         this.objects = new ArrayList<>();
     }
