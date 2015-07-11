@@ -21,6 +21,7 @@ public class WindowInterface extends WindowBasedGame {
 
     private Animation background;
     private Image logo;
+    private long delta;
 
     public WindowInterface(int idWindow, GenericSendTask interfaceTask) throws JSONException, SlickException {
         this.idWindow = idWindow;
@@ -77,6 +78,8 @@ public class WindowInterface extends WindowBasedGame {
         this.container.setAlwaysRender(false);
         this.container.setVSync(false);
 
+        this.delta = 0;
+
         MusicController.loop(EnumSound.BACKGROUND_HOME);
         this.overlay.enter();
         this.controller.enter();
@@ -102,8 +105,13 @@ public class WindowInterface extends WindowBasedGame {
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
-        this.controller.updateWindow(gameContainer);
-        this.overlay.updateOverlay();
+        this.delta += i;
+
+        if (this.delta > 30) {
+            this.controller.updateWindow(gameContainer);
+            this.overlay.updateOverlay();
+            this.delta = 0;
+        }
     }
 
     @Override

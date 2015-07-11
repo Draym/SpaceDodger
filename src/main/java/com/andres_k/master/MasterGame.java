@@ -30,7 +30,7 @@ public class MasterGame implements Observer {
         SoundController.init();
         MusicController.init();
 
-        InputData.init(getClass().getClassLoader().getResource(Config.input));
+        InputData.init(Config.input);
         CurrentUser.init("player", "player", "ally");
         this.masterTask = new GenericSendTask();
         this.masterTask.addObserver(this);

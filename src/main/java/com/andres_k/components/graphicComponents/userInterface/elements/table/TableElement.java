@@ -10,7 +10,7 @@ import com.andres_k.components.graphicComponents.userInterface.tools.listElement
 import com.andres_k.components.graphicComponents.userInterface.tools.listElements.StringListElement;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.tools.ColorTools;
-import com.andres_k.utils.tools.Debug;
+import com.andres_k.utils.tools.ConsoleWrite;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Rectangle;
 
@@ -66,7 +66,7 @@ public class TableElement extends InterfaceElement {
         if (task instanceof Element) {
             this.addElement((Element) task);
         } else if (task instanceof Pair) {
-            Debug.debug("Table received: " + task);
+            ConsoleWrite.debug("Table received: " + task);
             if (((Pair) task).getV1() instanceof Integer) {
                 Pair<Integer, Boolean> received = (Pair<Integer, Boolean>) task;
                 if (received.getV1() < this.reachable.length) {
@@ -76,7 +76,7 @@ public class TableElement extends InterfaceElement {
                 Pair<EnumOverlayElement, Object> received = (Pair<EnumOverlayElement, Object>) task;
                 Element element = this.containsId(received.getV1().getValue());
 
-                Debug.debug("find element: " + element + "\n");
+                ConsoleWrite.debug("find element: " + element + "\n");
                 if (element != null) {
                     element.doTask(received.getV2());
                 }

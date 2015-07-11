@@ -9,7 +9,7 @@ import com.andres_k.components.taskComponent.EnumTask;
 import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.configs.WindowConfig;
 import com.andres_k.utils.stockage.Pair;
-import com.andres_k.utils.tools.Debug;
+import com.andres_k.utils.tools.ConsoleWrite;
 import org.newdawn.slick.Graphics;
 
 import java.util.List;
@@ -121,7 +121,7 @@ public abstract class GameObject {
     }
 
     public void getHit(GameObject enemy) {
-        Debug.debug("\nCURRENT LIFE [" + this.type + "] vs [" + enemy.type + "]: " + this.currentLife + " - " + enemy.getDamage() + " = " + (this.currentLife - enemy.getDamage()));
+        ConsoleWrite.debug("\nCURRENT LIFE [" + this.type + "] vs [" + enemy.type + "]: " + this.currentLife + " - " + enemy.getDamage() + " = " + (this.currentLife - enemy.getDamage()));
         this.currentLife -= enemy.getDamage();
         if (this.currentLife <= 0) {
             this.animator.setCurrent(EnumAnimation.EXPLODE);

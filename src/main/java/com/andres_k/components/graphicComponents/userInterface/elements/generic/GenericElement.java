@@ -14,7 +14,7 @@ import com.andres_k.components.taskComponent.GenericSendTask;
 import com.andres_k.utils.configs.CurrentUser;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.stockage.Tuple;
-import com.andres_k.utils.tools.Debug;
+import com.andres_k.utils.tools.ConsoleWrite;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 
@@ -64,7 +64,7 @@ public class GenericElement extends InterfaceElement {
             } else if (((Pair) task).getV1() instanceof String) {
                 Pair<String, Object> received = (Pair<String, Object>) task;
 
-                Debug.debug("GENERIC ELEMENT: " + task);
+                ConsoleWrite.debug("GENERIC ELEMENT: " + task);
                 if (!received.getV1().equals("")) {
                     for (Element element : this.elements) {
                         if (element.getId().contains(received.getV1())) {

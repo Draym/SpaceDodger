@@ -1,14 +1,14 @@
 package com.andres_k.components.gameComponents.gameObject;
 
 import com.andres_k.components.gameComponents.animations.AnimatorGameData;
-import com.andres_k.components.gameComponents.gameObject.obstacles.Asteroid;
-import com.andres_k.components.gameComponents.gameObject.obstacles.Barrier;
-import com.andres_k.components.gameComponents.gameObject.obstacles.SpaceShip;
-import com.andres_k.components.gameComponents.gameObject.obstacles.Stone;
+import com.andres_k.components.gameComponents.gameObject.objects.Asteroid;
+import com.andres_k.components.gameComponents.gameObject.objects.Barrier;
+import com.andres_k.components.gameComponents.gameObject.objects.SpaceShip;
+import com.andres_k.components.gameComponents.gameObject.objects.Stone;
 import com.andres_k.components.graphicComponents.input.EnumInput;
 import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.configs.WindowConfig;
-import com.andres_k.utils.tools.Debug;
+import com.andres_k.utils.tools.ConsoleWrite;
 import com.andres_k.utils.tools.RandomTools;
 import com.andres_k.utils.tools.StringTools;
 import org.newdawn.slick.Graphics;
@@ -86,7 +86,7 @@ public class GameObjectController {
                     this.popAnObstacle(EnumGameObject.STONE);
                 }
             }
- //           Debug.debug("\n" + this.obstacles.size());
+            ConsoleWrite.debug("objects: " + this.obstacles.size());
             this.objectiveIncrement = (long) (10 + RandomTools.getInt((int) (50 / GlobalVariable.gameSpeed)) + (20 / GlobalVariable.gameSpeed));
         }
         for (int i = 0; i < this.players.size(); ++i) {
@@ -136,7 +136,7 @@ public class GameObjectController {
         String score = String.valueOf(player.getScore());
 
         score = StringTools.addCharacterEach(score, " ", 3);
-        Debug.debug(player.getId() + " : '" + score + "' pts.");
+        ConsoleWrite.write("\n" + player.getId() + " : '" + score + "' pts.");
     }
 
     // ADD

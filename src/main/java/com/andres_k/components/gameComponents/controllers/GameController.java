@@ -3,7 +3,7 @@ package com.andres_k.components.gameComponents.controllers;
 import com.andres_k.components.gameComponents.animations.AnimatorGameData;
 import com.andres_k.components.gameComponents.gameObject.EnumGameObject;
 import com.andres_k.components.gameComponents.gameObject.GameObjectController;
-import com.andres_k.components.gameComponents.gameObject.obstacles.SpaceShip;
+import com.andres_k.components.gameComponents.gameObject.objects.SpaceShip;
 import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.components.graphicComponents.input.EnumInput;
 import com.andres_k.components.graphicComponents.input.InputGame;
@@ -95,7 +95,7 @@ public class GameController extends WindowController {
                 this.notifyObservers(TaskFactory.createTask(EnumTargetTask.GAME, EnumTargetTask.GAME_OVERLAY, new Pair<>(EnumOverlayElement.TABLE_ROUND, new MessageRoundEnd("admin", "admin", "enemy"))));
                 this.running = false;
             }
-            GlobalVariable.gameSpeed += 0.0001;
+            GlobalVariable.gameSpeed += 0.001;
         }
     }
 
@@ -109,7 +109,7 @@ public class GameController extends WindowController {
 
     @Override
     public void keyReleased(int key, char c) {
-        if (!this.running && key == Input.KEY_ENTER) {
+        if ((!this.running && this.gameObjectController.getNumberPlayers() == 0) && key == Input.KEY_ENTER) {
             this.leave();
             this.enter();
         }

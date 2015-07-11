@@ -21,6 +21,7 @@ import org.newdawn.slick.state.StateBasedGame;
 public class WindowGame extends WindowBasedGame {
 
     private BackgroundSliding background;
+    private long delta;
 
     public WindowGame(int idWindow, GenericSendTask interfaceTask) throws JSONException {
         this.idWindow = idWindow;
@@ -70,9 +71,10 @@ public class WindowGame extends WindowBasedGame {
     public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         this.container.setTargetFrameRate(60);
         this.container.setShowFPS(false);
-        this.container.setAlwaysRender(false);
-        this.container.setVSync(false);
+        this.container.setAlwaysRender(true);
+        this.container.setVSync(true);
 
+        this.delta = 0;
         MusicController.loop(EnumSound.BACKGROUND_GAME);
         this.overlay.enter();
         this.controller.enter();
@@ -96,9 +98,14 @@ public class WindowGame extends WindowBasedGame {
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
-        this.background.update();;
-        this.controller.updateWindow(gameContainer);
-        this.overlay.updateOverlay();
+        this.delta += i;
+
+        if (this.delta > 30) {
+            this.background.update();
+            this.controller.updateWindow(gameContainer);
+            this.overlay.updateOverlay();
+            this.delta = 0;
+        }
     }
 
     @Override
