@@ -16,7 +16,7 @@ import java.util.List;
 public class BackgroundSliding {
 
     private List<Image> images;
-    private List<Pair<Float, Float>> positions;
+    private List<Pair<Integer, Integer>> positions;
     private float backgroundSizeY;
 
     public BackgroundSliding(String path) throws SlickException {
@@ -28,14 +28,14 @@ public class BackgroundSliding {
         this.backgroundSizeY = background.getHeight();
         int number = (int) (WindowConfig.w2_sY / this.backgroundSizeY) + 2;
 
-        float x = 0;
-        float y = WindowConfig.w2_sY - this.backgroundSizeY;
+        int x = 0;
+        int y = (int)(WindowConfig.w2_sY - this.backgroundSizeY);
 
         y = (y < 0 ? 0 : y);
          for (int i = 0; i < number; ++i) {
             this.images.add(background.copy());
             this.positions.add(new Pair<>(x, y));
-            y -= this.backgroundSizeY - 1;
+            y -= this.backgroundSizeY;
         }
     }
 
@@ -46,15 +46,15 @@ public class BackgroundSliding {
     }
 
     public void update() {
-        for (Pair<Float, Float> pos : this.positions){
-            pos.setV2(pos.getV2() + (GlobalVariable.gameSpeed / 2));
+        for (Pair<Integer, Integer> pos : this.positions){
+            pos.setV2((int)Math.ceil(((float)pos.getV2() + (GlobalVariable.gameSpeed / 2))));
         }
         for (int i = 0; i < this.positions.size(); ++i){
             if (this.positions.get(i).getV2() > WindowConfig.w2_sY){
                 int posPrev = i - 1;
                 posPrev = (posPrev < 0 ? this.positions.size() - 1 : posPrev);
 
-                this.positions.get(i).setV2(this.positions.get(posPrev).getV2() - this.backgroundSizeY);
+                this.positions.get(i).setV2((int)Math.ceil((float)this.positions.get(posPrev).getV2() - this.backgroundSizeY));
             }
         }
     }
