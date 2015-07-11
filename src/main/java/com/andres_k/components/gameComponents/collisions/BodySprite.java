@@ -6,6 +6,7 @@ import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.geom.Rectangle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +32,7 @@ public class BodySprite {
 
     public void draw(Graphics g, float posX, float posY) {
         g.setColor(Color.red);
-        g.drawRect(posX - this.center.getV1(), posY - this.center.getV2(), this.sizes.getV1(), this.sizes.getV2());
+        g.draw(this.getBody(posX, posY));
         for (BodyRect body : this.bodies) {
             body.draw(g, posX, posY);
         }
@@ -40,10 +41,17 @@ public class BodySprite {
     public void update() {
     }
 
+    // GETTERS
     public List<BodyRect> getBodies(){
         return this.bodies;
 
     }
+
+    public Rectangle getBody(float posX, float posY){
+        return new Rectangle(posX - this.center.getV1(), posY - this.center.getV2(), this.sizes.getV1(), this.sizes.getV2());
+    }
+
+
     @Override
     public String toString() {
         JSONObject object = new JSONObject();

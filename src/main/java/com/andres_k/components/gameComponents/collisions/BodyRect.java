@@ -29,14 +29,14 @@ public class BodyRect {
         } else if (this.type == EnumGameObject.BLOCK_BODY) {
             g.setColor(Color.green);
         }
-        g.drawRect(posX + this.body.getMinX(), posY + this.body.getMinY(), this.body.getWidth(), this.body.getHeight());
+        g.draw(this.getBody(posX, posY));
     }
 
 
     // GETTERS
 
-    public Rectangle getBody() {
-        return this.body;
+    public Rectangle getBody(float posX, float posY) {
+        return new Rectangle(posX + this.body.getMinX(), posY + this.body.getMinY(), this.body.getWidth(), this.body.getHeight());
     }
 
     public EnumGameObject getType() {

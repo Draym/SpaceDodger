@@ -6,6 +6,10 @@ package com.andres_k.components.graphicComponents.input;
 public enum EnumInput {
     NOTHING("NOTHING"),
     RELEASED("RELEASED"), PRESSED("PRESSED"),
+    KEY_RELEASED("KEY"+RELEASED.value), KEY_PRESSED("KEY" + PRESSED.value),
+    MOUSE_RELEASED("MOUSE"+RELEASED.value), MOUSE_PRESSED("MOUSE" + PRESSED.value),
+
+
     OVERLAY_1("OVERLAY_1"), OVERLAY_2("OVERLAY_2"),
     MOVE_UP("MOVE_UP"), MOVE_DOWN("MOVE_DOWN"),
     MOVE_LEFT("MOVE_LEFT"), MOVE_RIGHT("MOVE_RIGHT"),

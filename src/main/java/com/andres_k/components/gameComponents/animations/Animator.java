@@ -2,6 +2,7 @@ package com.andres_k.components.gameComponents.animations;
 
 import com.andres_k.components.gameComponents.collisions.BodyAnimation;
 import com.andres_k.components.gameComponents.collisions.BodyRect;
+import com.andres_k.components.gameComponents.collisions.BodySprite;
 import com.andres_k.components.graphicComponents.userInterface.tools.items.ActivatedTimer;
 import com.andres_k.utils.stockage.Pair;
 import org.codehaus.jettison.json.JSONException;
@@ -150,6 +151,13 @@ public class Animator implements Observer {
     public BodyAnimation currentBodyAnimation() {
         if (this.collisions.containsKey(this.current)) {
             return this.collisions.get(this.current).get(this.index);
+        }
+        return null;
+    }
+
+    public BodySprite currentBodySprite() {
+        if (this.collisions.containsKey(this.current)) {
+            return currentBodyAnimation().getCurrentBody(this.currentFrame());
         }
         return null;
     }

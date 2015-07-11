@@ -8,6 +8,7 @@ import com.andres_k.components.graphicComponents.sounds.SoundController;
 import com.andres_k.components.taskComponent.EnumTargetTask;
 import com.andres_k.components.taskComponent.GenericSendTask;
 import com.andres_k.utils.configs.Config;
+import com.andres_k.utils.configs.CurrentUser;
 import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.configs.WindowConfig;
 import com.andres_k.utils.stockage.Tuple;
@@ -29,7 +30,7 @@ public class MasterGame implements Observer {
         SoundController.init();
         MusicController.init();
         InputData.init(Config.input);
-
+        CurrentUser.init("player", "player", "ally");
         this.masterTask = new GenericSendTask();
         this.masterTask.addObserver(this);
         this.windows = new Windows("Space Dodger", this.masterTask);

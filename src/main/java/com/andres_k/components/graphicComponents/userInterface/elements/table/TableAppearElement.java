@@ -5,7 +5,6 @@ import com.andres_k.components.graphicComponents.userInterface.tools.elements.El
 import com.andres_k.components.graphicComponents.userInterface.tools.items.ColorRect;
 import com.andres_k.components.networkComponents.messages.MessageRoundEnd;
 import com.andres_k.components.networkComponents.messages.MessageRoundStart;
-import com.andres_k.utils.configs.CurrentUser;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.tools.Debug;
 
@@ -44,12 +43,10 @@ public class TableAppearElement extends TableElement {
             if (task instanceof MessageRoundEnd) {
                 MessageRoundEnd message = (MessageRoundEnd) task;
                 this.sendTaskToAll("start");
-                if (CurrentUser.isInGame()) {
-                    if (CurrentUser.getIdTeam().equals(message.getWinnerTeam())) {
-                        this.sendTaskToAll(new Pair<>("newCurrentIndex", 0));
-                    } else {
-                        this.sendTaskToAll(new Pair<>("newCurrentIndex", 1));
-                    }
+                if (message.getWinnerTeam().equals("ally")) {
+                    this.sendTaskToAll(new Pair<>("newCurrentIndex", 0));
+                } else {
+                    this.sendTaskToAll(new Pair<>("newCurrentIndex", 1));
                 }
                 this.activatedTimer.startTimer();
             } else if (task instanceof MessageRoundStart) {

@@ -9,11 +9,11 @@ public class CurrentUser {
     private static String idTeam;
     private static boolean inGame;
 
-    public CurrentUser(String pseudo, String id, String idTeam) {
-        this.pseudo = pseudo;
-        this.id = id;
-        this.idTeam = idTeam;
-        this.inGame = false;
+    public static void init(String newPseudo, String newId, String newIdTeam) {
+        pseudo = newPseudo;
+        id = newId;
+        idTeam = newIdTeam;
+        inGame = false;
     }
 
     // GETTERS

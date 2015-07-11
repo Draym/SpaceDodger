@@ -2,96 +2,114 @@ package com.andres_k.components.gameComponents.controllers;
 
 import com.andres_k.components.gameComponents.animations.AnimatorGameData;
 import com.andres_k.components.gameComponents.gameObject.EnumGameObject;
-import com.andres_k.components.gameComponents.gameObject.GameObject;
-import com.andres_k.components.gameComponents.gameObject.gameObjects.obstacles.ObstaclesController;
-import com.andres_k.components.gameComponents.gameObject.gameObjects.player.SpaceShip;
+import com.andres_k.components.gameComponents.gameObject.GameObjectController;
+import com.andres_k.components.gameComponents.gameObject.player.SpaceShip;
 import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.components.graphicComponents.input.EnumInput;
 import com.andres_k.components.graphicComponents.input.InputGame;
 import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverlayElement;
 import com.andres_k.components.networkComponents.messages.MessageGameNew;
+import com.andres_k.components.networkComponents.messages.MessageRoundEnd;
+import com.andres_k.components.networkComponents.messages.MessageRoundStart;
 import com.andres_k.components.taskComponent.EnumTargetTask;
+import com.andres_k.components.taskComponent.TaskFactory;
 import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.configs.WindowConfig;
+import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.stockage.Tuple;
 import com.andres_k.utils.tools.RandomTools;
 import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Observable;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by andres_k on 08/07/2015.
  */
 public class GameController extends WindowController {
     private AnimatorGameData animatorGameData;
-    private List<GameObject> players;
-    private ObstaclesController obstacles;
+    private GameObjectController gameObjectController;
     private InputGame inputGame;
+    private boolean running;
+    private Integer currentPlayer;
 
     public GameController() throws JSONException {
         this.animatorGameData = new AnimatorGameData();
 
-        this.players = new ArrayList<>();
         this.inputGame = new InputGame();
-        this.obstacles = new ObstaclesController();
+        this.gameObjectController = new GameObjectController();
     }
 
     @Override
     public void enter() {
-        this.obstacles.initWorld();
+        this.gameObjectController.initWorld();
+
+        this.createPlayerForGame();
+        this.setChanged();
+        this.notifyObservers(TaskFactory.createTask(EnumTargetTask.GAME, EnumTargetTask.GAME_OVERLAY, new Pair<>(EnumOverlayElement.TABLE_ROUND, new MessageRoundStart("admin", "admin", true))));
+
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                setChanged();
+                notifyObservers(TaskFactory.createTask(EnumTargetTask.GAME, EnumTargetTask.GAME_OVERLAY, new Pair<>(EnumOverlayElement.TABLE_ROUND, new MessageRoundStart("admin", "admin", false))));
+                running = true;
+            }
+        }, 4000);
     }
 
     @Override
     public void leave() {
-        for (GameObject player : this.players){
-            player.clear();
-        }
-        this.players.clear();
-        this.obstacles.leave();
+        this.gameObjectController.leave();
     }
 
     @Override
     public void init() throws SlickException, JSONException {
         this.animatorGameData.init();
-        this.obstacles.init(this.animatorGameData);
+        this.gameObjectController.init(this.animatorGameData);
     }
 
     @Override
     public void renderWindow(Graphics g) {
-        for (GameObject player : this.players) {
-            player.draw(g);
-        }
-        this.obstacles.draw(g);
+        this.gameObjectController.draw(g);
     }
 
     @Override
     public void updateWindow(GameContainer gameContainer) {
-        for (GameObject player : this.players) {
-            player.update();
+        if (this.running) {
+            this.gameObjectController.update();
+            if (this.gameObjectController.getNumberPlayers() == 0) {
+                this.setChanged();
+                this.notifyObservers(TaskFactory.createTask(EnumTargetTask.GAME, EnumTargetTask.GAME_OVERLAY, new Pair<>(EnumOverlayElement.TABLE_ROUND, new MessageRoundEnd("admin", "admin", "enemy"))));
+                this.running = false;
+            }
         }
-        this.obstacles.update();
     }
 
     @Override
     public void keyPressed(int key, char c) {
-        EnumInput result = this.inputGame.checkInput(key, EnumInput.PRESSED);
-
-        if (result.getIndex() >= 0 && result.getIndex() < this.players.size()){
-            this.players.get(result.getIndex()).eventPressed(result);
+        if (this.running) {
+            EnumInput result = this.inputGame.checkInput(key, EnumInput.PRESSED);
+            this.gameObjectController.event(EnumInput.KEY_PRESSED, result);
         }
     }
 
     @Override
     public void keyReleased(int key, char c) {
-        EnumInput result = this.inputGame.checkInput(key, EnumInput.RELEASED);
+        if (!this.running && key == Input.KEY_ENTER) {
+            this.leave();
+            this.enter();
+        }
 
-        if (result.getIndex() >= 0 && result.getIndex() < this.players.size()){
-            this.players.get(result.getIndex()).eventReleased(result);
+        if (this.running) {
+            EnumInput result = this.inputGame.checkInput(key, EnumInput.RELEASED);
+            this.gameObjectController.event(EnumInput.KEY_RELEASED, result);
         }
     }
 
@@ -114,14 +132,10 @@ public class GameController extends WindowController {
                     if (received.getV3() == EnumOverlayElement.EXIT) {
                         this.window.quit();
                     }
-                } else if (received.getV3() instanceof MessageGameNew){
-                    int nbr = Integer.valueOf((String) ((MessageGameNew) received.getV3()).getObjects().get(0));
-                    float newSpeed = Float.valueOf((String)((MessageGameNew) received.getV3()).getObjects().get(1));
+                } else if (received.getV3() instanceof MessageGameNew) {
+                    this.currentPlayer = Integer.valueOf((String) ((MessageGameNew) received.getV3()).getObjects().get(0));
+                    float newSpeed = Float.valueOf((String) ((MessageGameNew) received.getV3()).getObjects().get(1));
 
-                    for (int i = 0; i < nbr && i < 2; ++i){
-                        int randomX = RandomTools.getInt(WindowConfig.getW2SizeX() - 200) + 100;
-                        this.players.add(new SpaceShip(this.animatorGameData.getAnimator(EnumGameObject.SPACESHIP), randomX, WindowConfig.w2_sY - 100));
-                    }
                     if (newSpeed >= 1) {
                         GlobalVariable.gameSpeed = newSpeed;
                     }
@@ -129,5 +143,13 @@ public class GameController extends WindowController {
                 }
             }
         }
+    }
+
+    public void createPlayerForGame(){
+        for (int i = 0; i < this.currentPlayer && i < 2; ++i) {
+            int randomX = RandomTools.getInt(WindowConfig.getW2SizeX() - 200) + 100;
+            this.gameObjectController.addPlayer(new SpaceShip(this.animatorGameData.getAnimator(EnumGameObject.SPACESHIP), "player" + String.valueOf(this.gameObjectController.getNumberPlayers()), randomX, WindowConfig.w2_sY - 100));
+        }
+
     }
 }

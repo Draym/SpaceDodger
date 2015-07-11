@@ -47,7 +47,7 @@ public enum EnumOverlayElement {
     SCORE("score"),
 
     // roundAnimator
-    NEW_GAME("newGame"), END_GAME("endGame"), TIMER("stat"),
+    NEW_GAME("newGame"), END_GAME("endGame"), TIMER("stat"), NEW_ROUND("newRound"),
 
     // menuAnimator
     EXIT("exit"), SETTINGS("settings"), CONTROLS("controls"), SCREEN("screen"), NEW("new"),

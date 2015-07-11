@@ -1,9 +1,15 @@
 package com.andres_k.components.gameComponents.gameObject;
 
 import com.andres_k.components.gameComponents.animations.Animator;
+import com.andres_k.components.gameComponents.animations.EnumAnimation;
+import com.andres_k.components.gameComponents.collisions.BodyRect;
+import com.andres_k.components.gameComponents.collisions.BodySprite;
 import com.andres_k.components.graphicComponents.input.EnumInput;
 import com.andres_k.utils.stockage.Pair;
+import com.andres_k.utils.tools.Debug;
 import org.newdawn.slick.Graphics;
+
+import java.util.List;
 
 /**
  * Created by andres_k on 10/07/2015.
@@ -12,17 +18,19 @@ public abstract class GameObject {
     protected Animator animator;
     protected Pair<Float, Float> positions;
     protected Pair<Float, Float> moveTo;
+    protected String id;
 
     protected boolean move;
     protected float maxLife;
     protected float currentLife;
     protected float damage;
 
-    protected GameObject(Animator animator, float posX, float posY, float life, float damage) {
+    protected GameObject(Animator animator, String id, float posX, float posY, float life, float damage) {
         this.positions = new Pair<>(posX, posY);
         this.moveTo = new Pair<>(0f, 0f);
         this.move = false;
 
+        this.id = id;
         this.animator = animator;
         this.maxLife = life;
         this.currentLife = life;
@@ -46,6 +54,49 @@ public abstract class GameObject {
         }
     }
 
+    public Pair<Float, Float> predictMove() {
+        if (this.move) {
+            return new Pair<>(this.positions.getV1() + this.moveTo.getV1(), this.positions.getV2() + this.moveTo.getV2());
+        } else {
+            return new Pair<>(this.positions.getV1(), this.positions.getV2());
+        }
+    }
+
+    public void checkCollisionWith(GameObject enemy) {
+        Pair<Float, Float> tmpPos = predictMove();
+
+        BodySprite enemyBody = enemy.getBody();
+        BodySprite myBody = this.getBody();
+
+        if (myBody.getBody(tmpPos.getV1(), tmpPos.getV2()).intersects(enemyBody.getBody(enemy.getPosX(), enemy.getPosY()))) {
+            List<BodyRect> enemyBodies = enemyBody.getBodies();
+            List<BodyRect> myBodies = myBody.getBodies();
+
+            for (BodyRect mine : myBodies) {
+                for (BodyRect his : enemyBodies) {
+                    if (mine.getBody(tmpPos.getV1(), tmpPos.getV2()).intersects(his.getBody(enemy.getPosX(), enemy.getPosY()))) {
+                        if (mine.getType() == EnumGameObject.ATTACK_BODY && his.getType() == EnumGameObject.DEFENSE_BODY) {
+                            enemy.getHit(this);
+                        } else if (mine.getType() == EnumGameObject.DEFENSE_BODY && his.getType() == EnumGameObject.ATTACK_BODY) {
+                            this.getHit(enemy);
+                        } else {
+                            this.move = false;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public void getHit(GameObject enemy){
+        this.currentLife -= enemy.getDamage();
+        if (this.currentLife <= 0){
+            this.animator.setCurrent(EnumAnimation.EXPLODE);
+        } else {
+            this.animator.nextCurrentIndex();
+        }
+    }
+
     // GETTERS
 
     public boolean isMove() {
@@ -64,6 +115,10 @@ public abstract class GameObject {
         return this.damage;
     }
 
+    public BodySprite getBody() {
+        return this.animator.currentBodySprite();
+    }
+
     public float graphicalX() {
         return this.positions.getV1() - (this.animator.currentAnimation().getWidth() / 2);
     }
@@ -78,6 +133,14 @@ public abstract class GameObject {
 
     public float getPosY() {
         return this.positions.getV2();
+    }
+
+    public boolean isNeedDelete() {
+        return this.animator.isDeleted();
+    }
+
+    public String getId() {
+        return this.id;
     }
 
     // SETTERS

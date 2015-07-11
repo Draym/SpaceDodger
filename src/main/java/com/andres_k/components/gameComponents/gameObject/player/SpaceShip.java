@@ -1,4 +1,4 @@
-package com.andres_k.components.gameComponents.gameObject.gameObjects.player;
+package com.andres_k.components.gameComponents.gameObject.player;
 
 import com.andres_k.components.gameComponents.animations.Animator;
 import com.andres_k.components.gameComponents.animations.EnumAnimation;
@@ -13,8 +13,8 @@ import org.newdawn.slick.Graphics;
 public class SpaceShip extends GameObject {
     private EnumInput current;
 
-    public SpaceShip(Animator animator, float x, float y) {
-        super(animator, x, y, 1, 0);
+    public SpaceShip(Animator animator, String id, float x, float y) {
+        super(animator, id, x, y, 1, 0);
     }
 
     @Override
@@ -30,7 +30,6 @@ public class SpaceShip extends GameObject {
 
     @Override
     public void update() {
-        this.move();
     }
 
     @Override

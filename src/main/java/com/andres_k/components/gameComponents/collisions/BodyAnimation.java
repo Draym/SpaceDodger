@@ -37,9 +37,18 @@ public class BodyAnimation {
         }
     }
 
+    // GETTERS
+
     public List<BodyRect> getCurrentCollisions(int currentFrame){
         if (this.bodies.size() > currentFrame){
             return this.bodies.get(currentFrame).getBodies();
+        }
+        return null;
+    }
+
+    public BodySprite getCurrentBody(int currentFrame){
+        if (this.bodies.size() > currentFrame){
+            return this.bodies.get(currentFrame);
         }
         return null;
     }

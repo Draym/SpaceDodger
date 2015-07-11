@@ -1,4 +1,4 @@
-package com.andres_k.components.gameComponents.gameObject.gameObjects.obstacles;
+package com.andres_k.components.gameComponents.gameObject.obstacles;
 
 import com.andres_k.components.gameComponents.animations.Animator;
 import com.andres_k.components.gameComponents.gameObject.GameObject;
@@ -11,8 +11,8 @@ import org.newdawn.slick.Graphics;
  */
 public class Obstacle extends GameObject {
 
-    public Obstacle(Animator animator, float posX, float posY, float life, float damage) {
-        super(animator, posX, posY, life, damage);
+    public Obstacle(Animator animator, String id, float posX, float posY, float life, float damage) {
+        super(animator, id, posX, posY, life, damage);
         Debug.debug("add Obstacle: " + posX + ", " + posY);
     }
 

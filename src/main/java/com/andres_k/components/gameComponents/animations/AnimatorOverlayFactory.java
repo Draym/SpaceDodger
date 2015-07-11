@@ -37,13 +37,18 @@ public class AnimatorOverlayFactory extends AnimatorFactory {
             animator.addAnimation(EnumAnimation.BASIC, animation2);
         } else if (index == EnumSprites.TIMER) {
             Animation animation = new Animation();
-            for (int i = 4; i > 0; --i) {
+            for (int i = 3; i > 0; --i) {
                 Image img = new Image("image/overlay/roundCounter" + String.valueOf(i) + ".png");
-                animation.addFrame(img, 1000);
+                animation.addFrame(img, 600);
             }
             Image img = new Image("image/overlay/roundGo.png");
             animation.addFrame(img, 1000);
             animation.setLooping(false);
+            animator.addAnimation(EnumAnimation.BASIC, animation);
+        } else if (index == EnumSprites.NEW_ROUND) {
+            Animation animation = new Animation();
+            Image img = new Image("image/overlay/newRound.png");
+            animation.addFrame(img, 150);
             animator.addAnimation(EnumAnimation.BASIC, animation);
         }
         return animator;
