@@ -25,8 +25,9 @@ public abstract class GameObject {
     protected float maxLife;
     protected float currentLife;
     protected float damage;
+    protected float speed;
 
-    protected GameObject(Animator animator, String id, float posX, float posY, float life, float damage) {
+    protected GameObject(Animator animator, String id, float posX, float posY, float life, float damage, float speed) {
         this.positions = new Pair<>(posX, posY);
         this.moveTo = new Pair<>(0f, 0f);
         this.move = false;
@@ -36,6 +37,7 @@ public abstract class GameObject {
         this.maxLife = life;
         this.currentLife = life;
         this.damage = damage;
+        this.speed = speed;
     }
 
     public abstract void clear();
@@ -74,22 +76,24 @@ public abstract class GameObject {
     public void checkCollisionWith(GameObject enemy) {
         Pair<Float, Float> tmpPos = predictMove();
 
-        BodySprite enemyBody = enemy.getBody();
-        BodySprite myBody = this.getBody();
+        if (this.animator.getCurrentAnimation() != EnumAnimation.EXPLODE && enemy.animator.getCurrentAnimation() != EnumAnimation.EXPLODE) {
+            BodySprite enemyBody = enemy.getBody();
+            BodySprite myBody = this.getBody();
 
-        if (myBody.getBody(tmpPos.getV1(), tmpPos.getV2()).intersects(enemyBody.getBody(enemy.getPosX(), enemy.getPosY()))) {
-            List<BodyRect> enemyBodies = enemyBody.getBodies();
-            List<BodyRect> myBodies = myBody.getBodies();
+            if (myBody.getBody(tmpPos.getV1(), tmpPos.getV2()).intersects(enemyBody.getBody(enemy.getPosX(), enemy.getPosY()))) {
+                List<BodyRect> enemyBodies = enemyBody.getBodies();
+                List<BodyRect> myBodies = myBody.getBodies();
 
-            for (BodyRect mine : myBodies) {
-                for (BodyRect his : enemyBodies) {
-                    if (mine.getBody(tmpPos.getV1(), tmpPos.getV2()).intersects(his.getBody(enemy.getPosX(), enemy.getPosY()))) {
-                        if (mine.getType() == EnumGameObject.ATTACK_BODY && his.getType() == EnumGameObject.DEFENSE_BODY) {
-                            enemy.getHit(this);
-                        } else if (mine.getType() == EnumGameObject.DEFENSE_BODY && his.getType() == EnumGameObject.ATTACK_BODY) {
-                            this.getHit(enemy);
-                        } else if (mine.getType() != EnumGameObject.ATTACK_BODY && his.getType() != EnumGameObject.ATTACK_BODY) {
-                            this.move = false;
+                for (BodyRect mine : myBodies) {
+                    for (BodyRect his : enemyBodies) {
+                        if (mine.getBody(tmpPos.getV1(), tmpPos.getV2()).intersects(his.getBody(enemy.getPosX(), enemy.getPosY()))) {
+                            if (mine.getType() == EnumGameObject.ATTACK_BODY && his.getType() == EnumGameObject.DEFENSE_BODY) {
+                                enemy.getHit(this);
+                            } else if (mine.getType() == EnumGameObject.DEFENSE_BODY && his.getType() == EnumGameObject.ATTACK_BODY) {
+                                this.getHit(enemy);
+                            } else if (mine.getType() != EnumGameObject.ATTACK_BODY && his.getType() != EnumGameObject.ATTACK_BODY) {
+                                this.move = false;
+                            }
                         }
                     }
                 }
@@ -106,8 +110,8 @@ public abstract class GameObject {
         }
     }
 
-    public float calculateWithSpeed(float number) {
-        return number + (GlobalVariable.gameSpeed * 0.8f);
+    public float calculateWithSpeed() {
+        return this.speed + (GlobalVariable.gameSpeed * 0.8f);
     }
 
     // GETTERS

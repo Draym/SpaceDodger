@@ -9,13 +9,13 @@ import com.andres_k.utils.configs.WindowConfig;
  */
 public class Border extends Obstacle {
     public Border(Animator animator, String id, float posX, float posY) {
-        super(animator, id, posX, posY, 1, 100);
+        super(animator, id, posX, posY, 1, 100, 0);
         this.move = true;
     }
 
     @Override
     public void update() {
-        this.moveTo.setV2(this.calculateWithSpeed(0));
+        this.moveTo.setV2(this.calculateWithSpeed());
         this.move();
         if (this.getPosY() - 450 > WindowConfig.w2_sY){
             this.positions.setV2(-450f);
@@ -23,7 +23,7 @@ public class Border extends Obstacle {
     }
 
     @Override
-    public float calculateWithSpeed(float number) {
+    public float calculateWithSpeed() {
         return GlobalVariable.gameSpeed / 3;
     }
 

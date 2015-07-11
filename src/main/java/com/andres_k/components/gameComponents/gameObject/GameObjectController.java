@@ -3,6 +3,7 @@ package com.andres_k.components.gameComponents.gameObject;
 import com.andres_k.components.gameComponents.animations.AnimatorGameData;
 import com.andres_k.components.gameComponents.gameObject.obstacles.Asteroid;
 import com.andres_k.components.gameComponents.gameObject.obstacles.Border;
+import com.andres_k.components.gameComponents.gameObject.obstacles.Stone;
 import com.andres_k.components.graphicComponents.input.EnumInput;
 import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.configs.WindowConfig;
@@ -75,8 +76,12 @@ public class GameObjectController {
 
         if (this.updateIncrement == this.objectiveIncrement) {
             this.updateIncrement = 0;
-            for (int i = 0; i < Math.floor(GlobalVariable.gameSpeed); ++i) {
-                this.popAnObstacle(EnumGameObject.ASTEROID);
+            for (int i = 0; i < Math.floor(GlobalVariable.gameSpeed) && i < 10; ++i) {
+                if (RandomTools.getBoolean()) {
+                    this.popAnObstacle(EnumGameObject.ASTEROID);
+                } else {
+                    this.popAnObstacle(EnumGameObject.STONE);
+                }
             }
             this.objectiveIncrement = (long) (10 + RandomTools.getInt((int) (50 / GlobalVariable.gameSpeed)) + (20 / GlobalVariable.gameSpeed));
         }
@@ -130,10 +135,12 @@ public class GameObjectController {
     public void popAnObstacle(EnumGameObject type) {
 
         float x = RandomTools.getInt(500) + 100;
-        float y =  - (RandomTools.getInt(200) + 105);
+        float y = -(RandomTools.getInt(200) + 105);
 
-        if (type == EnumGameObject.ASTEROID){
+        if (type == EnumGameObject.ASTEROID) {
             this.obstacles.add(new Asteroid(this.animatorGameData.getAnimator(EnumGameObject.ASTEROID), UUID.randomUUID().toString(), x, y));
+        } else if (type == EnumGameObject.STONE) {
+            this.obstacles.add(new Stone(this.animatorGameData.getAnimator(EnumGameObject.STONE), UUID.randomUUID().toString(), x, y));
         }
     }
 

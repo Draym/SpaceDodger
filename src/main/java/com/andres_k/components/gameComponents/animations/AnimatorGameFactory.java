@@ -21,6 +21,9 @@ public class AnimatorGameFactory extends AnimatorFactory {
         if (index == EnumSprites.ASTEROID) {
             animator.addAnimation(EnumAnimation.BASIC, this.loadAnimation(new SpriteSheet("image/game/asteroid.png", 101, 105), true, 0, 3, 0, 1, 400));
             animator.addCollision(EnumAnimation.BASIC, StringTools.readFile("json/asteroid.json"));
+        } else if (index == EnumSprites.STONE) {
+            animator.addAnimation(EnumAnimation.BASIC, this.loadAnimation(new SpriteSheet("image/game/stone.png", 50, 43), true, 0, 3, 0, 1, 400));
+            animator.addCollision(EnumAnimation.BASIC, StringTools.readFile("json/stone.json"));
         } else if (index == EnumSprites.SPACESHIP) {
 
             animator.addAnimation(EnumAnimation.MOVE_LEFT, this.loadAnimation(new SpriteSheet("image/game/redShipLEFT.png", 52, 57), false, 0, 3, 0, 1, 400));
@@ -30,7 +33,9 @@ public class AnimatorGameFactory extends AnimatorFactory {
             animator.addCollision(EnumAnimation.MOVE_RIGHT, StringTools.readFile("json/redShipRIGHT.json"));
             animator.addCollision(EnumAnimation.BASIC, StringTools.readFile("json/redShipIDLE.json"));
 
-        } else if (index == EnumSprites.BARRIER){
+            animator.addAnimation(EnumAnimation.EXPLODE, this.loadAnimation(new SpriteSheet("image/game/explosion.png", 80, 80), false, 0, 5, 0, 1, 200));
+
+        } else if (index == EnumSprites.BARRIER) {
             animator.addAnimation(EnumAnimation.BASIC, this.loadAnimation(new SpriteSheet("image/game/barrier.png", 28, 900), true, 0, 3, 0, 1, 200));
             animator.addCollision(EnumAnimation.BASIC, StringTools.readFile("json/barrier.json"));
         }

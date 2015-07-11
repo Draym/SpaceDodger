@@ -1,8 +1,11 @@
 package com.andres_k.components.gameComponents.gameObject.obstacles;
 
 import com.andres_k.components.gameComponents.animations.Animator;
+import com.andres_k.components.gameComponents.animations.EnumAnimation;
+import com.andres_k.components.gameComponents.collisions.BodyAnimation;
 import com.andres_k.components.gameComponents.gameObject.GameObject;
 import com.andres_k.components.graphicComponents.input.EnumInput;
+import com.andres_k.utils.configs.WindowConfig;
 import org.newdawn.slick.Graphics;
 
 /**
@@ -10,8 +13,8 @@ import org.newdawn.slick.Graphics;
  */
 public class Obstacle extends GameObject {
 
-    public Obstacle(Animator animator, String id, float posX, float posY, float life, float damage) {
-        super(animator, id, posX, posY, life, damage);
+    public Obstacle(Animator animator, String id, float posX, float posY, float life, float damage, float speed) {
+        super(animator, id, posX, posY, life, damage, speed);
     }
 
     @Override
@@ -21,12 +24,19 @@ public class Obstacle extends GameObject {
     @Override
     public void draw(Graphics g) {
         g.drawAnimation(this.animator.currentAnimation(), this.graphicalX(), this.graphicalY());
-        this.animator.currentBodyAnimation().draw(g, this.animator.currentFrame(), this.getPosX(), this.getPosY());
+        BodyAnimation bodyAnimation = this.animator.currentBodyAnimation();
+        if (bodyAnimation != null) {
+            bodyAnimation.draw(g, this.animator.currentFrame(), this.getPosX(), this.getPosY());
+        }
     }
 
     @Override
     public void update() {
+        this.moveTo.setV2(this.calculateWithSpeed());
         this.move();
+        if (this.getPosY() > WindowConfig.w2_sY + 300){
+            this.animator.setCurrent(EnumAnimation.EXPLODE);
+        }
     }
 
     @Override

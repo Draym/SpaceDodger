@@ -27,6 +27,7 @@ public class AnimatorGameData {
         this.addItemAnimator(this.animatorFactory.getAnimator(EnumSprites.SPACESHIP), EnumGameObject.SPACESHIP);
         this.addItemAnimator(this.animatorFactory.getAnimator(EnumSprites.ASTEROID), EnumGameObject.ASTEROID);
         this.addItemAnimator(this.animatorFactory.getAnimator(EnumSprites.BARRIER), EnumGameObject.BARRIER);
+        this.addItemAnimator(this.animatorFactory.getAnimator(EnumSprites.STONE), EnumGameObject.STONE);
     }
 
     public void addItemAnimator(Animator roundAnimator, EnumGameObject type) {

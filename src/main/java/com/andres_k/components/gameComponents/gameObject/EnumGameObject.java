@@ -16,7 +16,8 @@ public enum EnumGameObject {
     //item
     BARRIER("barrier"),
     SPACESHIP("spaceship"),
-    ASTEROID("asteroid");
+    ASTEROID("asteroid"),
+    STONE("stone");
 
 
     private final String value;
