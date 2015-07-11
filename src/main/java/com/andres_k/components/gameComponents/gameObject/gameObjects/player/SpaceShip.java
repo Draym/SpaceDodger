@@ -11,6 +11,7 @@ import org.newdawn.slick.Graphics;
  * Created by andres_k on 10/07/2015.
  */
 public class SpaceShip extends GameObject {
+    private EnumInput current;
 
     public SpaceShip(Animator animator, float x, float y) {
         super(animator, x, y, 1, 0);
@@ -56,12 +57,14 @@ public class SpaceShip extends GameObject {
             this.moveTo.setV2(5f * GlobalVariable.gameSpeed);
             this.move = true;
         }
+        if (this.move) {
+            this.current = input;
+        }
     }
 
     @Override
     public void eventReleased(EnumInput input) {
-        if (input.isIn(EnumInput.MOVE_UP) || input.isIn(EnumInput.MOVE_DOWN) ||
-                input.isIn(EnumInput.MOVE_RIGHT) || input.isIn(EnumInput.MOVE_LEFT)) {
+        if (input == this.current) {
             this.animator.setCurrent(EnumAnimation.BASIC);
             this.moveTo.setV1(0f);
             this.moveTo.setV2(0f);
