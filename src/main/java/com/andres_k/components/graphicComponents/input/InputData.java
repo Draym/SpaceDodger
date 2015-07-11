@@ -1,9 +1,11 @@
 package com.andres_k.components.graphicComponents.input;
 
+import com.andres_k.utils.tools.Debug;
 import com.andres_k.utils.tools.StringTools;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
+import java.net.URL;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -14,9 +16,10 @@ import java.util.Map;
 public class InputData {
     private static Map<EnumInput, String> availableInput;
     private static JSONObject configs;
-    private static String file;
+    private static URL file;
 
-    public static void init(String file) throws JSONException {
+    public static void init(URL file) throws JSONException {
+        Debug.debug("file: " + file);
         availableInput = new LinkedHashMap<>();
         configs = new JSONObject(StringTools.readFile(file));
         InputData.file = file;

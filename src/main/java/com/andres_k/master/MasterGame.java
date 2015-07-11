@@ -29,7 +29,8 @@ public class MasterGame implements Observer {
     public MasterGame() throws SlickException, JSONException {
         SoundController.init();
         MusicController.init();
-        InputData.init(Config.input);
+
+        InputData.init(getClass().getClassLoader().getResource(Config.input));
         CurrentUser.init("player", "player", "ally");
         this.masterTask = new GenericSendTask();
         this.masterTask.addObserver(this);

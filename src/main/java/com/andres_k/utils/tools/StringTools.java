@@ -1,6 +1,8 @@
 package com.andres_k.utils.tools;
 
 import java.io.*;
+import java.net.URISyntaxException;
+import java.net.URL;
 
 /**
  * Created by andres_k on 24/03/2015.
@@ -8,31 +10,41 @@ import java.io.*;
 
 public class StringTools {
 
-    public static String readFile(String fileName) {
+    public static String readFile(URL fileName) {
         String content = "";
-        File file = new File(fileName); //for ex foo.txt
-        Debug.debug("file: " + file.getAbsolutePath());
+        if (fileName == null)
+            return content;
         try {
-            FileReader reader = new FileReader(file);
-            char[] chars = new char[(int) file.length()];
-            reader.read(chars);
-            content = new String(chars);
-            reader.close();
-        } catch (IOException e) {
+            File file = new File(fileName.toURI());
+            Debug.debug("file: " + file.getAbsolutePath());
+            try {
+                FileReader reader = new FileReader(file);
+                char[] chars = new char[(int) file.length()];
+                reader.read(chars);
+                content = new String(chars);
+                reader.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } catch (URISyntaxException e) {
             e.printStackTrace();
         }
         return content;
     }
 
-    public static void writeInFile(String fileName, String value) {
-        File file = new File(fileName);
-
+    public static void writeInFile(URL fileName, String value) {
+        if (fileName == null)
+            return;
         try {
-            FileWriter fw = new FileWriter(file.getAbsoluteFile());
-            BufferedWriter bw = new BufferedWriter(fw);
-            bw.write(value);
-            bw.close();
-        } catch (IOException e) {
+            File file = new File(fileName.toURI());
+            try {
+                FileWriter fw = new FileWriter(file.getAbsoluteFile());
+                BufferedWriter bw = new BufferedWriter(fw);
+                bw.write(value);
+                bw.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }        } catch (URISyntaxException e) {
             e.printStackTrace();
         }
     }
