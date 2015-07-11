@@ -1,5 +1,6 @@
 package com.andres_k.components.gameComponents.collisions;
 
+import com.andres_k.utils.configs.GlobalVariable;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
@@ -32,8 +33,10 @@ public class BodyAnimation {
     }
 
     public void draw(Graphics g, int currentFrame, float posX, float posY){
-        if (this.bodies.size() > currentFrame){
-            this.bodies.get(currentFrame).draw(g, posX, posY);
+        if (GlobalVariable.drawCollision) {
+            if (this.bodies.size() > currentFrame) {
+                this.bodies.get(currentFrame).draw(g, posX, posY);
+            }
         }
     }
 

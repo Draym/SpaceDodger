@@ -5,8 +5,9 @@ import com.andres_k.components.gameComponents.animations.EnumAnimation;
 import com.andres_k.components.gameComponents.collisions.BodyRect;
 import com.andres_k.components.gameComponents.collisions.BodySprite;
 import com.andres_k.components.graphicComponents.input.EnumInput;
+import com.andres_k.utils.configs.GlobalVariable;
+import com.andres_k.utils.configs.WindowConfig;
 import com.andres_k.utils.stockage.Pair;
-import com.andres_k.utils.tools.Debug;
 import org.newdawn.slick.Graphics;
 
 import java.util.List;
@@ -62,6 +63,14 @@ public abstract class GameObject {
         }
     }
 
+    public boolean inTheMapAfterMove(){
+        Pair<Float, Float> pos = this.predictMove();
+        if (pos.getV1() > 0 && pos.getV1() < WindowConfig.w2_sX && pos.getV2() > 0 && pos.getV2() < WindowConfig.w2_sY){
+            return true;
+        }
+        return false;
+    }
+
     public void checkCollisionWith(GameObject enemy) {
         Pair<Float, Float> tmpPos = predictMove();
 
@@ -79,7 +88,7 @@ public abstract class GameObject {
                             enemy.getHit(this);
                         } else if (mine.getType() == EnumGameObject.DEFENSE_BODY && his.getType() == EnumGameObject.ATTACK_BODY) {
                             this.getHit(enemy);
-                        } else {
+                        } else if (mine.getType() != EnumGameObject.ATTACK_BODY && his.getType() != EnumGameObject.ATTACK_BODY) {
                             this.move = false;
                         }
                     }
@@ -95,6 +104,10 @@ public abstract class GameObject {
         } else {
             this.animator.nextCurrentIndex();
         }
+    }
+
+    public float calculateWithSpeed(float number) {
+        return number + (GlobalVariable.gameSpeed * 0.8f);
     }
 
     // GETTERS

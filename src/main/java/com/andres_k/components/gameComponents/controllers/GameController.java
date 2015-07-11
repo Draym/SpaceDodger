@@ -3,7 +3,7 @@ package com.andres_k.components.gameComponents.controllers;
 import com.andres_k.components.gameComponents.animations.AnimatorGameData;
 import com.andres_k.components.gameComponents.gameObject.EnumGameObject;
 import com.andres_k.components.gameComponents.gameObject.GameObjectController;
-import com.andres_k.components.gameComponents.gameObject.player.SpaceShip;
+import com.andres_k.components.gameComponents.gameObject.obstacles.SpaceShip;
 import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.components.graphicComponents.input.EnumInput;
 import com.andres_k.components.graphicComponents.input.InputGame;
@@ -35,8 +35,9 @@ public class GameController extends WindowController {
     private AnimatorGameData animatorGameData;
     private GameObjectController gameObjectController;
     private InputGame inputGame;
-    private boolean running;
+
     private Integer currentPlayer;
+    private boolean running;
 
     public GameController() throws JSONException {
         this.animatorGameData = new AnimatorGameData();
@@ -47,8 +48,9 @@ public class GameController extends WindowController {
 
     @Override
     public void enter() {
-        this.gameObjectController.initWorld();
+        this.gameObjectController.enter();
 
+        GlobalVariable.gameSpeed = 1;
         this.createPlayerForGame();
         this.setChanged();
         this.notifyObservers(TaskFactory.createTask(EnumTargetTask.GAME, EnumTargetTask.GAME_OVERLAY, new Pair<>(EnumOverlayElement.TABLE_ROUND, new MessageRoundStart("admin", "admin", true))));
@@ -61,11 +63,13 @@ public class GameController extends WindowController {
                 notifyObservers(TaskFactory.createTask(EnumTargetTask.GAME, EnumTargetTask.GAME_OVERLAY, new Pair<>(EnumOverlayElement.TABLE_ROUND, new MessageRoundStart("admin", "admin", false))));
                 running = true;
             }
-        }, 4000);
+        }, 3000);
     }
 
     @Override
     public void leave() {
+        this.running = false;
+        GlobalVariable.gameSpeed = 1;
         this.gameObjectController.leave();
     }
 
@@ -82,13 +86,14 @@ public class GameController extends WindowController {
 
     @Override
     public void updateWindow(GameContainer gameContainer) {
+            this.gameObjectController.update(this.running);
         if (this.running) {
-            this.gameObjectController.update();
             if (this.gameObjectController.getNumberPlayers() == 0) {
                 this.setChanged();
                 this.notifyObservers(TaskFactory.createTask(EnumTargetTask.GAME, EnumTargetTask.GAME_OVERLAY, new Pair<>(EnumOverlayElement.TABLE_ROUND, new MessageRoundEnd("admin", "admin", "enemy"))));
                 this.running = false;
             }
+            GlobalVariable.gameSpeed += 0.001;
         }
     }
 

@@ -1,9 +1,12 @@
 package com.andres_k.components.gameComponents.gameObject;
 
 import com.andres_k.components.gameComponents.animations.AnimatorGameData;
-import com.andres_k.components.gameComponents.gameObject.obstacles.Obstacle;
+import com.andres_k.components.gameComponents.gameObject.obstacles.Asteroid;
+import com.andres_k.components.gameComponents.gameObject.obstacles.Border;
 import com.andres_k.components.graphicComponents.input.EnumInput;
+import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.configs.WindowConfig;
+import com.andres_k.utils.tools.RandomTools;
 import org.newdawn.slick.Graphics;
 
 import java.util.ArrayList;
@@ -19,6 +22,9 @@ public class GameObjectController {
 
     private AnimatorGameData animatorGameData;
 
+    private long updateIncrement;
+    private long objectiveIncrement;
+
     public GameObjectController() {
         this.obstacles = new ArrayList<>();
         this.players = new ArrayList<>();
@@ -31,11 +37,19 @@ public class GameObjectController {
     }
 
     public void initWorld() {
-        this.obstacles.add(new Obstacle(this.animatorGameData.getAnimator(EnumGameObject.BARRIER), UUID.randomUUID().toString(), 14, 450, 1, 1));
-        this.obstacles.add(new Obstacle(this.animatorGameData.getAnimator(EnumGameObject.BARRIER), UUID.randomUUID().toString(), WindowConfig.w2_sX - 14, 450, 1, 1));
+        this.obstacles.add(new Border(this.animatorGameData.getAnimator(EnumGameObject.BARRIER), UUID.randomUUID().toString(), 14, 450));
+        this.obstacles.add(new Border(this.animatorGameData.getAnimator(EnumGameObject.BARRIER), UUID.randomUUID().toString(), WindowConfig.w2_sX - 14, 450));
+        this.obstacles.add(new Border(this.animatorGameData.getAnimator(EnumGameObject.BARRIER), UUID.randomUUID().toString(), 14, -450));
+        this.obstacles.add(new Border(this.animatorGameData.getAnimator(EnumGameObject.BARRIER), UUID.randomUUID().toString(), WindowConfig.w2_sX - 14, -450));
     }
 
     // FUNCTIONS
+
+    public void enter() {
+        this.initWorld();
+        this.updateIncrement = 0;
+        this.objectiveIncrement = 20;
+    }
 
     public void leave() {
         for (GameObject player : this.players) {
@@ -57,7 +71,15 @@ public class GameObjectController {
         }
     }
 
-    public void update() {
+    public void update(boolean running) {
+
+        if (this.updateIncrement == this.objectiveIncrement) {
+            this.updateIncrement = 0;
+            for (int i = 0; i < Math.floor(GlobalVariable.gameSpeed); ++i) {
+                this.popAnObstacle(EnumGameObject.ASTEROID);
+            }
+            this.objectiveIncrement = (long) (10 + RandomTools.getInt((int) (50 / GlobalVariable.gameSpeed)) + (20 / GlobalVariable.gameSpeed));
+        }
         for (int i = 0; i < this.players.size(); ++i) {
             this.players.get(i).update();
             if (this.players.get(i).isNeedDelete()) {
@@ -77,6 +99,9 @@ public class GameObjectController {
                 this.checkCollision(this.obstacles.get(i));
                 this.obstacles.get(i).move();
             }
+        }
+        if (running) {
+            ++this.updateIncrement;
         }
     }
 
@@ -102,44 +127,54 @@ public class GameObjectController {
         this.players.add(player);
     }
 
+    public void popAnObstacle(EnumGameObject type) {
+
+        float x = RandomTools.getInt(500) + 100;
+        float y =  - (RandomTools.getInt(200) + 105);
+
+        if (type == EnumGameObject.ASTEROID){
+            this.obstacles.add(new Asteroid(this.animatorGameData.getAnimator(EnumGameObject.ASTEROID), UUID.randomUUID().toString(), x, y));
+        }
+    }
+
     // COLLISION
 
-    public void checkCollision(GameObject current){
+    public void checkCollision(GameObject current) {
         List<GameObject> items = this.getAllExpectHim(current.getId());
 
-        for (GameObject item : items){
+        for (GameObject item : items) {
             current.checkCollisionWith(item);
         }
     }
 
     // GETTERS
 
-    public List<GameObject> getAllExpectHim(String id){
+    public List<GameObject> getAllExpectHim(String id) {
         List<GameObject> items = new ArrayList<>();
 
-        for (GameObject object : this.players){
-            if (!object.getId().equals(id)){
+        for (GameObject object : this.players) {
+            if (!object.getId().equals(id)) {
                 items.add(object);
             }
         }
-        for (GameObject object : this.obstacles){
-            if (!object.getId().equals(id)){
+        for (GameObject object : this.obstacles) {
+            if (!object.getId().equals(id)) {
                 items.add(object);
             }
         }
         return items;
     }
 
-    public GameObject getPlayer(String id){
-        for (GameObject player : this.players){
-            if (player.getId().equals(id)){
+    public GameObject getPlayer(String id) {
+        for (GameObject player : this.players) {
+            if (player.getId().equals(id)) {
                 return player;
             }
         }
         return null;
     }
 
-    public int getNumberPlayers(){
+    public int getNumberPlayers() {
         return this.players.size();
     }
 }

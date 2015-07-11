@@ -3,7 +3,6 @@ package com.andres_k.components.gameComponents.gameObject.obstacles;
 import com.andres_k.components.gameComponents.animations.Animator;
 import com.andres_k.components.gameComponents.gameObject.GameObject;
 import com.andres_k.components.graphicComponents.input.EnumInput;
-import com.andres_k.utils.tools.Debug;
 import org.newdawn.slick.Graphics;
 
 /**
@@ -13,7 +12,6 @@ public class Obstacle extends GameObject {
 
     public Obstacle(Animator animator, String id, float posX, float posY, float life, float damage) {
         super(animator, id, posX, posY, life, damage);
-        Debug.debug("add Obstacle: " + posX + ", " + posY);
     }
 
     @Override

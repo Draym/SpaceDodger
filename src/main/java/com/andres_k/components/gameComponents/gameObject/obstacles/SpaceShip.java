@@ -1,4 +1,4 @@
-package com.andres_k.components.gameComponents.gameObject.player;
+package com.andres_k.components.gameComponents.gameObject.obstacles;
 
 import com.andres_k.components.gameComponents.animations.Animator;
 import com.andres_k.components.gameComponents.animations.EnumAnimation;
@@ -30,6 +30,20 @@ public class SpaceShip extends GameObject {
 
     @Override
     public void update() {
+
+    }
+
+    public void move() {
+        if (this.move) {
+            if (this.inTheMapAfterMove()) {
+                this.positions.setV1(this.positions.getV1() + this.moveTo.getV1());
+                this.positions.setV2(this.positions.getV2() + this.moveTo.getV2());
+            } else {
+                this.move = false;
+                this.moveTo.setV1(0f);
+                this.moveTo.setV2(0f);
+            }
+        }
     }
 
     @Override
@@ -37,23 +51,23 @@ public class SpaceShip extends GameObject {
 
         if (input.isIn(EnumInput.MOVE_LEFT)) {
             this.animator.setCurrent(EnumAnimation.MOVE_LEFT);
-            this.moveTo.setV1(-5f * GlobalVariable.gameSpeed);
+            this.moveTo.setV1(-this.calculateWithSpeed(5));
             this.moveTo.setV2(0f);
             this.move = true;
         } else if (input.isIn(EnumInput.MOVE_RIGHT)) {
             this.animator.setCurrent(EnumAnimation.MOVE_RIGHT);
-            this.moveTo.setV1(5f * GlobalVariable.gameSpeed);
+            this.moveTo.setV1(this.calculateWithSpeed(5));
             this.moveTo.setV2(0f);
             this.move = true;
         } else if (input.isIn(EnumInput.MOVE_UP)) {
             this.animator.setCurrent(EnumAnimation.BASIC);
             this.moveTo.setV1(0f);
-            this.moveTo.setV2(-5f * GlobalVariable.gameSpeed);
+            this.moveTo.setV2(-this.calculateWithSpeed(5));
             this.move = true;
         } else if (input.isIn(EnumInput.MOVE_DOWN)) {
             this.animator.setCurrent(EnumAnimation.BASIC);
             this.moveTo.setV1(0f);
-            this.moveTo.setV2(5f * GlobalVariable.gameSpeed);
+            this.moveTo.setV2(this.calculateWithSpeed(5));
             this.move = true;
         }
         if (this.move) {
