@@ -86,6 +86,7 @@ public class GameController extends WindowController {
 
     @Override
     public void updateWindow(GameContainer gameContainer) {
+        if (this.running || this.gameObjectController.getNumberPlayers() == 0)
             this.gameObjectController.update(this.running);
         if (this.running) {
             if (this.gameObjectController.getNumberPlayers() == 0) {
@@ -93,12 +94,15 @@ public class GameController extends WindowController {
                 this.notifyObservers(TaskFactory.createTask(EnumTargetTask.GAME, EnumTargetTask.GAME_OVERLAY, new Pair<>(EnumOverlayElement.TABLE_ROUND, new MessageRoundEnd("admin", "admin", "enemy"))));
                 this.running = false;
             }
-            GlobalVariable.gameSpeed += 0.001;
+            GlobalVariable.gameSpeed += 0.0001;
         }
     }
 
     @Override
     public void keyPressed(int key, char c) {
+        if (key == Input.KEY_ESCAPE){
+            this.running = !this.running;
+        }
         if (this.running) {
             EnumInput result = this.inputGame.checkInput(key, EnumInput.PRESSED);
             this.gameObjectController.event(EnumInput.KEY_PRESSED, result);

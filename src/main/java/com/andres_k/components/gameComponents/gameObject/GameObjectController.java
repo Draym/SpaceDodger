@@ -7,6 +7,7 @@ import com.andres_k.components.gameComponents.gameObject.obstacles.Stone;
 import com.andres_k.components.graphicComponents.input.EnumInput;
 import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.configs.WindowConfig;
+import com.andres_k.utils.tools.Debug;
 import com.andres_k.utils.tools.RandomTools;
 import org.newdawn.slick.Graphics;
 
@@ -76,13 +77,14 @@ public class GameObjectController {
 
         if (this.updateIncrement == this.objectiveIncrement) {
             this.updateIncrement = 0;
-            for (int i = 0; i < Math.floor(GlobalVariable.gameSpeed) && i < 10; ++i) {
+            for (float i = 0; i < GlobalVariable.gameSpeed && i < 20; ++i) {
                 if (RandomTools.getBoolean()) {
                     this.popAnObstacle(EnumGameObject.ASTEROID);
                 } else {
                     this.popAnObstacle(EnumGameObject.STONE);
                 }
             }
+            Debug.debug("\n" + this.obstacles.size());
             this.objectiveIncrement = (long) (10 + RandomTools.getInt((int) (50 / GlobalVariable.gameSpeed)) + (20 / GlobalVariable.gameSpeed));
         }
         for (int i = 0; i < this.players.size(); ++i) {
@@ -134,12 +136,16 @@ public class GameObjectController {
 
     public void popAnObstacle(EnumGameObject type) {
 
-        float x = RandomTools.getInt(500) + 100;
+        float x = RandomTools.getInt(700);
         float y = -(RandomTools.getInt(200) + 105);
 
         if (type == EnumGameObject.ASTEROID) {
+            x = (x < 95 ? 95 : x);
+            x = (x > 605 ? 605 : x);
             this.obstacles.add(new Asteroid(this.animatorGameData.getAnimator(EnumGameObject.ASTEROID), UUID.randomUUID().toString(), x, y));
         } else if (type == EnumGameObject.STONE) {
+            x = (x < 70 ? 70 : x);
+            x = (x > 630 ? 630 : x);
             this.obstacles.add(new Stone(this.animatorGameData.getAnimator(EnumGameObject.STONE), UUID.randomUUID().toString(), x, y));
         }
     }

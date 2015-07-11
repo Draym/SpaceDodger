@@ -8,7 +8,7 @@ import com.andres_k.utils.configs.GlobalVariable;
  */
 public class Asteroid extends Obstacle {
     public Asteroid(Animator animator, String id, float posX, float posY) {
-        super(animator, id, posX, posY, 3, 5, 2);
+        super(animator, id, posX, posY, 3, 10, 2);
         this.move = true;
     }
 

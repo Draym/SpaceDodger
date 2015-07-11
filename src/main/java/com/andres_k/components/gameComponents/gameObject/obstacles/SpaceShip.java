@@ -14,7 +14,7 @@ public class SpaceShip extends GameObject {
     private EnumInput current;
 
     public SpaceShip(Animator animator, String id, float x, float y) {
-        super(animator, id, x, y, 1, 0, 5);
+        super(animator, id, x, y, 1, 0, 3);
     }
 
     @Override

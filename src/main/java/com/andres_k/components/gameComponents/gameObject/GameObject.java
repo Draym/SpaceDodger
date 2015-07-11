@@ -111,7 +111,7 @@ public abstract class GameObject {
     }
 
     public float calculateWithSpeed() {
-        return this.speed + (GlobalVariable.gameSpeed * 0.8f);
+        return this.speed + (GlobalVariable.gameSpeed * 0.7f);
     }
 
     // GETTERS
