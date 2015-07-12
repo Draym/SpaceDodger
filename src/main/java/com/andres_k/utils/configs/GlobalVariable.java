@@ -7,7 +7,7 @@ import org.newdawn.slick.AppGameContainer;
  */
 public class GlobalVariable {
     public static float gameSpeed = 1;
-    public static boolean drawCollision = false;
+    public static boolean drawCollision = true;
     public static boolean debug = false;
     public static AppGameContainer appGameContainer;
 }
