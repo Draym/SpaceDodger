@@ -10,6 +10,7 @@ import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.tools.ColorTools;
 import com.andres_k.utils.tools.StringTools;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.SlickException;
 
 import java.util.Map;
 
@@ -28,7 +29,7 @@ public class TableMenuElement extends TableElement {
 
     // FUNCTION
     @Override
-    public void doTask(Object task) {
+    public void doTask(Object task) throws SlickException {
         if (task instanceof Element) {
             this.addElement((Element) task);
         } else if (task instanceof Pair) {

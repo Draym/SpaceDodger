@@ -7,6 +7,7 @@ import com.andres_k.components.taskComponent.EnumTask;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.stockage.Tuple;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
 
 /**
  * Created by andres_k on 27/06/2015.
@@ -135,7 +136,7 @@ public class ImageElement extends Element {
     }
 
     @Override
-    public boolean replace(Element element) {
+    public boolean replace(Element element) throws SlickException {
         if (element.getType() == EnumOverlayElement.IMAGE) {
             this.animator = new Animator(((ImageElement) element).animator);
             return true;

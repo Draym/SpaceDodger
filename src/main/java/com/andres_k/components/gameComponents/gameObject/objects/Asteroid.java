@@ -9,13 +9,13 @@ import com.andres_k.utils.configs.GlobalVariable;
  */
 public class Asteroid extends Obstacle {
     public Asteroid(Animator animator, String id, float posX, float posY) {
-        super(animator, id, EnumGameObject.ASTEROID, posX, posY, 15, 10, 2);
+        super(animator, id, EnumGameObject.ASTEROID, posX, posY, 8, 10, 2);
         this.move = true;
     }
 
     @Override
     public float calculateWithSpeed() {
-        return this.speed + (GlobalVariable.gameSpeed * 0.4f);
+        return this.speed + (GlobalVariable.currentSpeed * 0.4f);
     }
 
 }

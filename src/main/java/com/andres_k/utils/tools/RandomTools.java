@@ -13,7 +13,10 @@ public class RandomTools {
     }
 
     public static int getInt(int bound) {
-        return random.nextInt(bound);
+        if (bound > 0) {
+            return random.nextInt(bound);
+        }
+        return 1;
     }
 
     public static float getFloat() {

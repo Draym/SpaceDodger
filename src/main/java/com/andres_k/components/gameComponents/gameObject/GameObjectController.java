@@ -12,6 +12,7 @@ import com.andres_k.utils.tools.ConsoleWrite;
 import com.andres_k.utils.tools.RandomTools;
 import com.andres_k.utils.tools.StringTools;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +41,7 @@ public class GameObjectController {
         this.animatorGameData = animatorGameData;
     }
 
-    public void initWorld() {
+    public void initWorld() throws SlickException {
         this.obstacles.add(new Barrier(this.animatorGameData.getAnimator(EnumGameObject.BARRIER), UUID.randomUUID().toString(), 14, 450));
         this.obstacles.add(new Barrier(this.animatorGameData.getAnimator(EnumGameObject.BARRIER), UUID.randomUUID().toString(), WindowConfig.w2_sX - 14, 450));
         this.obstacles.add(new Barrier(this.animatorGameData.getAnimator(EnumGameObject.BARRIER), UUID.randomUUID().toString(), 14, -450));
@@ -49,7 +50,7 @@ public class GameObjectController {
 
     // FUNCTIONS
 
-    public void enter() {
+    public void enter() throws SlickException {
         this.initWorld();
         this.updateIncrement = 0;
         this.objectiveIncrement = 20;
@@ -75,11 +76,11 @@ public class GameObjectController {
         }
     }
 
-    public void update(boolean running) {
+    public void update(boolean running) throws SlickException {
 
         if (this.updateIncrement == this.objectiveIncrement) {
             this.updateIncrement = 0;
-            for (float i = 0; i < GlobalVariable.gameSpeed; ++i) {
+            for (float i = 0; i < GlobalVariable.currentSpeed; ++i) {
                 if (RandomTools.getBoolean()) {
                     this.popAnObstacle(EnumGameObject.ASTEROID);
                 } else {
@@ -87,7 +88,7 @@ public class GameObjectController {
                 }
             }
             ConsoleWrite.debug("objects: " + this.obstacles.size());
-            this.objectiveIncrement = (long) (10 + RandomTools.getInt((int) (50 / GlobalVariable.gameSpeed)) + (20 / GlobalVariable.gameSpeed));
+            this.objectiveIncrement = (long) (10 + RandomTools.getInt((int) (50 / GlobalVariable.currentSpeed)) + (20 / GlobalVariable.currentSpeed));
         }
         for (int i = 0; i < this.players.size(); ++i) {
             this.players.get(i).update();
@@ -119,13 +120,13 @@ public class GameObjectController {
     public void event(EnumInput event, EnumInput input) {
         if (event == EnumInput.KEY_RELEASED) {
             if (input.getIndex() >= 0 && input.getIndex() < this.players.size()) {
-                GameObject player = this.getPlayer("player" + String.valueOf(input.getIndex()));
+                GameObject player = this.getPlayerById("player" + String.valueOf(input.getIndex()));
                 if (player != null) {
                     player.eventReleased(input);
                 }
             }
         } else if (event == EnumInput.KEY_PRESSED) {
-            GameObject player = this.getPlayer("player" + String.valueOf(input.getIndex()));
+            GameObject player = this.getPlayerById("player" + String.valueOf(input.getIndex()));
             if (player != null) {
                 player.eventPressed(input);
             }
@@ -136,7 +137,7 @@ public class GameObjectController {
         String score = String.valueOf(player.getScore());
 
         score = StringTools.addCharacterEach(score, " ", 3);
-        ConsoleWrite.write("\n" + player.getId() + " : '" + score + "' pts.");
+        ConsoleWrite.write("\n" + player.getPseudo() + " : '" + score + "' pts.");
     }
 
     // ADD
@@ -145,7 +146,7 @@ public class GameObjectController {
         this.players.add(player);
     }
 
-    public void popAnObstacle(EnumGameObject type) {
+    public void popAnObstacle(EnumGameObject type) throws SlickException {
 
         float x = RandomTools.getInt(700);
         float y = -(RandomTools.getInt(200) + 105);
@@ -189,9 +190,9 @@ public class GameObjectController {
         return items;
     }
 
-    public GameObject getPlayer(String id) {
+    public GameObject getPlayerById(String id) {
         for (GameObject player : this.players) {
-            if (player.getId().equals(id)) {
+            if (player.getId().contains(id)) {
                 return player;
             }
         }

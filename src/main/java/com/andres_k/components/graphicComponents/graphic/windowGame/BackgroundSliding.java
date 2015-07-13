@@ -47,7 +47,7 @@ public class BackgroundSliding {
 
     public void update() {
         for (Pair<Integer, Integer> pos : this.positions){
-            pos.setV2((int)Math.ceil(((float)pos.getV2() + (GlobalVariable.gameSpeed / 2))));
+            pos.setV2((int)Math.ceil(((float)pos.getV2() + (GlobalVariable.currentSpeed / 2))));
         }
         for (int i = 0; i < this.positions.size(); ++i){
             if (this.positions.get(i).getV2() > WindowConfig.w2_sY){

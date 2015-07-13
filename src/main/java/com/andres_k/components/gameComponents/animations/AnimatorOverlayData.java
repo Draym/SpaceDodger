@@ -9,8 +9,7 @@ import java.util.HashMap;
 /**
  * Created by andres_k on 13/03/2015.
  */
-public class AnimatorOverlayData {
-    private AnimatorFactory animatorFactory;
+public class AnimatorOverlayData extends AnimatorData{
     private HashMap<EnumOverlayElement, Animator> roundAnimator;
     private HashMap<EnumOverlayElement, Animator> iconAnimator;
     private HashMap<EnumOverlayElement, Animator> menuAnimator;
@@ -24,9 +23,12 @@ public class AnimatorOverlayData {
     }
 
     public void init() throws SlickException, JSONException {
-        this.initRound();
-        this.initIcon();
-        this.initMenu();
+        if (this.needInit) {
+            this.initRound();
+            this.initIcon();
+            this.initMenu();
+            this.needInit = false;
+        }
     }
 
     public void initRound() throws SlickException, JSONException {
@@ -64,7 +66,7 @@ public class AnimatorOverlayData {
 
     // GETTERS
 
-    public Animator getAnimator(EnumOverlayElement index) {
+    public Animator getAnimator(EnumOverlayElement index) throws SlickException {
         if (this.iconAnimator.containsKey(index)) {
             return new Animator(this.iconAnimator.get(index));
         } else if (this.menuAnimator.containsKey(index)) {

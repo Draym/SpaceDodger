@@ -118,7 +118,7 @@ public class SelectionField extends Element {
 
     @Override
     public boolean isEmpty() {
-        return this.stringElement.isActivated();
+        return this.stringElement.isEmpty();
     }
 
     @Override

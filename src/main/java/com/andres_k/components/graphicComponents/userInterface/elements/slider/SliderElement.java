@@ -8,6 +8,7 @@ import com.andres_k.components.graphicComponents.userInterface.tools.listElement
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.tools.ConsoleWrite;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -55,7 +56,7 @@ public class SliderElement extends InterfaceElement {
     }
 
     @Override
-    public void doTask(Object task) {
+    public void doTask(Object task) throws SlickException {
         if (task instanceof Pair && ((Pair) task).getV1() instanceof EnumOverlayElement && ((Pair) task).getV2() instanceof Element) {
 
             if (this.elements.containsKey(((Pair) task).getV1())) {

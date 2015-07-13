@@ -9,8 +9,7 @@ import java.util.HashMap;
 /**
  * Created by andres_k on 13/03/2015.
  */
-public class AnimatorGameData {
-    private AnimatorFactory animatorFactory;
+public class AnimatorGameData extends AnimatorData{
     private HashMap<EnumGameObject, Animator> itemAnimator;
 
 
@@ -20,7 +19,10 @@ public class AnimatorGameData {
     }
 
     public void init() throws SlickException, JSONException {
-        this.initItem();
+        if (this.needInit) {
+            this.initItem();
+            this.needInit = false;
+        }
     }
 
     public void initItem() throws SlickException, JSONException {
@@ -36,7 +38,7 @@ public class AnimatorGameData {
 
 
     // GETTERS
-    public Animator getAnimator(EnumGameObject index) {
+    public Animator getAnimator(EnumGameObject index) throws SlickException {
         if (this.itemAnimator.containsKey(index)) {
             return new Animator(this.itemAnimator.get(index));
         }

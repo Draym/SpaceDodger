@@ -8,6 +8,7 @@ import com.andres_k.utils.stockage.Pair;
 import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
+import org.newdawn.slick.SlickException;
 
 import java.util.*;
 
@@ -42,8 +43,11 @@ public class Animator implements Observer {
         this.activatedTimer = new ActivatedTimer(true);
     }
 
-    public Animator(Animator animator) {
+    public Animator(Animator animator) throws SlickException {
         this.animations = new HashMap<>();
+        if (animator == null){
+            throw new SlickException("image not loaded");
+        }
         for (Map.Entry<EnumAnimation, List<Animation>> entry : animator.animations.entrySet()) {
             EnumAnimation type = entry.getKey();
             List<Animation> values = entry.getValue();

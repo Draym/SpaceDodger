@@ -156,8 +156,12 @@ public class GenericElement extends InterfaceElement {
                             MessageGameNew task = new MessageGameNew("admin", "admin", EnumOverlayElement.GO);
 
                             for (Element tmp : this.elements) {
+                                if (tmp.getType() == EnumOverlayElement.SELECT_FIELD && tmp.isEmpty())
+                                    return result;
+                            }
+                            for (Element tmp : this.elements) {
                                 if (tmp.getType() == EnumOverlayElement.SELECT_FIELD) {
-                                    task.addObject(tmp.toString());
+                                    task.addValue(tmp.toString());
                                     tmp.doTask(new Tuple<>(EnumTask.SETTER, "current", ""));
                                 }
                             }

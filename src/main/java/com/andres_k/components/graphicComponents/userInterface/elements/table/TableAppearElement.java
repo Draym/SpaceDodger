@@ -9,6 +9,7 @@ import com.andres_k.components.taskComponent.EnumTask;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.stockage.Tuple;
 import com.andres_k.utils.tools.ConsoleWrite;
+import org.newdawn.slick.SlickException;
 
 /**
  * Created by andres_k on 02/07/2015.
@@ -21,7 +22,7 @@ public class TableAppearElement extends TableElement {
 
     // FUNCTION
     @Override
-    public void doTask(Object task) {
+    public void doTask(Object task) throws SlickException {
         ConsoleWrite.debug("\nReceived in " + this.type + " -> " + task);
         if (task instanceof Element) {
             this.addElement((Element) task);

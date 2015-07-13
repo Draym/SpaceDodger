@@ -17,7 +17,7 @@ public abstract class WindowController extends Observable implements Observer {
     protected StateBasedGame stateWindow = null;
     protected WindowBasedGame window;
 
-    public abstract void enter();
+    public abstract void enter() throws SlickException;
 
     public abstract void leave();
 
@@ -25,7 +25,7 @@ public abstract class WindowController extends Observable implements Observer {
 
     public abstract void renderWindow(Graphics g);
 
-    public abstract void updateWindow(GameContainer gameContainer);
+    public abstract void updateWindow(GameContainer gameContainer) throws SlickException;
 
     public abstract void keyPressed(int key, char c);
 

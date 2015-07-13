@@ -13,6 +13,7 @@ import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.tools.ColorTools;
 import com.andres_k.utils.tools.ConsoleWrite;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
 import java.util.LinkedHashMap;
@@ -67,7 +68,7 @@ public class TableSelectElement extends InterfaceElement {
     }
 
     @Override
-    public void doTask(Object task) {
+    public void doTask(Object task) throws SlickException {
         if (task instanceof Element) {
             this.addElement((Element) task);
         } else if (task instanceof Pair) {
@@ -156,7 +157,7 @@ public class TableSelectElement extends InterfaceElement {
         return null;
     }
 
-    public void addElement(Element item) {
+    public void addElement(Element item) throws SlickException {
         Element key = this.containsKey(item);
         if (key != null) {
             //           Debug.debug("add elem: '" + item.toString() + "'");

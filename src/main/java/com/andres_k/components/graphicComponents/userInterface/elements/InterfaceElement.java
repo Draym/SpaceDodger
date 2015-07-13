@@ -4,6 +4,7 @@ import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverl
 import com.andres_k.components.graphicComponents.userInterface.tools.items.ActivatedTimer;
 import com.andres_k.components.graphicComponents.userInterface.tools.items.ColorRect;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
 
 /**
  * Created by andres_k on 23/06/2015.
@@ -30,7 +31,7 @@ public abstract class InterfaceElement {
         this.activatedTimer.stopTimer();
     }
 
-    public abstract void doTask(Object task);
+    public abstract void doTask(Object task) throws SlickException;
 
     public abstract void leave();
 

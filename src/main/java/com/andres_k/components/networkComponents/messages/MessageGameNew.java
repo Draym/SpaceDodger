@@ -11,17 +11,17 @@ import java.util.List;
  */
 public class MessageGameNew extends MessageModel {
     EnumOverlayElement from;
-    List<Object> objects;
+    List<String> values;
 
     public MessageGameNew(String pseudo, String id, EnumOverlayElement from){
         super(pseudo, id);
 
         this.from = from;
-        this.objects = new ArrayList<>();
+        this.values = new ArrayList<>();
     }
 
-    public void addObject(Object object){
-        this.objects.add(object);
+    public void addValue(String object){
+        this.values.add(object);
     }
 
     // GETTERS
@@ -29,7 +29,7 @@ public class MessageGameNew extends MessageModel {
         return this.from;
     }
 
-    public List<Object> getObjects(){
-        return this.objects;
+    public List<String> getValues(){
+        return this.values;
     }
 }

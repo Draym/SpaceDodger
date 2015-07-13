@@ -54,7 +54,11 @@ public class WindowInterface extends WindowBasedGame {
         }
 
 
-        this.overlay.initElementsComponent(this.animatorOverlay);
+        try {
+            this.overlay.initElementsComponent(this.animatorOverlay);
+        } catch (Exception e) {
+            throw new SlickException(e.getMessage());
+        }
 
         this.controller.setStateWindow(this.stateWindow);
         this.controller.setWindow(this);

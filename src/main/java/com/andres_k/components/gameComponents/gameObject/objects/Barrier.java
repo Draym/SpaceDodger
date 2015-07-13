@@ -25,7 +25,7 @@ public class Barrier extends Obstacle {
 
     @Override
     public float calculateWithSpeed() {
-        return GlobalVariable.gameSpeed / 3;
+        return GlobalVariable.currentSpeed / 3;
     }
 
 }

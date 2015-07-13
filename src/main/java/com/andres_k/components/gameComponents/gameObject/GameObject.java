@@ -113,7 +113,7 @@ public abstract class GameObject {
                         }
                     }
                 }
-                if (!collision && this.type == EnumGameObject.SPACESHIP && this.type != enemy.getType()) {
+                if (!collision && this.type == EnumGameObject.SPACESHIP && this.type != enemy.getType() && enemy.type != EnumGameObject.BARRIER) {
                     this.doTask(new Pair<>(EnumTask.UPGRADE_SCORE, 1000));
                 }
             }
@@ -133,7 +133,7 @@ public abstract class GameObject {
     }
 
     public float calculateWithSpeed() {
-        return this.speed + (GlobalVariable.gameSpeed * 0.7f);
+        return this.speed + (GlobalVariable.currentSpeed * 0.7f);
     }
 
     // GETTERS

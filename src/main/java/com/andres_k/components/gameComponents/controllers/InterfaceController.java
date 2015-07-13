@@ -27,10 +27,12 @@ public class InterfaceController extends WindowController {
     @Override
     public void enter() {
         //init overlay value
+        for (int i = 0; i < GlobalVariable.maxPlayer; ++i) {
+            this.setChanged();
+            this.notifyObservers(TaskFactory.createTask(EnumTargetTask.INTERFACE, EnumTargetTask.INTERFACE_OVERLAY, new Pair<EnumOverlayElement, Pair>(EnumOverlayElement.TABLE_MENU_NEWGAME, new Pair<>(EnumOverlayElement.SELECT_FIELD.getValue() + EnumOverlayElement.NEW.getValue() + "pseudo" + String.valueOf(i), new Tuple<>(EnumTask.SETTER, "current", "unknown")))));
+        }
         this.setChanged();
-        this.notifyObservers(TaskFactory.createTask(EnumTargetTask.INTERFACE, EnumTargetTask.INTERFACE_OVERLAY, new Pair<EnumOverlayElement, Pair>(EnumOverlayElement.TABLE_MENU_NEWGAME, new Pair<>(EnumOverlayElement.SELECT_FIELD.getValue() + EnumOverlayElement.NEW.getValue() + "nbPlayer",  new Tuple<>(EnumTask.SETTER, "current", "1")))));
-        this.setChanged();
-        this.notifyObservers(TaskFactory.createTask(EnumTargetTask.INTERFACE, EnumTargetTask.INTERFACE_OVERLAY, new Pair<EnumOverlayElement, Pair>(EnumOverlayElement.TABLE_MENU_NEWGAME, new Pair<>(EnumOverlayElement.SELECT_FIELD.getValue() + EnumOverlayElement.NEW.getValue() + "speedGame", new Tuple<>(EnumTask.SETTER, "current", String.valueOf(GlobalVariable.gameSpeed))))));
+        this.notifyObservers(TaskFactory.createTask(EnumTargetTask.INTERFACE, EnumTargetTask.INTERFACE_OVERLAY, new Pair<EnumOverlayElement, Pair>(EnumOverlayElement.TABLE_MENU_NEWGAME, new Pair<>(EnumOverlayElement.SELECT_FIELD.getValue() + EnumOverlayElement.NEW.getValue() + "speedGame", new Tuple<>(EnumTask.SETTER, "current", String.valueOf(GlobalVariable.currentSpeed))))));
 
     }
 

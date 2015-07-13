@@ -9,6 +9,7 @@ import com.andres_k.components.networkComponents.messages.MessageRoundScore;
 import com.andres_k.utils.stockage.Pair;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.SlickException;
 
 /**
  * Created by andres_k on 02/07/2015.
@@ -23,7 +24,7 @@ public class TableActivateElement extends TableElement {
 
     // FUNCTION
     @Override
-    public void doTask(Object task) {
+    public void doTask(Object task) throws SlickException {
         if (task instanceof Element) {
             this.addElement((Element) task);
         } else if (task instanceof Pair) {

@@ -25,9 +25,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
-import java.util.Observable;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 /**
  * Created by andres_k on 08/07/2015.
@@ -37,21 +35,26 @@ public class GameController extends WindowController {
     private GameObjectController gameObjectController;
     private InputGame inputGame;
 
-    private Integer currentPlayer;
+    private List<String> playerNames;
+
     private boolean running;
+    private float roundSpeed;
 
     public GameController() throws JSONException {
         this.animatorGameData = new AnimatorGameData();
 
         this.inputGame = new InputGame();
         this.gameObjectController = new GameObjectController();
+        this.roundSpeed = GlobalVariable.defaultSpeed;
+
+        this.playerNames = new ArrayList<>();
     }
 
     @Override
-    public void enter() {
+    public void enter() throws SlickException {
         this.gameObjectController.enter();
 
-        GlobalVariable.gameSpeed = 1;
+        GlobalVariable.currentSpeed = this.roundSpeed;
         this.createPlayerForGame();
         this.setChanged();
         this.notifyObservers(TaskFactory.createTask(EnumTargetTask.GAME, EnumTargetTask.GAME_OVERLAY, new Pair<>(EnumOverlayElement.TABLE_ROUND, new MessageRoundStart("admin", "admin", true))));
@@ -70,7 +73,7 @@ public class GameController extends WindowController {
     @Override
     public void leave() {
         this.running = false;
-        GlobalVariable.gameSpeed = 1;
+        GlobalVariable.currentSpeed = this.roundSpeed;
         this.gameObjectController.leave();
     }
 
@@ -86,7 +89,7 @@ public class GameController extends WindowController {
     }
 
     @Override
-    public void updateWindow(GameContainer gameContainer) {
+    public void updateWindow(GameContainer gameContainer) throws SlickException {
         if (this.running || this.gameObjectController.getNumberPlayers() == 0)
             this.gameObjectController.update(this.running);
         if (this.running) {
@@ -95,7 +98,7 @@ public class GameController extends WindowController {
                 this.notifyObservers(TaskFactory.createTask(EnumTargetTask.GAME, EnumTargetTask.GAME_OVERLAY, new Pair<>(EnumOverlayElement.TABLE_ROUND, new MessageRoundEnd("admin", "admin", "enemy"))));
                 this.running = false;
             }
-            GlobalVariable.gameSpeed += 0.001;
+            GlobalVariable.currentSpeed += 0.001;
         }
     }
 
@@ -111,7 +114,12 @@ public class GameController extends WindowController {
     public void keyReleased(int key, char c) {
         if ((!this.running && this.gameObjectController.getNumberPlayers() == 0) && key == Input.KEY_ENTER) {
             this.leave();
-            this.enter();
+            try {
+                this.enter();
+            } catch (SlickException e) {
+                e.printStackTrace();
+                this.window.quit();
+            }
         }
 
         if (this.running) {
@@ -140,24 +148,31 @@ public class GameController extends WindowController {
                         this.window.quit();
                     }
                 } else if (received.getV3() instanceof MessageGameNew) {
-                    this.currentPlayer = Integer.valueOf((String) ((MessageGameNew) received.getV3()).getObjects().get(0));
-                    float newSpeed = Float.valueOf((String) ((MessageGameNew) received.getV3()).getObjects().get(1));
+                    List<String> values = ((MessageGameNew) received.getV3()).getValues();
+                    float newSpeed = Float.valueOf(values.get(values.size() - 1));
 
-                    if (newSpeed >= 1) {
-                        GlobalVariable.gameSpeed = newSpeed;
+                    this.playerNames.clear();
+                    for (int i = 0; i < (values.size() - 1); ++i) {
+                        this.playerNames.add(values.get(i));
+                    }
+
+                    if (newSpeed >= 1 && newSpeed < 100) {
+                        this.roundSpeed = newSpeed;
+                    } else {
+                        this.roundSpeed = GlobalVariable.defaultSpeed;
                     }
                     this.stateWindow.enterState(EnumWindow.GAME.getValue());
-                } else if (received.getV3() instanceof MessageOverlayMenu){
+                } else if (received.getV3() instanceof MessageOverlayMenu) {
                     this.running = !((MessageOverlayMenu) received.getV3()).isActivated();
                 }
             }
         }
     }
 
-    public void createPlayerForGame(){
-        for (int i = 0; i < this.currentPlayer && i < 2; ++i) {
+    public void createPlayerForGame() throws SlickException {
+        for (int i = 0; i < this.playerNames.size() && i < 2; ++i) {
             int randomX = RandomTools.getInt(WindowConfig.getW2SizeX() - 200) + 100;
-            this.gameObjectController.addPlayer(new SpaceShip(this.animatorGameData.getAnimator(EnumGameObject.SPACESHIP), "player" + String.valueOf(this.gameObjectController.getNumberPlayers()), randomX, WindowConfig.w2_sY - 100));
+            this.gameObjectController.addPlayer(new SpaceShip(this.animatorGameData.getAnimator(EnumGameObject.SPACESHIP), "player" + String.valueOf(i) + ":" + this.playerNames.get(i), randomX, WindowConfig.w2_sY - 100));
         }
 
     }

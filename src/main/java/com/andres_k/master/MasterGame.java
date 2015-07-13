@@ -40,9 +40,7 @@ public class MasterGame implements Observer {
     public void start() {
         try {
             this.startGame();
-        } catch (SlickException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

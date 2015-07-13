@@ -4,6 +4,7 @@ import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverl
 import com.andres_k.components.graphicComponents.userInterface.tools.items.ColorRect;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
 
 /**
  * Created by andres_k on 27/06/2015.
@@ -35,7 +36,7 @@ public abstract class Element {
 
     public abstract void update();
 
-    public abstract boolean replace(Element element);
+    public abstract boolean replace(Element element) throws SlickException;
 
     public abstract Object doTask(Object task);
 

@@ -7,7 +7,6 @@ import com.andres_k.components.gameComponents.gameObject.EnumGameObject;
 import com.andres_k.components.gameComponents.gameObject.GameObject;
 import com.andres_k.components.graphicComponents.input.EnumInput;
 import com.andres_k.components.taskComponent.EnumTask;
-import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.stockage.Pair;
 import org.newdawn.slick.Graphics;
 
@@ -39,7 +38,10 @@ public class SpaceShip extends GameObject {
 
     @Override
     public void update() {
-        this.score += 1;
+        if (this.positions.getV2() < 200) {
+            this.score += 1;
+        }
+        this.score += Math.ceil(this.calculateWithSpeed() - this.speed);
     }
 
     public void move() {
@@ -77,7 +79,7 @@ public class SpaceShip extends GameObject {
             } else if (input.isIn(EnumInput.MOVE_DOWN)) {
                 this.animator.setCurrent(EnumAnimation.BASIC);
                 this.moveTo.setV1(0f);
-                this.moveTo.setV2(this.calculateWithSpeed());
+                this.moveTo.setV2(this.calculateWithSpeed() / 2);
                 this.move = true;
             }
             if (this.move) {
@@ -100,11 +102,11 @@ public class SpaceShip extends GameObject {
 
     @Override
     public Object doTask(Object task) {
-        if (task instanceof Pair){
+        if (task instanceof Pair) {
             Pair<EnumTask, Object> received = (Pair<EnumTask, Object>) task;
 
-            if (received.getV1() == EnumTask.UPGRADE_SCORE && received.getV2() instanceof Integer){
-                this.score += (int)received.getV2();
+            if (received.getV1() == EnumTask.UPGRADE_SCORE && received.getV2() instanceof Integer) {
+                this.score += (int) received.getV2();
             }
         }
         return null;
@@ -112,8 +114,15 @@ public class SpaceShip extends GameObject {
 
     // GETTERS
 
-    public long getScore(){
+    public long getScore() {
         return this.score / 10;
     }
 
+    public String getPseudo() {
+        if (this.id.contains(":")) {
+            return this.id.substring(this.id.indexOf(":") + 1, this.id.length());
+        } else {
+            return this.id;
+        }
+    }
 }
