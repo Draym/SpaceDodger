@@ -11,13 +11,13 @@ import org.newdawn.slick.Input;
 /**
  * Created by andres_k on 29/06/2015.
  */
-public class SelectionField extends Element {
+public class SelectionStringField extends Element {
     private StringElement stringElement;
     private boolean focused;
     private boolean visible;
     private String target;
 
-    public SelectionField(ColorRect body, StringElement stringElement, String id, boolean visible) {
+    public SelectionStringField(ColorRect body, StringElement stringElement, String id, boolean visible) {
         this.stringElement = stringElement;
         this.body = body;
         this.focused = false;

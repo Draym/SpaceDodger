@@ -31,6 +31,7 @@ public enum EnumOverlayElement {
     TABLE_MENU(TABLE.value + "Menu", TABLE.index),
     TABLE_MENU_HOME(TABLE.value + " Home", TABLE.index),
     TABLE_MENU_NEWGAME(TABLE.value + " NewGame", TABLE.index),
+    TABLE_MENU_NEWGAME_LAUNCH(TABLE_MENU_NEWGAME.value + "Launch", TABLE.index),
     TABLE_MENU_SETTINGS(TABLE_MENU.value + "Settings", TABLE_MENU.index),
     TABLE_MENU_CONTROLS(TABLE_MENU.value + "Controls", TABLE_MENU.index),
     TABLE_MENU_SCREEN(TABLE_MENU.value + "Screen", TABLE_MENU.index),
@@ -39,11 +40,15 @@ public enum EnumOverlayElement {
     // primitive
     IMAGE("image"),
     STRING("string"),
-    BUTTON("button"),
     BORDER("border"),
     SELECT_FIELD("selectField"),
-    SAVE("save"),
+    BACKGROUND("background"),
+
+    // button
+    BUTTON("button"),
     GO("go"),
+    NEXT("next"),
+    SAVE("save"),
     SCORE("score"),
 
     // roundAnimator

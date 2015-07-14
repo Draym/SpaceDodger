@@ -46,6 +46,8 @@ public abstract class Overlay extends Observable implements Observer {
         }
     }
 
+    public abstract void initElement(EnumOverlayElement element) throws SlickException;
+
     // FUNCTIONS
     public abstract void enter() throws SlickException;
 
@@ -81,17 +83,15 @@ public abstract class Overlay extends Observable implements Observer {
     public abstract boolean event(int key, char c, EnumInput type);
 
     public boolean isOnFocus(int x, int y) {
-        boolean result = false;
-
         for (Map.Entry<EnumOverlayElement, InterfaceElement> entry : this.elements.entrySet()) {
             boolean[] reachable = entry.getValue().getReachable();
             if (reachable[this.current]) {
                 if (entry.getValue().isOnFocus(x, y) != null) {
-                    result = true;
+                    return true;
                 }
             }
         }
-        return result;
+        return false;
     }
 
     public boolean isFocused() {

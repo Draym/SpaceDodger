@@ -17,6 +17,7 @@ import com.andres_k.components.soundComponents.SoundController;
 import com.andres_k.components.taskComponent.EnumTargetTask;
 import com.andres_k.components.taskComponent.EnumTask;
 import com.andres_k.components.taskComponent.TaskFactory;
+import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.configs.WindowConfig;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.stockage.Tuple;
@@ -56,10 +57,11 @@ public class InterfaceOverlay extends Overlay {
                 new ColorRect(new Rectangle(menuX, menuY, 300, 310), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREY)), new Pair<>(false, true), false, new boolean[]{true, true}));
 
         this.elements.put(EnumOverlayElement.TABLE_MENU_NEWGAME, new GenericElement(EnumOverlayElement.TABLE_MENU_NEWGAME, this.genericSendTask,
-                new ColorRect(new Rectangle(menuX, menuY, 300, 180), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREY)), new Pair<>(false, true), false, new boolean[]{true, true}));
+                new ColorRect(new Rectangle(menuX, menuY, 300, 150), ColorTools.get(ColorTools.Colors.TRANSPARENT_BLACK)), new Pair<>(false, true), false, new boolean[]{true, true}));
+        this.elements.put(EnumOverlayElement.TABLE_MENU_NEWGAME_LAUNCH, new GenericElement(EnumOverlayElement.TABLE_MENU_NEWGAME_LAUNCH, this.genericSendTask,
+                new ColorRect(new Rectangle(menuX, menuY, 300, 180), ColorTools.get(ColorTools.Colors.TRANSPARENT_BLACK)), new Pair<>(false, true), false, new boolean[]{true, true}));
         this.elements.put(EnumOverlayElement.TABLE_MENU, new GenericElement(EnumOverlayElement.TABLE_MENU, this.genericSendTask,
                 new ColorRect(new Rectangle(menuX, menuY, 300, 240), ColorTools.get(ColorTools.Colors.TRANSPARENT_BLACK)), new Pair<>(true, true), false, new boolean[]{true, true}));
-
 
 
         this.elements.put(EnumOverlayElement.TABLE_MENU_HOME, new GenericElement(EnumOverlayElement.TABLE_MENU_HOME, this.genericSendTask,
@@ -71,18 +73,35 @@ public class InterfaceOverlay extends Overlay {
         this.animatorOverlayData = animatorOverlayData;
 
         this.initTableMenu();
-        this.initTableMenuAcceuil();
-        this.initTableMenuNew();
+        this.initTableMenuHome();
         this.initTableMenuControls();
         this.initTableMenuSettings();
     }
 
     @Override
-    public void enter() throws SlickException {
-        this.initTableMenuControls();
+    public void initElement(EnumOverlayElement element) throws SlickException {
+        if (element == EnumOverlayElement.TABLE_MENU_CONTROLS) {
+            this.elements.get(element).clearData();
+            this.initTableMenuControls();
+        } else if (element == EnumOverlayElement.TABLE_MENU_NEWGAME_LAUNCH) {
+            this.elements.get(element).clearData();
+            this.initTableMenuNewGameLaunch();
+        } else if (element == EnumOverlayElement.TABLE_MENU_NEWGAME) {
+            this.elements.get(element).clearData();
+            this.initTableMenuNewGame();
+        } else if (element == EnumOverlayElement.TABLE_MENU_SETTINGS) {
+            this.elements.get(element).clearData();
+            this.initTableMenuSettings();
+        }
     }
 
-    private void initTableMenuAcceuil() throws SlickException {
+    @Override
+    public void enter() throws SlickException {
+        this.initElement(EnumOverlayElement.TABLE_MENU_CONTROLS);
+        this.initElement(EnumOverlayElement.TABLE_MENU_SETTINGS);
+    }
+
+    private void initTableMenuHome() throws SlickException {
         InterfaceElement table = this.elements.get(EnumOverlayElement.TABLE_MENU_HOME);
 
         table.doTask(new ButtonElement(new ImageElement(new ColorRect(new Rectangle(table.getBody().getMinX() + 20, table.getBody().getMinY() + 20, table.getBody().getSizeX() - 40, 60), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREYBLACK)),
@@ -91,31 +110,48 @@ public class InterfaceOverlay extends Overlay {
                 this.animatorOverlayData.getAnimator(EnumOverlayElement.SCORE), Element.PositionInBody.MIDDLE_MID), EnumOverlayElement.SCORE));
     }
 
-    public void initTableMenuNew() throws SlickException {
+    public void initTableMenuNewGame() throws SlickException {
         InterfaceElement tableMenuNew = this.elements.get(EnumOverlayElement.TABLE_MENU_NEWGAME);
 
         float posX = tableMenuNew.getBody().getMinX();
         float posY = tableMenuNew.getBody().getMinY();
+        float sizeX = tableMenuNew.getBody().getSizeX();
+        float sizeY = tableMenuNew.getBody().getSizeY();
 
+        tableMenuNew.doTask(new ImageElement(new ColorRect(new Rectangle(posX + 15, posY + 15, sizeX - 30, sizeY - 30), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREY)), EnumOverlayElement.BACKGROUND.getValue(), Element.PositionInBody.MIDDLE_MID));
+        posY += (StringTools.charSizeY());
+        tableMenuNew.doTask(new StringElement(new ColorRect(new Rectangle(posX + 20, posY + 10, (sizeX - 30) / 2, StringTools.charSizeY())), new StringTimer("Player Size"), Color.black, Element.PositionInBody.RIGHT_MID));
+        tableMenuNew.doTask(new SelectionStringField(new ColorRect(new Rectangle(posX + 160, posY + 10, (sizeX - 30) / 4, StringTools.charSizeY()), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREYBLACK)),
+                new StringElement(new StringTimer(String.valueOf(GlobalVariable.currentPlayer)), Color.black, Element.PositionInBody.LEFT_MID), EnumOverlayElement.SELECT_FIELD.getValue() + "playerSize", true));
 
         posY += (StringTools.charSizeY());
-        tableMenuNew.doTask(new StringElement(new ColorRect(new Rectangle(posX + 20, posY, tableMenuNew.getBody().getSizeX() + 20, StringTools.charSizeY())), new StringTimer("pseudo"), Color.black, Element.PositionInBody.LEFT_MID));
-        tableMenuNew.doTask(new SelectionField(new ColorRect(new Rectangle(posX + 150, posY, 70, StringTools.charSizeY()), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREYBLUE)),
-                new StringElement(new StringTimer(""), Color.black, Element.PositionInBody.LEFT_MID), EnumOverlayElement.SELECT_FIELD.getValue() + EnumOverlayElement.NEW.getValue() + "pseudo1", true));
-/*
-        posY += (StringTools.charSizeY());
-        tableMenuNew.doTask(new StringElement(new ColorRect(new Rectangle(posX + 20, posY, tableMenuNew.getBody().getSizeX() + 20, StringTools.charSizeY())), new StringTimer("pseudo"), Color.black, Element.PositionInBody.LEFT_MID));
-        tableMenuNew.doTask(new SelectionField(new ColorRect(new Rectangle(posX + 150, posY, 70, StringTools.charSizeY()), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREYBLUE)),
-                new StringElement(new StringTimer(""), Color.black, Element.PositionInBody.LEFT_MID), EnumOverlayElement.SELECT_FIELD.getValue() + EnumOverlayElement.NEW.getValue() + "pseudo2", true));
-  */
-        posY += (StringTools.charSizeY() * 2);
-        tableMenuNew.doTask(new StringElement(new ColorRect(new Rectangle(posX + 20, posY, tableMenuNew.getBody().getSizeX() + 20, StringTools.charSizeY())), new StringTimer("Speed Game"), Color.black, Element.PositionInBody.LEFT_MID));
-        tableMenuNew.doTask(new SelectionField(new ColorRect(new Rectangle(posX + 150, posY, 70, StringTools.charSizeY()), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREYBLUE)),
-                new StringElement(new StringTimer(""), Color.black, Element.PositionInBody.LEFT_MID), EnumOverlayElement.SELECT_FIELD.getValue() + EnumOverlayElement.NEW.getValue() + "speedGame", true));
-        posY += (StringTools.charSizeY());
 
-        tableMenuNew.doTask(new ButtonElement(new ImageElement(new ColorRect(new Rectangle(posX + (tableMenuNew.getBody().getSizeX() / 2) - 105, posY + 40, 220, 50), ColorTools.get(ColorTools.Colors.TRANSPARENT_BLACK)),
-                this.animatorOverlayData.getAnimator(EnumOverlayElement.GO), Element.PositionInBody.MIDDLE_MID), EnumOverlayElement.GO));
+        tableMenuNew.doTask(new ButtonElement(new ImageElement(new ColorRect(new Rectangle(posX + 20, posY + 40, tableMenuNew.getBody().getSizeX() - 40, 50)),
+                this.animatorOverlayData.getAnimator(EnumOverlayElement.NEXT), Element.PositionInBody.MIDDLE_MID), EnumOverlayElement.NEXT, EnumOverlayElement.TABLE_MENU_NEWGAME_LAUNCH));
+    }
+
+    public void initTableMenuNewGameLaunch() throws SlickException {
+        InterfaceElement tableMenuNew = this.elements.get(EnumOverlayElement.TABLE_MENU_NEWGAME_LAUNCH);
+
+        float posX = tableMenuNew.getBody().getMinX();
+        float posY = tableMenuNew.getBody().getMinY();
+        float sizeX = tableMenuNew.getBody().getSizeX();
+        float sizeY = tableMenuNew.getBody().getSizeY();
+
+        tableMenuNew.doTask(new ImageElement(new ColorRect(new Rectangle(posX + 15, posY + 15, sizeX - 30, sizeY - 30), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREY)), EnumOverlayElement.BACKGROUND.getValue(), Element.PositionInBody.MIDDLE_MID));
+        posY += (StringTools.charSizeY());
+        posY += 10;
+        tableMenuNew.doTask(new StringElement(new ColorRect(new Rectangle(posX + 20, posY, (sizeX - 30) / 2, StringTools.charSizeY())), new StringTimer("Speed Game"), Color.black, Element.PositionInBody.RIGHT_MID));
+        tableMenuNew.doTask(new SelectionStringField(new ColorRect(new Rectangle(posX + 160, posY, (sizeX - 30) / 2 - 10, StringTools.charSizeY()), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREY)),
+                new StringElement(new StringTimer(String.valueOf(GlobalVariable.currentSpeed)), Color.black, Element.PositionInBody.LEFT_MID), EnumOverlayElement.SELECT_FIELD.getValue() + EnumOverlayElement.NEW.getValue() + "speedGame", true));
+        for (int i = 0; i < GlobalVariable.currentPlayer; ++i) {
+            posY += (StringTools.charSizeY());
+            tableMenuNew.doTask(new StringElement(new ColorRect(new Rectangle(posX + 20, posY, (sizeX - 30) / 2, StringTools.charSizeY())), new StringTimer("Pseudo P" + String.valueOf(i + 1)), Color.black, Element.PositionInBody.RIGHT_MID));
+            tableMenuNew.doTask(new SelectionStringField(new ColorRect(new Rectangle(posX + 160, posY, (sizeX - 30) / 2 - 10, StringTools.charSizeY()), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREY)),
+                    new StringElement(new StringTimer("unknown"), Color.black, Element.PositionInBody.LEFT_MID), EnumOverlayElement.SELECT_FIELD.getValue() + EnumOverlayElement.NEW.getValue() + "pseudo" + String.valueOf(i), true));
+        }
+        tableMenuNew.doTask(new ButtonElement(new ImageElement(new ColorRect(new Rectangle(posX + (tableMenuNew.getBody().getSizeX() / 2) - 105, posY + 40, 220, 50)),
+                this.animatorOverlayData.getAnimator(EnumOverlayElement.GO), Element.PositionInBody.MIDDLE_MID), EnumOverlayElement.GO, EnumOverlayElement.BUTTON));
     }
 
     private void initTableMenu() throws SlickException {
@@ -135,7 +171,6 @@ public class InterfaceOverlay extends Overlay {
         tableMenuControls.doTask(new ButtonElement(new StringElement(new StringTimer("Controls"), Color.black,
                 EnumOverlayElement.CONTROLS.getValue() + ":" + EnumOverlayElement.CONTROLS.getValue(), Element.PositionInBody.MIDDLE_MID), EnumOverlayElement.BUTTON));
 
-        tableMenuControls.doTask(new Pair<>("clear", EnumOverlayElement.CONTROLS.getValue() + ":" + EnumOverlayElement.CONTROLS.getValue()));
         for (Map.Entry<EnumInput, String> entry : InputData.getAvailableInput().entrySet()) {
             tableMenuControls.doTask(new ButtonElement(new StringElement(new StringTimer(entry.getKey().getValue() + ":" +
                     StringTools.duplicateString(" ", 14 - entry.getKey().getValue().length()) + entry.getValue() +
@@ -213,6 +248,7 @@ public class InterfaceOverlay extends Overlay {
                         this.notifyObservers(TaskFactory.createTask(EnumTargetTask.INTERFACE_OVERLAY, EnumTargetTask.INTERFACE, received.getV2()));
                     } else if (this.elements.containsKey(received.getV1()) && this.elements.containsKey(received.getV2())) {
                         this.elements.get(received.getV1()).stop();
+                        this.initElement(received.getV2());
                         this.elements.get(received.getV2()).start();
                     }
                 } else if (((Pair) arg).getV2() instanceof Pair) {
@@ -223,7 +259,7 @@ public class InterfaceOverlay extends Overlay {
                     }
                 }
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -274,7 +310,7 @@ public class InterfaceOverlay extends Overlay {
                     }
                 }
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return false;

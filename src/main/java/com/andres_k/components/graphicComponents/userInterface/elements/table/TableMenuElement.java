@@ -5,6 +5,7 @@ import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverl
 import com.andres_k.components.graphicComponents.userInterface.tools.elements.Element;
 import com.andres_k.components.graphicComponents.userInterface.tools.items.ColorRect;
 import com.andres_k.components.graphicComponents.userInterface.tools.listElements.ListElement;
+import com.andres_k.components.taskComponent.EnumTask;
 import com.andres_k.components.taskComponent.GenericSendTask;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.tools.ColorTools;
@@ -32,15 +33,12 @@ public class TableMenuElement extends TableElement {
     public void doTask(Object task) throws SlickException {
         if (task instanceof Element) {
             this.addElement((Element) task);
+        } else if (task instanceof EnumTask) {
+            if (task == EnumTask.CLEAR){
+                this.clearData();
+            }
         } else if (task instanceof Pair) {
-            if (((Pair) task).getV1().equals("clear")){
-                String id = (String) ((Pair) task).getV2();
-
-                Element key = this.containsKey(id);
-                if (key != null){
-                    this.table.get(key).clear();
-                }
-            } else {
+            if (((Pair) task).getV1() instanceof Integer && ((Pair) task).getV2() instanceof Boolean) {
                 Pair<Integer, Boolean> received = (Pair<Integer, Boolean>) task;
                 if (received.getV1() < this.reachable.length) {
                     this.reachable[received.getV1()] = received.getV2();
@@ -56,7 +54,7 @@ public class TableMenuElement extends TableElement {
                 }
                 ++i;
             }
-        } else if (task instanceof String){
+        } else if (task instanceof String) {
             String value = this.focusedElement.toString();
             String keyString = (String) task;
             String newValue;
@@ -120,7 +118,7 @@ public class TableMenuElement extends TableElement {
                                 newValue = true;
                             }
                             EnumOverlayElement type = element.getType();
-                            if (element.getId().contains(":")){
+                            if (element.getId().contains(":")) {
                                 type = EnumOverlayElement.getEnumByValue(element.getId().substring(element.getId().indexOf(":") + 1));
                             }
                             this.genericSendTask.sendTask(new Pair<>(type, new Pair<>(listIndex, newValue)));

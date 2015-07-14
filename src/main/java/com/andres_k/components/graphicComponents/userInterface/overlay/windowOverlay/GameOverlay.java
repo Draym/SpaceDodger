@@ -20,6 +20,7 @@ import com.andres_k.components.networkComponents.messages.MessageOverlayChat;
 import com.andres_k.components.soundComponents.MusicController;
 import com.andres_k.components.soundComponents.SoundController;
 import com.andres_k.components.taskComponent.EnumTargetTask;
+import com.andres_k.components.taskComponent.EnumTask;
 import com.andres_k.components.taskComponent.TaskFactory;
 import com.andres_k.utils.configs.WindowConfig;
 import com.andres_k.utils.stockage.Pair;
@@ -58,12 +59,12 @@ public class GameOverlay extends Overlay {
                 new ColorRect(new Rectangle((WindowConfig.w2_sX / 2) - 200, (WindowConfig.w2_sY / 2) - 250, 400, 200))));
 
         this.elements.put(EnumOverlayElement.TABLE_MENU_CONTROLS, new TableMenuElement(EnumOverlayElement.TABLE_MENU_CONTROLS, this.genericSendTask,
-                new ColorRect(new Rectangle((WindowConfig.w2_sX / 2) - 150, (WindowConfig.w2_sY / 2) - 300, 400, 300), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREY))));
+                new ColorRect(new Rectangle((WindowConfig.w2_sX / 2) - 150, (WindowConfig.w2_sY / 2) - 100, 400, 300), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREY))));
         this.elements.put(EnumOverlayElement.TABLE_MENU_SETTINGS, new GenericElement(EnumOverlayElement.TABLE_MENU_SETTINGS,
-                new ColorRect(new Rectangle((WindowConfig.w2_sX / 2) - 150, (WindowConfig.w2_sY / 2) - 300, 300, 310), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREY)), new Pair<>(false, true), false, new boolean[]{true, true}));
+                new ColorRect(new Rectangle((WindowConfig.w2_sX / 2) - 150, (WindowConfig.w2_sY / 2) - 100, 300, 310), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREY)), new Pair<>(false, true), false, new boolean[]{true, true}));
 
         this.elements.put(EnumOverlayElement.TABLE_MENU, new GenericElement(EnumOverlayElement.TABLE_MENU, this.genericSendTask,
-                new ColorRect(new Rectangle((WindowConfig.w2_sX / 2) - 150, (WindowConfig.w2_sY / 2) - 300, 300, 240), ColorTools.get(ColorTools.Colors.TRANSPARENT_BLACK)), new Pair<>(true, true), false, new boolean[]{true, true}));
+                new ColorRect(new Rectangle((WindowConfig.w2_sX / 2) - 150, (WindowConfig.w2_sY / 2) - 100, 300, 240), ColorTools.get(ColorTools.Colors.TRANSPARENT_BLACK)), new Pair<>(true, true), false, new boolean[]{true, true}));
     }
 
     @Override
@@ -79,8 +80,19 @@ public class GameOverlay extends Overlay {
     }
 
     @Override
+    public void initElement(EnumOverlayElement element) throws SlickException {
+        if (element == EnumOverlayElement.TABLE_MENU_CONTROLS) {
+            this.initTableMenuControls();
+        } else if (element == EnumOverlayElement.TABLE_MENU_SETTINGS) {
+            this.elements.get(element).clearData();
+            this.initTableMenuSettings();
+        }
+    }
+
+    @Override
     public void enter() throws SlickException {
-        this.initTableMenuControls();
+        this.initElement(EnumOverlayElement.TABLE_MENU_CONTROLS);
+        this.initElement(EnumOverlayElement.TABLE_MENU_SETTINGS);
     }
 
     private void initTableNewRound() throws SlickException {
@@ -141,8 +153,8 @@ public class GameOverlay extends Overlay {
         tableMenuSettings.doTask(new ImageElement(new ColorRect(new Rectangle(posX + 10, posY + 4, 202, 12), ColorTools.get(ColorTools.Colors.TRANSPARENT_BLACK)), EnumOverlayElement.MUSICS_GRAPH.getValue() + EnumOverlayElement.BORDER.getValue(), Element.PositionInBody.LEFT_MID));
         tableMenuSettings.doTask(new ImageElement(new ColorRect(new Rectangle(posX + 11, posY + 5, 200, 10), ColorTools.get(ColorTools.Colors.TRANSPARENT_BLUE)), EnumOverlayElement.MUSICS_GRAPH.getValue(), Element.PositionInBody.LEFT_MID));
 
-        tableMenuSettings.doTask(new Pair<>(EnumOverlayElement.SOUNDS_GRAPH, new Pair<>("cutBody", SoundController.getVolume() / SoundController.getMaxVolume())));
-        tableMenuSettings.doTask(new Pair<>(EnumOverlayElement.MUSICS_GRAPH, new Pair<>("cutBody", MusicController.getVolume() / MusicController.getMaxVolume())));
+        tableMenuSettings.doTask(new Pair<>(EnumOverlayElement.SOUNDS_GRAPH.getValue(), new Tuple<>(EnumTask.CUT, "body", SoundController.getVolume() / SoundController.getMaxVolume())));
+        tableMenuSettings.doTask(new Pair<>(EnumOverlayElement.MUSICS_GRAPH.getValue(), new Tuple<>(EnumTask.CUT, "body", MusicController.getVolume() / MusicController.getMaxVolume())));
     }
 
     // TASK
@@ -197,7 +209,7 @@ public class GameOverlay extends Overlay {
                 this.setChanged();
                 this.notifyObservers(TaskFactory.createTask(EnumTargetTask.GAME_OVERLAY, EnumTargetTask.GAME, arg));
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

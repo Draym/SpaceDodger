@@ -10,13 +10,15 @@ import java.util.List;
  * Created by andres_k on 10/07/2015.
  */
 public class MessageGameNew extends MessageModel {
-    EnumOverlayElement from;
+    EnumOverlayElement type;
+    EnumOverlayElement target;
     List<String> values;
 
-    public MessageGameNew(String pseudo, String id, EnumOverlayElement from){
+    public MessageGameNew(String pseudo, String id, EnumOverlayElement type, EnumOverlayElement target){
         super(pseudo, id);
 
-        this.from = from;
+        this.type = type;
+        this.target = target;
         this.values = new ArrayList<>();
     }
 
@@ -25,8 +27,8 @@ public class MessageGameNew extends MessageModel {
     }
 
     // GETTERS
-    public EnumOverlayElement getFrom(){
-        return this.from;
+    public EnumOverlayElement getType(){
+        return this.type;
     }
 
     public List<String> getValues(){

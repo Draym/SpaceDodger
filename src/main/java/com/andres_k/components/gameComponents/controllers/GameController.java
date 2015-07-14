@@ -149,10 +149,10 @@ public class GameController extends WindowController {
                     }
                 } else if (received.getV3() instanceof MessageGameNew) {
                     List<String> values = ((MessageGameNew) received.getV3()).getValues();
-                    float newSpeed = Float.valueOf(values.get(values.size() - 1));
+                    float newSpeed = Float.valueOf(values.get(0));
 
                     this.playerNames.clear();
-                    for (int i = 0; i < (values.size() - 1); ++i) {
+                    for (int i = 1; i < values.size(); ++i) {
                         this.playerNames.add(values.get(i));
                     }
 

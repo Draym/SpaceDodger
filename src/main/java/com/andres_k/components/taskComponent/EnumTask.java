@@ -13,6 +13,7 @@ public enum EnumTask {
     CUT,
     START,
     STOP,
+    CLEAR,
 
     //others
     UPGRADE_SCORE,

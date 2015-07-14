@@ -7,6 +7,7 @@ import com.andres_k.components.taskComponent.EnumTask;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.stockage.Tuple;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
 /**
@@ -146,6 +147,7 @@ public class ImageElement extends Element {
 
     @Override
     public Object doTask(Object task) {
+
         if (task instanceof EnumTask) {
             if (task == EnumTask.START) {
                 this.start();
@@ -180,6 +182,10 @@ public class ImageElement extends Element {
                         this.body.setPrintable(false);
                         this.body.setSizes(0, this.body.getSizeY());
                     }
+                }
+            } else if (order == EnumTask.EVENT) {
+                if (target instanceof Integer && (int) target <= Input.KEY_NUMPAD9 && (int) target >= Input.KEY_NUMPAD0) {
+                    this.animator.setIndex((Integer) value);
                 }
             }
 

@@ -55,6 +55,10 @@ public class GenericElement extends InterfaceElement {
     public void doTask(Object task) {
         if (task instanceof Element) {
             this.elements.add((Element) task);
+        } else if (task instanceof EnumTask) {
+            if (task == EnumTask.CLEAR) {
+                this.elements.clear();
+            }
         } else if (task instanceof Pair) {
             if (((Pair) task).getV1() instanceof Integer) {
                 Pair<Integer, Boolean> received = (Pair<Integer, Boolean>) task;
@@ -152,8 +156,9 @@ public class GenericElement extends InterfaceElement {
                 Object result = element.isOnFocus(x, y);
                 if (result != null) {
                     if (result instanceof EnumOverlayElement) {
-                        if (result == EnumOverlayElement.GO) {
-                            MessageGameNew task = new MessageGameNew("admin", "admin", EnumOverlayElement.GO);
+                        ConsoleWrite.debug("isOnFocus(" + x + ", " + y + ") -> " + result);
+                        if (element.getType() == EnumOverlayElement.GO || element.getType() == EnumOverlayElement.NEXT) {
+                            MessageGameNew task = new MessageGameNew("admin", "admin", element.getType(), (EnumOverlayElement) result);
 
                             for (Element tmp : this.elements) {
                                 if (tmp.getType() == EnumOverlayElement.SELECT_FIELD && tmp.isEmpty())
@@ -169,12 +174,12 @@ public class GenericElement extends InterfaceElement {
                                 this.genericSendTask.sendTask(new Pair<>(this.type, task));
                                 this.eventReleased(Input.KEY_ESCAPE, 'e');
                             }
-                        } else if (this.genericSendTask != null) {
+                        }
+                        if (this.genericSendTask != null) {
                             this.genericSendTask.sendTask(new Pair<>(this.type, result));
                         }
                         return result;
-                    }
-                    if (result instanceof Boolean && (Boolean) result == true) {
+                    } else if (result instanceof Boolean && (Boolean) result) {
 
                         if (element.getId().equals(EnumOverlayElement.MUSICS_GRAPH.getValue() + EnumOverlayElement.BORDER.getValue())) {
                             int graph = this.containId(EnumOverlayElement.MUSICS_GRAPH.getValue());
@@ -212,8 +217,8 @@ public class GenericElement extends InterfaceElement {
                 }
             }
         }
-        if (onFocus == true) {
-            return onFocus;
+        if (onFocus) {
+            return true;
         }
         return null;
     }

@@ -4,7 +4,7 @@ package com.andres_k.components.graphicComponents.userInterface.elements.chat;
 import com.andres_k.components.graphicComponents.userInterface.elements.InterfaceElement;
 import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverlayElement;
 import com.andres_k.components.graphicComponents.userInterface.tools.elements.Element;
-import com.andres_k.components.graphicComponents.userInterface.tools.elements.SelectionField;
+import com.andres_k.components.graphicComponents.userInterface.tools.elements.SelectionStringField;
 import com.andres_k.components.graphicComponents.userInterface.tools.elements.StringElement;
 import com.andres_k.components.graphicComponents.userInterface.tools.items.ActivatedTimer;
 import com.andres_k.components.graphicComponents.userInterface.tools.items.ColorRect;
@@ -29,7 +29,7 @@ import org.newdawn.slick.geom.Rectangle;
 
 public class ChatElement extends InterfaceElement {
     private ListElement stringListElement;
-    private SelectionField selectionField;
+    private SelectionStringField selectionStringField;
 
     public ChatElement(EnumOverlayElement type, ColorRect body) {
         this.parentInit(body, type, false, new boolean[]{true, true});
@@ -46,7 +46,7 @@ public class ChatElement extends InterfaceElement {
     }
 
     private void childInit() {
-        this.selectionField = new SelectionField(new ColorRect(new Rectangle(this.body.getMinX() + 20, this.body.getMinY() + 170, 300, StringTools.charSizeY()), new Color(0.2f, 0.2f, 0.3f, 0.6f)),
+        this.selectionStringField = new SelectionStringField(new ColorRect(new Rectangle(this.body.getMinX() + 20, this.body.getMinY() + 170, 300, StringTools.charSizeY()), new Color(0.2f, 0.2f, 0.3f, 0.6f)),
                 new StringElement(new StringTimer(""), Color.white, Element.PositionInBody.LEFT_MID), EnumOverlayElement.SELECT_FIELD.getValue() + "chat", true);
         float chatSizeY = 170;
         this.stringListElement = new StringListElement(new ColorRect(new Rectangle(this.body.getMinX(), this.body.getMinY(), this.body.getSizeX(), chatSizeY)));
@@ -65,7 +65,7 @@ public class ChatElement extends InterfaceElement {
         if (this.isActivated()) {
             this.body.draw(g);
             this.stringListElement.draw(g);
-            this.selectionField.draw(g);
+            this.selectionStringField.draw(g);
         }
     }
 
@@ -82,7 +82,7 @@ public class ChatElement extends InterfaceElement {
     }
 
     private boolean selectionFocused() {
-        if (this.selectionField.doTask(new Pair<>(EnumTask.GETTER, "focus")) != null) {
+        if (this.selectionStringField.doTask(new Pair<>(EnumTask.GETTER, "focus")) != null) {
             return true;
         } else {
             return false;
@@ -90,7 +90,7 @@ public class ChatElement extends InterfaceElement {
     }
 
     private void setSelectionFocus(boolean value) {
-        this.selectionField.doTask(new Tuple<>(EnumTask.SETTER, "focus", value));
+        this.selectionStringField.doTask(new Tuple<>(EnumTask.SETTER, "focus", value));
     }
 
     @Override
@@ -98,9 +98,9 @@ public class ChatElement extends InterfaceElement {
         if (key == Input.KEY_ENTER) {
             if (this.selectionFocused()) {
                 this.setSelectionFocus(false);
-                if (!this.selectionField.toString().equals("")) {
-                    MessageOverlayChat request = new MessageOverlayChat(CurrentUser.getPseudo(), CurrentUser.getId(), true, this.selectionField.toString());
-                    this.selectionField.doTask(new Tuple<>(EnumTask.SETTER, "current", ""));
+                if (!this.selectionStringField.toString().equals("")) {
+                    MessageOverlayChat request = new MessageOverlayChat(CurrentUser.getPseudo(), CurrentUser.getId(), true, this.selectionStringField.toString());
+                    this.selectionStringField.doTask(new Tuple<>(EnumTask.SETTER, "current", ""));
                     return request;
                 }
             } else {
@@ -111,7 +111,7 @@ public class ChatElement extends InterfaceElement {
         } else if (key == Input.KEY_ESCAPE && this.selectionFocused()) {
             return true;
         } else if (this.selectionFocused()) {
-            this.selectionField.doTask(new Tuple<>(EnumTask.EVENT, key, c));
+            this.selectionStringField.doTask(new Tuple<>(EnumTask.EVENT, key, c));
             this.activatedTimer.startTimer();
         } else {
             return null;
@@ -138,10 +138,10 @@ public class ChatElement extends InterfaceElement {
             if (result instanceof Element) {
                 //todo catach l'element et l'envoyer au selectField pour envois de message by id
                 ConsoleWrite.debug("element CATCH");
-                this.selectionField.doTask(new Pair<>(EnumTask.SEND_TO, ((Element) result).getId()));
+                this.selectionStringField.doTask(new Pair<>(EnumTask.SEND_TO, ((Element) result).getId()));
                 return result;
             }
-            if (this.selectionField.isOnFocus(x, y) != null) {
+            if (this.selectionStringField.isOnFocus(x, y) != null) {
                 ConsoleWrite.debug("selection CATCH");
                 return true;
             }

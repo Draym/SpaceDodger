@@ -4,16 +4,15 @@ import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverlayElement;
 import com.andres_k.components.networkComponents.messages.MessageGameNew;
 import com.andres_k.components.taskComponent.EnumTargetTask;
-import com.andres_k.components.taskComponent.EnumTask;
 import com.andres_k.components.taskComponent.TaskFactory;
 import com.andres_k.utils.configs.GlobalVariable;
-import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.stockage.Tuple;
 import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
+import java.util.List;
 import java.util.Observable;
 
 /**
@@ -26,14 +25,6 @@ public class InterfaceController extends WindowController {
 
     @Override
     public void enter() {
-        //init overlay value
-        for (int i = 0; i < GlobalVariable.maxPlayer; ++i) {
-            this.setChanged();
-            this.notifyObservers(TaskFactory.createTask(EnumTargetTask.INTERFACE, EnumTargetTask.INTERFACE_OVERLAY, new Pair<EnumOverlayElement, Pair>(EnumOverlayElement.TABLE_MENU_NEWGAME, new Pair<>(EnumOverlayElement.SELECT_FIELD.getValue() + EnumOverlayElement.NEW.getValue() + "pseudo" + String.valueOf(i), new Tuple<>(EnumTask.SETTER, "current", "unknown")))));
-        }
-        this.setChanged();
-        this.notifyObservers(TaskFactory.createTask(EnumTargetTask.INTERFACE, EnumTargetTask.INTERFACE_OVERLAY, new Pair<EnumOverlayElement, Pair>(EnumOverlayElement.TABLE_MENU_NEWGAME, new Pair<>(EnumOverlayElement.SELECT_FIELD.getValue() + EnumOverlayElement.NEW.getValue() + "speedGame", new Tuple<>(EnumTask.SETTER, "current", String.valueOf(GlobalVariable.currentSpeed))))));
-
     }
 
     @Override
@@ -86,8 +77,18 @@ public class InterfaceController extends WindowController {
                         this.window.quit();
                     }
                 } else if (received.getV3() instanceof MessageGameNew) {
-                    this.setChanged();
-                    this.notifyObservers(TaskFactory.createTask(EnumTargetTask.INTERFACE, EnumTargetTask.GAME, received.getV3()));
+                    if (((MessageGameNew) received.getV3()).getType() == EnumOverlayElement.GO) {
+                        this.setChanged();
+                        this.notifyObservers(TaskFactory.createTask(EnumTargetTask.INTERFACE, EnumTargetTask.GAME, received.getV3()));
+                    } else if (((MessageGameNew) received.getV3()).getType() == EnumOverlayElement.NEXT) {
+                        List<String> values = ((MessageGameNew) received.getV3()).getValues();
+
+                        if (values.size() > 0){
+                            Integer value = Integer.valueOf(values.get(0));
+                            GlobalVariable.currentPlayer = value;
+                            GlobalVariable.currentSpeed = (GlobalVariable.currentPlayer > GlobalVariable.maxPlayer ? GlobalVariable.maxPlayer : GlobalVariable.currentPlayer);
+                        }
+                    }
                 }
             }
         }
