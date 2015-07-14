@@ -10,7 +10,10 @@ public class GlobalVariable {
     public static float currentSpeed = defaultSpeed;
     public static int maxPlayer = 2;
     public static int currentPlayer = 1;
+
     public static boolean drawCollision = false;
+    public static boolean showFps = false;
     public static boolean debug = false;
+
     public static AppGameContainer appGameContainer;
 }
