@@ -20,8 +20,6 @@ import org.newdawn.slick.state.StateBasedGame;
  * Created by andres_k on 08/07/2015.
  */
 public class WindowGame extends WindowBasedGame {
-
-    private BackgroundSliding background;
     private long delta;
 
     public WindowGame(int idWindow, GenericSendTask interfaceTask) throws JSONException {
@@ -64,8 +62,6 @@ public class WindowGame extends WindowBasedGame {
             throw new SlickException(e.getMessage());
         }
         this.overlay.initElementsComponent(this.animatorOverlay);
-
-        this.background = new BackgroundSliding("image/background/backgroundGame.png");
     }
 
 
@@ -93,7 +89,6 @@ public class WindowGame extends WindowBasedGame {
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
-        this.background.draw(graphics);
         this.controller.renderWindow(graphics);
         this.overlay.draw(graphics);
     }
@@ -103,7 +98,6 @@ public class WindowGame extends WindowBasedGame {
         this.delta += i;
 
         if (this.delta > 30) {
-            this.background.update();
             this.controller.updateWindow(gameContainer);
             this.overlay.updateOverlay();
             this.delta = 0;

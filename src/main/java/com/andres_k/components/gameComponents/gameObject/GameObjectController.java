@@ -152,6 +152,15 @@ public class GameObjectController extends Observable {
         ConsoleWrite.write("\n" + player.getPseudo() + " : '" + score + "' pts.");
     }
 
+    public void changeGameState(boolean running){
+        for (GameObject object : this.players){
+            object.getAnimator().currentAnimation().setAutoUpdate(running);
+        }
+        for (GameObject object : this.obstacles){
+            object.getAnimator().currentAnimation().setAutoUpdate(running);
+        }
+    }
+
     // ADD
 
     public void createPlayers(List<String> playerNames, AnimatorGameData animatorGameData) throws SlickException {

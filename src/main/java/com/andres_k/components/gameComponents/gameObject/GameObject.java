@@ -190,6 +190,10 @@ public abstract class GameObject {
         return this.alive;
     }
 
+    public Animator getAnimator(){
+        return this.animator;
+    }
+
     // SETTERS
 
     public void setMove(boolean value) {

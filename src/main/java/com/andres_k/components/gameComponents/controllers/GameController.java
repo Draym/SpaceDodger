@@ -3,6 +3,7 @@ package com.andres_k.components.gameComponents.controllers;
 import com.andres_k.components.gameComponents.animations.AnimatorGameData;
 import com.andres_k.components.gameComponents.gameObject.GameObjectController;
 import com.andres_k.components.graphicComponents.graphic.EnumWindow;
+import com.andres_k.components.graphicComponents.graphic.windowGame.BackgroundSliding;
 import com.andres_k.components.graphicComponents.input.EnumInput;
 import com.andres_k.components.graphicComponents.input.InputGame;
 import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverlayElement;
@@ -31,6 +32,7 @@ import java.util.*;
 public class GameController extends WindowController {
     private AnimatorGameData animatorGameData;
     private GameObjectController gameObjectController;
+    private BackgroundSliding background;
     private InputGame inputGame;
     private List<String> playerNames;
 
@@ -80,17 +82,22 @@ public class GameController extends WindowController {
     public void init() throws SlickException, JSONException {
         this.animatorGameData.init();
         this.gameObjectController.init(this.animatorGameData);
+
+        this.background = new BackgroundSliding("image/background/backgroundGame.png");
     }
 
     @Override
     public void renderWindow(Graphics g) {
+        this.background.draw(g);
         this.gameObjectController.draw(g);
     }
 
     @Override
     public void updateWindow(GameContainer gameContainer) throws SlickException {
-        if (this.running || this.gameObjectController.getNumberPlayers() == 0)
+        if (this.running || this.gameObjectController.getNumberPlayers() == 0) {
+            this.background.update();
             this.gameObjectController.update(this.running);
+        }
         if (this.running) {
             if (this.gameObjectController.getNumberPlayers() == 0) {
                 this.setChanged();
@@ -163,6 +170,7 @@ public class GameController extends WindowController {
                     this.stateWindow.enterState(EnumWindow.GAME.getValue());
                 } else if (received.getV3() instanceof MessageOverlayMenu) {
                     this.running = !((MessageOverlayMenu) received.getV3()).isActivated();
+                    this.gameObjectController.changeGameState(this.running);
                 }
             }
         } else if (arg instanceof Pair){
