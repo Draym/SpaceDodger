@@ -20,8 +20,8 @@ public class MusicController {
     public static void init() throws SlickException {
         if (needInit == true) {
             musics = new HashMap<>();
-   //         musics.put(EnumSound.BACKGROUND_HOME, new Music(EnumSound.BACKGROUND_HOME.getPath()));
-     //       musics.put(EnumSound.BACKGROUND_GAME, new Music(EnumSound.BACKGROUND_GAME.getPath()));
+            musics.put(EnumSound.BACKGROUND_HOME, new Music(EnumSound.BACKGROUND_HOME.getPath()));
+            musics.put(EnumSound.BACKGROUND_GAME, new Music(EnumSound.BACKGROUND_GAME.getPath()));
             pitch = 1.0f;
             volume = 1.0f;
             maxVolume = 2.0f;
