@@ -6,6 +6,7 @@ import com.andres_k.components.graphicComponents.userInterface.tools.items.Color
 import com.andres_k.components.taskComponent.EnumTask;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.stockage.Tuple;
+import com.andres_k.utils.tools.ConsoleWrite;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;

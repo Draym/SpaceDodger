@@ -195,7 +195,7 @@ public class Animator implements Observer {
 
     public Animation getAnimation(EnumAnimation type, int index) {
         if (this.animations.containsKey(type)) {
-            if (index < this.animations.get(type).size()) {
+            if (index >= 0 && index < this.animations.get(type).size()) {
                 return this.animations.get(type).get(index);
             }
         }

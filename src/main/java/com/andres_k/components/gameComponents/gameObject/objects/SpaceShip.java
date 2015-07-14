@@ -125,4 +125,13 @@ public class SpaceShip extends GameObject {
             return this.id;
         }
     }
+
+    public int getIdIndex(){
+        if (this.id.contains(":")) {
+            int index = this.id.indexOf(":");
+            return Integer.valueOf(this.id.substring(index - 1, index));
+        } else {
+            return -1;
+        }
+    }
 }

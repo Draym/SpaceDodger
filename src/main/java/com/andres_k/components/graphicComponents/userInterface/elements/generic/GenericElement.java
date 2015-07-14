@@ -1,14 +1,13 @@
 package com.andres_k.components.graphicComponents.userInterface.elements.generic;
 
-import com.andres_k.components.soundComponents.MusicController;
-import com.andres_k.components.soundComponents.SoundController;
 import com.andres_k.components.graphicComponents.userInterface.elements.InterfaceElement;
 import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverlayElement;
 import com.andres_k.components.graphicComponents.userInterface.tools.elements.Element;
 import com.andres_k.components.graphicComponents.userInterface.tools.items.ColorRect;
-import com.andres_k.components.networkComponents.messages.MessageGameNew;
-import com.andres_k.components.networkComponents.messages.MessageOverlayChat;
-import com.andres_k.components.networkComponents.messages.MessageOverlayMenu;
+import com.andres_k.components.networkComponents.MessageModel;
+import com.andres_k.components.networkComponents.messages.*;
+import com.andres_k.components.soundComponents.MusicController;
+import com.andres_k.components.soundComponents.SoundController;
 import com.andres_k.components.taskComponent.EnumTask;
 import com.andres_k.components.taskComponent.GenericSendTask;
 import com.andres_k.utils.configs.CurrentUser;
@@ -81,6 +80,8 @@ public class GenericElement extends InterfaceElement {
                     }
                 }
             }
+        } else if (task instanceof MessageModel) {
+            this.manageRoundAppear(task);
         }
     }
 
@@ -156,62 +157,9 @@ public class GenericElement extends InterfaceElement {
                 Object result = element.isOnFocus(x, y);
                 if (result != null) {
                     if (result instanceof EnumOverlayElement) {
-                        ConsoleWrite.debug("isOnFocus(" + x + ", " + y + ") -> " + result);
-                        if (element.getType() == EnumOverlayElement.GO || element.getType() == EnumOverlayElement.NEXT) {
-                            MessageGameNew task = new MessageGameNew("admin", "admin", element.getType(), (EnumOverlayElement) result);
-
-                            for (Element tmp : this.elements) {
-                                if (tmp.getType() == EnumOverlayElement.SELECT_FIELD && tmp.isEmpty())
-                                    return result;
-                            }
-                            for (Element tmp : this.elements) {
-                                if (tmp.getType() == EnumOverlayElement.SELECT_FIELD) {
-                                    task.addValue(tmp.toString());
-                                    tmp.doTask(new Tuple<>(EnumTask.SETTER, "current", ""));
-                                }
-                            }
-                            if (this.genericSendTask != null) {
-                                this.genericSendTask.sendTask(new Pair<>(this.type, task));
-                                this.eventReleased(Input.KEY_ESCAPE, 'e');
-                            }
-                        }
-                        if (this.genericSendTask != null) {
-                            this.genericSendTask.sendTask(new Pair<>(this.type, result));
-                        }
-                        return result;
+                        return this.manageButtons(element, result);
                     } else if (result instanceof Boolean && (Boolean) result) {
-
-                        if (element.getId().equals(EnumOverlayElement.MUSICS_GRAPH.getValue() + EnumOverlayElement.BORDER.getValue())) {
-                            int graph = this.containId(EnumOverlayElement.MUSICS_GRAPH.getValue());
-                            int value = this.containId(EnumOverlayElement.MUSICS_VALUE.getValue());
-
-                            if (graph != -1 && value != -1) {
-                                Element itemGraph = this.elements.get(graph);
-                                Element itemValue = this.elements.get(value);
-                                float border = itemGraph.getBody().getMinX() - element.getBody().getMinX();
-                                float percent = (x - itemGraph.getBody().getMinX()) / (element.getBody().getSizeX() - (border * 2));
-
-                                MusicController.changeVolume(percent * MusicController.getMaxVolume());
-
-                                itemValue.doTask(String.valueOf((int) (MusicController.getVolume() * 100)));
-                                itemGraph.doTask(new Tuple<>(EnumTask.CUT, "body", MusicController.getVolume() / MusicController.getMaxVolume()));
-                            }
-                        } else if (element.getId().equals(EnumOverlayElement.SOUNDS_GRAPH.getValue() + EnumOverlayElement.BORDER.getValue())) {
-                            int graph = this.containId(EnumOverlayElement.SOUNDS_GRAPH.getValue());
-                            int value = this.containId(EnumOverlayElement.SOUNDS_VALUE.getValue());
-
-                            if (graph != -1 && value != -1) {
-                                Element itemGraph = this.elements.get(graph);
-                                Element itemValue = this.elements.get(value);
-                                float border = itemGraph.getBody().getMinX() - element.getBody().getMinX();
-                                float percent = (x - itemGraph.getBody().getMinX()) / (element.getBody().getSizeX() - (border * 2));
-
-                                SoundController.changeVolume(percent * SoundController.getMaxVolume());
-
-                                itemValue.doTask(String.valueOf((int) (SoundController.getVolume() * 100)));
-                                itemGraph.doTask(new Tuple<>(EnumTask.CUT, "body", SoundController.getVolume() / SoundController.getMaxVolume()));
-                            }
-                        }
+                        this.manageOptionSound(element, x, y);
                         onFocus = true;
                     }
                 }
@@ -269,6 +217,95 @@ public class GenericElement extends InterfaceElement {
                     element.doTask(new Tuple<>(EnumTask.SETTER, "current", ""));
                     return request;
                 }
+            }
+        }
+        return null;
+    }
+
+    protected void sendTaskToAll(Object task) {
+        for (int i = 0; i < this.elements.size(); ++i) {
+            this.elements.get(i).doTask(task);
+        }
+    }
+
+    // MANAGE FUNCTION
+
+    private Object manageRoundAppear(Object task) {
+        if (this.type == EnumOverlayElement.TABLE_ROUND_END) {
+            if (task instanceof MessageRoundEnd) {
+                MessageRoundEnd message = (MessageRoundEnd) task;
+                this.sendTaskToAll(EnumTask.START);
+                if (message.getWinnerTeam().equals("ally")) {
+                    this.sendTaskToAll(new Tuple<>(EnumTask.SETTER, "index", 0));
+                } else {
+                    this.sendTaskToAll(new Tuple<>(EnumTask.SETTER, "index", 1));
+                }
+                this.start();
+            } else if (task instanceof MessageRoundStart) {
+                MessageRoundStart message = (MessageRoundStart) task;
+                if (message.isStarted()) {
+                    this.stop();
+                }
+            }
+        }
+        return null;
+    }
+
+    private Object manageButtons(Element element, Object result) {
+        if (element.getType() == EnumOverlayElement.GO || element.getType() == EnumOverlayElement.NEXT) {
+            MessageGameNew task = new MessageGameNew("admin", "admin", element.getType(), (EnumOverlayElement) result);
+
+            for (Element tmp : this.elements) {
+                if (tmp.getType() == EnumOverlayElement.SELECT_FIELD && tmp.isEmpty())
+                    return result;
+            }
+            for (Element tmp : this.elements) {
+                if (tmp.getType() == EnumOverlayElement.SELECT_FIELD) {
+                    task.addValue(tmp.toString());
+                    tmp.doTask(new Tuple<>(EnumTask.SETTER, "current", ""));
+                }
+            }
+            if (this.genericSendTask != null) {
+                this.genericSendTask.sendTask(new Pair<>(this.type, task));
+                this.eventReleased(Input.KEY_ESCAPE, 'e');
+            }
+        }
+        if (this.genericSendTask != null) {
+            this.genericSendTask.sendTask(new Pair<>(this.type, result));
+        }
+        return result;
+    }
+
+    private Object manageOptionSound(Element element, int x, int y) {
+        if (element.getId().equals(EnumOverlayElement.MUSICS_GRAPH.getValue() + EnumOverlayElement.BORDER.getValue())) {
+            int graph = this.containId(EnumOverlayElement.MUSICS_GRAPH.getValue());
+            int value = this.containId(EnumOverlayElement.MUSICS_VALUE.getValue());
+
+            if (graph != -1 && value != -1) {
+                Element itemGraph = this.elements.get(graph);
+                Element itemValue = this.elements.get(value);
+                float border = itemGraph.getBody().getMinX() - element.getBody().getMinX();
+                float percent = (x - itemGraph.getBody().getMinX()) / (element.getBody().getSizeX() - (border * 2));
+
+                MusicController.changeVolume(percent * MusicController.getMaxVolume());
+
+                itemValue.doTask(String.valueOf((int) (MusicController.getVolume() * 100)));
+                itemGraph.doTask(new Tuple<>(EnumTask.CUT, "body", MusicController.getVolume() / MusicController.getMaxVolume()));
+            }
+        } else if (element.getId().equals(EnumOverlayElement.SOUNDS_GRAPH.getValue() + EnumOverlayElement.BORDER.getValue())) {
+            int graph = this.containId(EnumOverlayElement.SOUNDS_GRAPH.getValue());
+            int value = this.containId(EnumOverlayElement.SOUNDS_VALUE.getValue());
+
+            if (graph != -1 && value != -1) {
+                Element itemGraph = this.elements.get(graph);
+                Element itemValue = this.elements.get(value);
+                float border = itemGraph.getBody().getMinX() - element.getBody().getMinX();
+                float percent = (x - itemGraph.getBody().getMinX()) / (element.getBody().getSizeX() - (border * 2));
+
+                SoundController.changeVolume(percent * SoundController.getMaxVolume());
+
+                itemValue.doTask(String.valueOf((int) (SoundController.getVolume() * 100)));
+                itemGraph.doTask(new Tuple<>(EnumTask.CUT, "body", SoundController.getVolume() / SoundController.getMaxVolume()));
             }
         }
         return null;

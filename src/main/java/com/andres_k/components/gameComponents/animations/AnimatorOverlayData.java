@@ -50,7 +50,8 @@ public class AnimatorOverlayData extends AnimatorData{
         this.addMenuAnimator(this.animatorFactory.getAnimator(EnumSprites.GO), EnumOverlayElement.GO);
         this.addMenuAnimator(this.animatorFactory.getAnimator(EnumSprites.NEXT), EnumOverlayElement.NEXT);
         this.addMenuAnimator(this.animatorFactory.getAnimator(EnumSprites.SAVE), EnumOverlayElement.SAVE);
-        this.addMenuAnimator(this.animatorFactory.getAnimator(EnumSprites.SCORE), EnumOverlayElement.SCORE);
+        this.addMenuAnimator(this.animatorFactory.getAnimator(EnumSprites.HIGHSCORE), EnumOverlayElement.HIGHSCORE);
+        this.addMenuAnimator(this.animatorFactory.getAnimator(EnumSprites.ALPHABET), EnumOverlayElement.ALPHABET);
     }
 
     public void addRoundAnimator(Animator roundAnimator, EnumOverlayElement type) {

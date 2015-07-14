@@ -45,6 +45,7 @@ public class GameController extends WindowController {
 
         this.inputGame = new InputGame();
         this.gameObjectController = new GameObjectController();
+        this.gameObjectController.addObserver(this);
         this.roundSpeed = GlobalVariable.defaultSpeed;
 
         this.playerNames = new ArrayList<>();
@@ -166,6 +167,9 @@ public class GameController extends WindowController {
                     this.running = !((MessageOverlayMenu) received.getV3()).isActivated();
                 }
             }
+        } else if (arg instanceof Pair){
+            this.setChanged();
+            this.notifyObservers(TaskFactory.createTask(EnumTargetTask.GAME, (EnumTargetTask) ((Pair) arg).getV1(), ((Pair) arg).getV2()));
         }
     }
 

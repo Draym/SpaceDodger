@@ -105,9 +105,32 @@ public class AnimatorOverlayFactory extends AnimatorFactory {
             animation.addFrame(img, 150);
             animation.setLooping(false);
             animator.addAnimation(EnumAnimation.BASIC, animation);
-        } else if (index == EnumSprites.SCORE) {
+        } else if (index == EnumSprites.HIGHSCORE) {
             Animation animation = new Animation();
-            Image img = new Image("image/overlay/score.png");
+            Image img = new Image("image/overlay/highScore.png");
+            animation.addFrame(img, 150);
+            animation.setLooping(false);
+            animator.addAnimation(EnumAnimation.BASIC, animation);
+        }else if (index == EnumSprites.ALPHABET) {
+            animator = this.loadAlphabet();
+        }
+        return animator;
+    }
+
+    public Animator loadAlphabet() throws SlickException {
+        Animator animator = new Animator();
+        String alphabet = "abcdefghijklmnopqrstuvwxyz-";
+
+        for (int i = 0; i < 10; ++i){
+            Animation animation = new Animation();
+            Image img = new Image("image/characters/numeric/" + String.valueOf(i) + ".png");
+            animation.addFrame(img, 150);
+            animation.setLooping(false);
+            animator.addAnimation(EnumAnimation.BASIC, animation);
+        }
+        for (int i = 0; i < alphabet.length(); ++i) {
+            Animation animation = new Animation();
+            Image img = new Image("image/characters/alphabet/" + alphabet.charAt(i) + ".png");
             animation.addFrame(img, 150);
             animation.setLooping(false);
             animator.addAnimation(EnumAnimation.BASIC, animation);

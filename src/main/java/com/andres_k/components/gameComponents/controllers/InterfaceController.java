@@ -86,7 +86,7 @@ public class InterfaceController extends WindowController {
                         if (values.size() > 0){
                             Integer value = Integer.valueOf(values.get(0));
                             GlobalVariable.currentPlayer = value;
-                            GlobalVariable.currentSpeed = (GlobalVariable.currentPlayer > GlobalVariable.maxPlayer ? GlobalVariable.maxPlayer : GlobalVariable.currentPlayer);
+                            GlobalVariable.currentPlayer = (GlobalVariable.currentPlayer > GlobalVariable.maxPlayer ? GlobalVariable.maxPlayer : GlobalVariable.currentPlayer);
                         }
                     }
                 }

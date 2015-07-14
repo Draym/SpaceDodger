@@ -43,6 +43,7 @@ public enum EnumOverlayElement {
     BORDER("border"),
     SELECT_FIELD("selectField"),
     BACKGROUND("background"),
+    ALPHABET("alphabet"),
 
     // button
     BUTTON("button"),
@@ -50,6 +51,7 @@ public enum EnumOverlayElement {
     NEXT("next"),
     SAVE("save"),
     SCORE("score"),
+    HIGHSCORE("highScore"),
 
     // roundAnimator
     NEW_GAME("newGame"), END_GAME("endGame"), TIMER("stat"), NEW_ROUND("newRound"),

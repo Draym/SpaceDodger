@@ -6,8 +6,13 @@ import com.andres_k.components.gameComponents.gameObject.objects.Barrier;
 import com.andres_k.components.gameComponents.gameObject.objects.SpaceShip;
 import com.andres_k.components.gameComponents.gameObject.objects.Stone;
 import com.andres_k.components.graphicComponents.input.EnumInput;
+import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverlayElement;
+import com.andres_k.components.taskComponent.EnumTargetTask;
+import com.andres_k.components.taskComponent.EnumTask;
 import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.configs.WindowConfig;
+import com.andres_k.utils.stockage.Pair;
+import com.andres_k.utils.stockage.Tuple;
 import com.andres_k.utils.tools.ConsoleWrite;
 import com.andres_k.utils.tools.RandomTools;
 import com.andres_k.utils.tools.StringTools;
@@ -16,12 +21,13 @@ import org.newdawn.slick.SlickException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 import java.util.UUID;
 
 /**
  * Created by andres_k on 10/07/2015.
  */
-public class GameObjectController {
+public class GameObjectController extends Observable{
     private List<GameObject> obstacles;
     private List<GameObject> players;
 
@@ -137,6 +143,10 @@ public class GameObjectController {
         String score = String.valueOf(player.getScore());
 
         score = StringTools.addCharacterEach(score, " ", 3);
+        Pair task = new Pair<>(EnumOverlayElement.SCORE.getValue() + player.getIdIndex(), new Tuple<>(EnumTask.SETTER, "value", player.getPseudo() + " - " + score));
+
+        this.setChanged();
+        this.notifyObservers(new Pair<>(EnumTargetTask.GAME_OVERLAY, new Pair<>(EnumOverlayElement.TABLE_ROUND_END, task)));
         ConsoleWrite.write("\n" + player.getPseudo() + " : '" + score + "' pts.");
     }
 

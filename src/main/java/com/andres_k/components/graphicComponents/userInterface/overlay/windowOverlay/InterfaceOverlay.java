@@ -107,7 +107,7 @@ public class InterfaceOverlay extends Overlay {
         table.doTask(new ButtonElement(new ImageElement(new ColorRect(new Rectangle(table.getBody().getMinX() + 20, table.getBody().getMinY() + 20, table.getBody().getSizeX() - 40, 60), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREYBLACK)),
                 this.animatorOverlayData.getAnimator(EnumOverlayElement.NEW_GAME), Element.PositionInBody.MIDDLE_MID), EnumOverlayElement.TABLE_MENU_NEWGAME));
         table.doTask(new ButtonElement(new ImageElement(new ColorRect(new Rectangle(table.getBody().getMinX() + 20, table.getBody().getMinY() + 90, table.getBody().getSizeX() - 40, 60), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREYBLACK)),
-                this.animatorOverlayData.getAnimator(EnumOverlayElement.SCORE), Element.PositionInBody.MIDDLE_MID), EnumOverlayElement.SCORE));
+                this.animatorOverlayData.getAnimator(EnumOverlayElement.HIGHSCORE), Element.PositionInBody.MIDDLE_MID), EnumOverlayElement.HIGHSCORE));
     }
 
     public void initTableMenuNewGame() throws SlickException {
