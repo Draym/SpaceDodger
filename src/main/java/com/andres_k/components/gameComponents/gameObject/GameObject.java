@@ -85,7 +85,7 @@ public abstract class GameObject {
         return false;
     }
 
-    public void checkCollisionWith(GameObject enemy) {
+    public boolean checkCollisionWith(GameObject enemy) {
         Pair<Float, Float> tmpPos = predictMove();
         boolean collision = false;
 
@@ -117,6 +117,7 @@ public abstract class GameObject {
                 }
             }
         }
+        return collision;
     }
 
     public void getHit(GameObject enemy) {

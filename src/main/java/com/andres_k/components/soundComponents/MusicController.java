@@ -53,6 +53,14 @@ public class MusicController {
         return false;
     }
 
+    public static boolean resume(EnumSound value) {
+        if (!needInit && musics.containsKey(value)) {
+            musics.get(value).resume();
+            return true;
+        }
+        return false;
+    }
+
     public static boolean stop(EnumSound value) {
         if (!needInit && musics.containsKey(value)) {
             musics.get(value).stop();

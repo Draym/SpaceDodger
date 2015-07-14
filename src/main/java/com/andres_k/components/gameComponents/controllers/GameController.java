@@ -1,9 +1,7 @@
 package com.andres_k.components.gameComponents.controllers;
 
 import com.andres_k.components.gameComponents.animations.AnimatorGameData;
-import com.andres_k.components.gameComponents.gameObject.EnumGameObject;
 import com.andres_k.components.gameComponents.gameObject.GameObjectController;
-import com.andres_k.components.gameComponents.gameObject.objects.SpaceShip;
 import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.components.graphicComponents.input.EnumInput;
 import com.andres_k.components.graphicComponents.input.InputGame;
@@ -12,13 +10,13 @@ import com.andres_k.components.networkComponents.messages.MessageGameNew;
 import com.andres_k.components.networkComponents.messages.MessageOverlayMenu;
 import com.andres_k.components.networkComponents.messages.MessageRoundEnd;
 import com.andres_k.components.networkComponents.messages.MessageRoundStart;
+import com.andres_k.components.soundComponents.EnumSound;
+import com.andres_k.components.soundComponents.MusicController;
 import com.andres_k.components.taskComponent.EnumTargetTask;
 import com.andres_k.components.taskComponent.TaskFactory;
 import com.andres_k.utils.configs.GlobalVariable;
-import com.andres_k.utils.configs.WindowConfig;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.stockage.Tuple;
-import com.andres_k.utils.tools.RandomTools;
 import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -75,6 +73,7 @@ public class GameController extends WindowController {
         this.running = false;
         GlobalVariable.currentSpeed = this.roundSpeed;
         this.gameObjectController.leave();
+        MusicController.resume(EnumSound.BACKGROUND_GAME);
     }
 
     @Override
@@ -173,10 +172,6 @@ public class GameController extends WindowController {
     }
 
     public void createPlayerForGame() throws SlickException {
-        for (int i = 0; i < this.playerNames.size() && i < 2; ++i) {
-            int randomX = RandomTools.getInt(WindowConfig.getW2SizeX() - 200) + 100;
-            this.gameObjectController.addPlayer(new SpaceShip(this.animatorGameData.getAnimator(EnumGameObject.SPACESHIP), "player" + String.valueOf(i) + ":" + this.playerNames.get(i), randomX, WindowConfig.w2_sY - 100));
-        }
-
+        this.gameObjectController.createPlayers(this.playerNames, this.animatorGameData);
     }
 }

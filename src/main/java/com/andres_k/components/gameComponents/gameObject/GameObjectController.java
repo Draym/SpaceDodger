@@ -28,7 +28,7 @@ import java.util.UUID;
 /**
  * Created by andres_k on 10/07/2015.
  */
-public class GameObjectController extends Observable{
+public class GameObjectController extends Observable {
     private List<GameObject> obstacles;
     private List<GameObject> players;
 
@@ -100,7 +100,7 @@ public class GameObjectController extends Observable{
         for (int i = 0; i < this.players.size(); ++i) {
             this.players.get(i).update();
             if (this.players.get(i).isNeedDelete()) {
-                this.thisPlayerIsDead((SpaceShip)this.players.get(i));
+                this.thisPlayerIsDead((SpaceShip) this.players.get(i));
                 this.players.remove(i);
                 --i;
             } else {
@@ -140,7 +140,7 @@ public class GameObjectController extends Observable{
         }
     }
 
-    public void thisPlayerIsDead(SpaceShip player){
+    public void thisPlayerIsDead(SpaceShip player) {
         String score = String.valueOf(player.getScore());
 
         ScoreData.setAvailableScore(player.getPseudo(), score);
@@ -154,8 +154,15 @@ public class GameObjectController extends Observable{
 
     // ADD
 
-    public void addPlayer(GameObject player) {
-        this.players.add(player);
+    public void createPlayers(List<String> playerNames, AnimatorGameData animatorGameData) throws SlickException {
+        for (int i = 0; i < playerNames.size(); ++i) {
+            SpaceShip player = null;
+            while (player == null || this.checkCollision(player)) {
+                int randomX = RandomTools.getInt(WindowConfig.getW2SizeX() - 200) + 100;
+                player = new SpaceShip(animatorGameData.getAnimator(EnumGameObject.SPACESHIP), "player" + String.valueOf(i) + ":" + playerNames.get(i), randomX, WindowConfig.w2_sY - 100);
+            }
+            this.players.add(player);
+        }
     }
 
     public void popAnObstacle(EnumGameObject type) throws SlickException {
@@ -176,12 +183,18 @@ public class GameObjectController extends Observable{
 
     // COLLISION
 
-    public void checkCollision(GameObject current) {
-        List<GameObject> items = this.getAllExpectHim(current.getId());
+    public boolean checkCollision(GameObject current) {
+        boolean collision = false;
+        if (current != null) {
+            List<GameObject> items = this.getAllExpectHim(current.getId());
 
-        for (GameObject item : items) {
-            current.checkCollisionWith(item);
+            for (GameObject item : items) {
+                if (current.checkCollisionWith(item)){
+                    collision = true;
+                }
+            }
         }
+        return collision;
     }
 
     // GETTERS
