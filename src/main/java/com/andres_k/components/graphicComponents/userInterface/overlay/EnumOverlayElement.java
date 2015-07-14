@@ -53,7 +53,11 @@ public enum EnumOverlayElement {
     SCORE("score"),
     HIGHSCORE("highScore"),
 
+    //animator
+    TOPSCORE("topScore"),
+
     // roundAnimator
+
     NEW_GAME("newGame"), END_GAME("endGame"), TIMER("stat"), NEW_ROUND("newRound"),
 
     // menuAnimator

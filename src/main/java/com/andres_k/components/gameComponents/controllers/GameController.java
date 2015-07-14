@@ -34,7 +34,6 @@ public class GameController extends WindowController {
     private AnimatorGameData animatorGameData;
     private GameObjectController gameObjectController;
     private InputGame inputGame;
-
     private List<String> playerNames;
 
     private boolean running;

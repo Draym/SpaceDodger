@@ -72,7 +72,7 @@ public class WindowGame extends WindowBasedGame {
     @Override
     public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         this.container.setTargetFrameRate(60);
-        this.container.setShowFPS(false);
+        this.container.setShowFPS(true);
         this.container.setAlwaysRender(true);
         this.container.setVSync(true);
 

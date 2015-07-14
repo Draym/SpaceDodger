@@ -1,6 +1,7 @@
 package com.andres_k.components.gameComponents.gameObject;
 
 import com.andres_k.components.gameComponents.animations.AnimatorGameData;
+import com.andres_k.components.gameComponents.controllers.ScoreData;
 import com.andres_k.components.gameComponents.gameObject.objects.Asteroid;
 import com.andres_k.components.gameComponents.gameObject.objects.Barrier;
 import com.andres_k.components.gameComponents.gameObject.objects.SpaceShip;
@@ -142,6 +143,7 @@ public class GameObjectController extends Observable{
     public void thisPlayerIsDead(SpaceShip player){
         String score = String.valueOf(player.getScore());
 
+        ScoreData.setAvailableScore(player.getPseudo(), score);
         score = StringTools.addCharacterEach(score, " ", 3);
         Pair task = new Pair<>(EnumOverlayElement.SCORE.getValue() + player.getIdIndex(), new Tuple<>(EnumTask.SETTER, "value", player.getPseudo() + " - " + score));
 

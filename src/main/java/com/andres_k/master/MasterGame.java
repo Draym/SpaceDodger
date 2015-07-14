@@ -1,6 +1,7 @@
 package com.andres_k.master;
 
 
+import com.andres_k.components.gameComponents.controllers.ScoreData;
 import com.andres_k.components.graphicComponents.graphic.Windows;
 import com.andres_k.components.graphicComponents.input.InputData;
 import com.andres_k.components.soundComponents.MusicController;
@@ -31,6 +32,7 @@ public class MasterGame implements Observer {
         MusicController.init();
 
         InputData.init(Config.input);
+        ScoreData.init(Config.score);
         CurrentUser.init("player", "player", "ally");
         this.masterTask = new GenericSendTask();
         this.masterTask.addObserver(this);

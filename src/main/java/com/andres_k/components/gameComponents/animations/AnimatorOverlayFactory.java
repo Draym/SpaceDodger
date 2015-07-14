@@ -111,7 +111,13 @@ public class AnimatorOverlayFactory extends AnimatorFactory {
             animation.addFrame(img, 150);
             animation.setLooping(false);
             animator.addAnimation(EnumAnimation.BASIC, animation);
-        }else if (index == EnumSprites.ALPHABET) {
+        } else if (index == EnumSprites.TOPSCORE) {
+            Animation animation = new Animation();
+            Image img = new Image("image/overlay/topScore.png");
+            animation.addFrame(img, 150);
+            animation.setLooping(false);
+            animator.addAnimation(EnumAnimation.BASIC, animation);
+        } else if (index == EnumSprites.ALPHABET) {
             animator = this.loadAlphabet();
         }
         return animator;
@@ -121,7 +127,7 @@ public class AnimatorOverlayFactory extends AnimatorFactory {
         Animator animator = new Animator();
         String alphabet = "abcdefghijklmnopqrstuvwxyz-";
 
-        for (int i = 0; i < 10; ++i){
+        for (int i = 0; i < 10; ++i) {
             Animation animation = new Animation();
             Image img = new Image("image/characters/numeric/" + String.valueOf(i) + ".png");
             animation.addFrame(img, 150);

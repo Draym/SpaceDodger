@@ -51,6 +51,7 @@ public class AnimatorOverlayData extends AnimatorData{
         this.addMenuAnimator(this.animatorFactory.getAnimator(EnumSprites.NEXT), EnumOverlayElement.NEXT);
         this.addMenuAnimator(this.animatorFactory.getAnimator(EnumSprites.SAVE), EnumOverlayElement.SAVE);
         this.addMenuAnimator(this.animatorFactory.getAnimator(EnumSprites.HIGHSCORE), EnumOverlayElement.HIGHSCORE);
+        this.addMenuAnimator(this.animatorFactory.getAnimator(EnumSprites.TOPSCORE), EnumOverlayElement.TOPSCORE);
         this.addMenuAnimator(this.animatorFactory.getAnimator(EnumSprites.ALPHABET), EnumOverlayElement.ALPHABET);
     }
 

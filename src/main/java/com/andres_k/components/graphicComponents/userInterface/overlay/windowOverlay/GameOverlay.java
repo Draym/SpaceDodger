@@ -19,6 +19,7 @@ import com.andres_k.components.soundComponents.SoundController;
 import com.andres_k.components.taskComponent.EnumTargetTask;
 import com.andres_k.components.taskComponent.EnumTask;
 import com.andres_k.components.taskComponent.TaskFactory;
+import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.configs.WindowConfig;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.stockage.Tuple;
@@ -104,14 +105,15 @@ public class GameOverlay extends Overlay {
         float posX = tableNewRound.getBody().getMinX();
         float posY = tableNewRound.getBody().getMinY();
         float sizeX = tableNewRound.getBody().getSizeX();
-        float sizeY = tableNewRound.getBody().getSizeY();
 
         tableNewRound.doTask(new ImageElement(new ColorRect(new Rectangle(posX, posY, sizeX, 60)),
                 this.animatorOverlayData.getAnimator(EnumOverlayElement.END_GAME), EnumOverlayElement.END_GAME.getValue() + ":" + EnumOverlayElement.END_GAME.getValue(), Element.PositionInBody.MIDDLE_UP));
         posY += 110;
-        tableNewRound.doTask(new StringToImageElement(new ColorRect(new Rectangle(posX, posY, sizeX, 60)), this.animatorOverlayData.getAnimator(EnumOverlayElement.ALPHABET), "", EnumOverlayElement.SCORE.getValue() + "0", Element.PositionInBody.MIDDLE_MID));
-        posY += 50;
-        tableNewRound.doTask(new StringToImageElement(new ColorRect(new Rectangle(posX, posY, sizeX, 60)), this.animatorOverlayData.getAnimator(EnumOverlayElement.ALPHABET), "", EnumOverlayElement.SCORE.getValue() + "1", Element.PositionInBody.MIDDLE_MID));
+
+        for (int i = 0; i < GlobalVariable.currentPlayer; ++i) {
+            tableNewRound.doTask(new StringToImageElement(new ColorRect(new Rectangle(posX, posY, sizeX, 60)), this.animatorOverlayData.getAnimator(EnumOverlayElement.ALPHABET), "", EnumOverlayElement.SCORE.getValue() + String.valueOf(i), Element.PositionInBody.MIDDLE_MID));
+            posY += 50;
+        }
     }
 
     private void initTableMenu() throws SlickException {

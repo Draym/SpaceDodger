@@ -6,7 +6,6 @@ import com.andres_k.components.graphicComponents.userInterface.tools.items.Color
 import com.andres_k.components.taskComponent.EnumTask;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.stockage.Tuple;
-import com.andres_k.utils.tools.ConsoleWrite;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -72,8 +71,7 @@ public class StringToImageElement extends Element {
                 if (this.images.get(i) == this.alphabet[1].indexOf("-") + 10) {
                     addY = 10;
                     addX = 25;
-                }
-                else {
+                } else {
                     addY = 0;
                     addX = tmp.getWidth() - 4;
                 }
@@ -267,7 +265,9 @@ public class StringToImageElement extends Element {
         for (int i = 0; i < this.images.size(); ++i) {
             Animation tmp = this.animator.getAnimation(this.animator.getCurrentAnimation(), this.images.get(i));
             if (tmp != null) {
-                size += tmp.getWidth();
+                size += tmp.getWidth() - 4;
+            } else {
+                size += 25;
             }
         }
         return size;
@@ -279,7 +279,8 @@ public class StringToImageElement extends Element {
         for (int i = 0; i < this.images.size(); ++i) {
             Animation tmp = this.animator.getAnimation(this.animator.getCurrentAnimation(), this.images.get(i));
             if (tmp != null) {
-                size += tmp.getHeight();
+                if (size < tmp.getHeight())
+                    size = tmp.getHeight();
             }
         }
         return size;
