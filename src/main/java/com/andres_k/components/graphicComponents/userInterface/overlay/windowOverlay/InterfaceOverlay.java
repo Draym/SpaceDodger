@@ -129,7 +129,7 @@ public class InterfaceOverlay extends Overlay {
         table.doTask(new ImageElement(new ColorRect(new Rectangle(posX, posY, sizeX, 70), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREYBLACK)), this.animatorOverlayData.getAnimator(EnumOverlayElement.TOPSCORE), EnumOverlayElement.BACKGROUND.getValue(), Element.PositionInBody.MIDDLE_MID));
         posY += 90;
         List<Pair<String, String>> data = ScoreData.getDataScore();
-        for (int i = 0; i < data.size(); ++i) {
+        for (int i = 0; i < data.size() && i < 5; ++i) {
             table.doTask(new StringToImageElement(new ColorRect(new Rectangle(posX, posY, sizeX, 50)), this.animatorOverlayData.getAnimator(EnumOverlayElement.ALPHABET), data.get(i).getV1() + "  -  " + data.get(i).getV2(), EnumOverlayElement.SCORE.getValue() + String.valueOf(i), Element.PositionInBody.MIDDLE_MID));
             posY += 50;
         }
