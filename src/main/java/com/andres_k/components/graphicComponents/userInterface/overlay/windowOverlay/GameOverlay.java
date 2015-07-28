@@ -70,8 +70,6 @@ public class GameOverlay extends Overlay {
         this.animatorOverlayData = animatorOverlayData;
 
         this.initTableNewRound();
-        this.initTableEndRound();
-
         this.initTableMenu();
         this.initTableMenuControls();
         this.initTableMenuSettings();
@@ -84,6 +82,9 @@ public class GameOverlay extends Overlay {
         } else if (element == EnumOverlayElement.TABLE_MENU_SETTINGS) {
             this.elements.get(element).clearData();
             this.initTableMenuSettings();
+        } else if (element == EnumOverlayElement.TABLE_ROUND_END){
+            this.elements.get(element).clearData();
+            this.initTableEndRound();
         }
     }
 
@@ -91,6 +92,7 @@ public class GameOverlay extends Overlay {
     public void enter() throws SlickException {
         this.initElement(EnumOverlayElement.TABLE_MENU_CONTROLS);
         this.initElement(EnumOverlayElement.TABLE_MENU_SETTINGS);
+        this.initElement(EnumOverlayElement.TABLE_ROUND_END);
     }
 
     private void initTableNewRound() throws SlickException {
