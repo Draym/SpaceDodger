@@ -11,7 +11,7 @@ public class GlobalVariable {
     public static int maxPlayer = 2;
     public static int currentPlayer = 1;
 
-    public static boolean drawCollision = true;
+    public static boolean drawCollision = false;
     public static boolean showFps = false;
     public static boolean debug = false;
 
