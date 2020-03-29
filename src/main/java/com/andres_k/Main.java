@@ -10,13 +10,11 @@ import org.newdawn.slick.SlickException;
 
 public class Main {
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         try {
             MasterGame game = new MasterGame();
             game.start();
-        } catch (SlickException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (SlickException | JSONException e) {
             e.printStackTrace();
         }
     }
