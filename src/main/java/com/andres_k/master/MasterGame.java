@@ -8,11 +8,9 @@ import com.andres_k.components.soundComponents.MusicController;
 import com.andres_k.components.soundComponents.SoundController;
 import com.andres_k.components.taskComponent.EnumTargetTask;
 import com.andres_k.components.taskComponent.GenericSendTask;
-import com.andres_k.utils.configs.Config;
-import com.andres_k.utils.configs.CurrentUser;
-import com.andres_k.utils.configs.GlobalVariable;
-import com.andres_k.utils.configs.WindowConfig;
+import com.andres_k.utils.configs.*;
 import com.andres_k.utils.stockage.Tuple;
+import com.andres_k.utils.tools.DLLTools;
 import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
@@ -28,6 +26,7 @@ public class MasterGame implements Observer {
     private Windows windows;
 
     public MasterGame() throws SlickException, JSONException {
+        DLLTools.init();
         SoundController.init();
         MusicController.init();
 
@@ -36,7 +35,7 @@ public class MasterGame implements Observer {
         CurrentUser.init("player", "player", "ally");
         this.masterTask = new GenericSendTask();
         this.masterTask.addObserver(this);
-        this.windows = new Windows("Space Dodger", this.masterTask);
+        this.windows = new Windows(GameInfo.get().getName(), this.masterTask);
     }
 
     public void start() {

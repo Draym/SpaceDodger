@@ -9,7 +9,7 @@ import com.andres_k.components.taskComponent.EnumTask;
 import com.andres_k.components.taskComponent.GenericSendTask;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.tools.ColorTools;
-import com.andres_k.utils.tools.StringTools;
+import com.andres_k.utils.tools.FilesTools;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
@@ -60,7 +60,7 @@ public class TableMenuElement extends TableElement {
             String newValue;
             if (value.contains(":")) {
                 value = value.substring(0, value.indexOf(":"));
-                newValue = StringTools.duplicateString(" ", 14 - value.length()) + keyString + StringTools.duplicateString(" ", 18 - keyString.length());
+                newValue = FilesTools.duplicateString(" ", 14 - value.length()) + keyString + FilesTools.duplicateString(" ", 18 - keyString.length());
             } else {
                 newValue = keyString;
             }

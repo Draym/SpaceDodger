@@ -24,7 +24,7 @@ import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.stockage.Tuple;
 import com.andres_k.utils.tools.ColorTools;
 import com.andres_k.utils.tools.ConsoleWrite;
-import com.andres_k.utils.tools.StringTools;
+import com.andres_k.utils.tools.FilesTools;
 import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.SlickException;
@@ -144,12 +144,12 @@ public class InterfaceOverlay extends Overlay {
         float sizeY = tableMenuNew.getBody().getSizeY();
 
         tableMenuNew.doTask(new ImageElement(new ColorRect(new Rectangle(posX + 15, posY + 15, sizeX - 30, sizeY - 30), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREY)), EnumOverlayElement.BACKGROUND.getValue(), Element.PositionInBody.MIDDLE_MID));
-        posY += (StringTools.charSizeY());
-        tableMenuNew.doTask(new StringElement(new ColorRect(new Rectangle(posX + 20, posY + 10, (sizeX - 30) / 2, StringTools.charSizeY())), new StringTimer("Player Size"), Color.black, Element.PositionInBody.RIGHT_MID));
-        tableMenuNew.doTask(new SelectionStringField(new ColorRect(new Rectangle(posX + 160, posY + 10, (sizeX - 30) / 4, StringTools.charSizeY()), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREYBLACK)),
+        posY += (FilesTools.charSizeY());
+        tableMenuNew.doTask(new StringElement(new ColorRect(new Rectangle(posX + 20, posY + 10, (sizeX - 30) / 2, FilesTools.charSizeY())), new StringTimer("Player Size"), Color.black, Element.PositionInBody.RIGHT_MID));
+        tableMenuNew.doTask(new SelectionStringField(new ColorRect(new Rectangle(posX + 160, posY + 10, (sizeX - 30) / 4, FilesTools.charSizeY()), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREYBLACK)),
                 new StringElement(new StringTimer(String.valueOf(GlobalVariable.currentPlayer)), Color.black, Element.PositionInBody.LEFT_MID), EnumOverlayElement.SELECT_FIELD.getValue() + "playerSize", true));
 
-        posY += (StringTools.charSizeY());
+        posY += (FilesTools.charSizeY());
 
         tableMenuNew.doTask(new ButtonElement(new ImageElement(new ColorRect(new Rectangle(posX + 20, posY + 40, tableMenuNew.getBody().getSizeX() - 40, 50)),
                 this.animatorOverlayData.getAnimator(EnumOverlayElement.NEXT), Element.PositionInBody.MIDDLE_MID), EnumOverlayElement.NEXT, EnumOverlayElement.TABLE_MENU_NEWGAME_LAUNCH));
@@ -164,15 +164,15 @@ public class InterfaceOverlay extends Overlay {
         float sizeY = tableMenuNew.getBody().getSizeY();
 
         tableMenuNew.doTask(new ImageElement(new ColorRect(new Rectangle(posX + 15, posY + 15, sizeX - 30, sizeY - 30), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREY)), EnumOverlayElement.BACKGROUND.getValue(), Element.PositionInBody.MIDDLE_MID));
-        posY += (StringTools.charSizeY());
+        posY += (FilesTools.charSizeY());
         posY += 10;
-        tableMenuNew.doTask(new StringElement(new ColorRect(new Rectangle(posX + 20, posY, (sizeX - 30) / 2, StringTools.charSizeY())), new StringTimer("Speed Game"), Color.black, Element.PositionInBody.RIGHT_MID));
-        tableMenuNew.doTask(new SelectionStringField(new ColorRect(new Rectangle(posX + 160, posY, (sizeX - 30) / 2 - 10, StringTools.charSizeY()), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREY)),
+        tableMenuNew.doTask(new StringElement(new ColorRect(new Rectangle(posX + 20, posY, (sizeX - 30) / 2, FilesTools.charSizeY())), new StringTimer("Speed Game"), Color.black, Element.PositionInBody.RIGHT_MID));
+        tableMenuNew.doTask(new SelectionStringField(new ColorRect(new Rectangle(posX + 160, posY, (sizeX - 30) / 2 - 10, FilesTools.charSizeY()), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREY)),
                 new StringElement(new StringTimer(String.valueOf(GlobalVariable.currentSpeed)), Color.black, Element.PositionInBody.LEFT_MID), EnumOverlayElement.SELECT_FIELD.getValue() + EnumOverlayElement.NEW.getValue() + "speedGame", true));
         for (int i = 0; i < GlobalVariable.currentPlayer; ++i) {
-            posY += (StringTools.charSizeY());
-            tableMenuNew.doTask(new StringElement(new ColorRect(new Rectangle(posX + 20, posY, (sizeX - 30) / 2, StringTools.charSizeY())), new StringTimer("Pseudo P" + String.valueOf(i + 1)), Color.black, Element.PositionInBody.RIGHT_MID));
-            tableMenuNew.doTask(new SelectionStringField(new ColorRect(new Rectangle(posX + 160, posY, (sizeX - 30) / 2 - 10, StringTools.charSizeY()), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREY)),
+            posY += (FilesTools.charSizeY());
+            tableMenuNew.doTask(new StringElement(new ColorRect(new Rectangle(posX + 20, posY, (sizeX - 30) / 2, FilesTools.charSizeY())), new StringTimer("Pseudo P" + String.valueOf(i + 1)), Color.black, Element.PositionInBody.RIGHT_MID));
+            tableMenuNew.doTask(new SelectionStringField(new ColorRect(new Rectangle(posX + 160, posY, (sizeX - 30) / 2 - 10, FilesTools.charSizeY()), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREY)),
                     new StringElement(new StringTimer("unknown"), Color.black, Element.PositionInBody.LEFT_MID), EnumOverlayElement.SELECT_FIELD.getValue() + EnumOverlayElement.NEW.getValue() + "pseudo" + String.valueOf(i), true));
         }
         tableMenuNew.doTask(new ButtonElement(new ImageElement(new ColorRect(new Rectangle(posX + (tableMenuNew.getBody().getSizeX() / 2) - 105, posY + 40, 220, 50)),
@@ -198,8 +198,8 @@ public class InterfaceOverlay extends Overlay {
 
         for (Map.Entry<EnumInput, String> entry : InputData.getAvailableInput().entrySet()) {
             tableMenuControls.doTask(new ButtonElement(new StringElement(new StringTimer(entry.getKey().getValue() + ":" +
-                    StringTools.duplicateString(" ", 14 - entry.getKey().getValue().length()) + entry.getValue() +
-                    StringTools.duplicateString(" ", 18 - entry.getValue().length())), Color.black,
+                    FilesTools.duplicateString(" ", 14 - entry.getKey().getValue().length()) + entry.getValue() +
+                    FilesTools.duplicateString(" ", 18 - entry.getValue().length())), Color.black,
                     EnumOverlayElement.CONTROLS.getValue() + ":" + entry.getKey().getValue(), Element.PositionInBody.MIDDLE_MID), EnumOverlayElement.CONTROLS));
         }
     }
@@ -210,19 +210,19 @@ public class InterfaceOverlay extends Overlay {
         float posY = tableMenuSettings.getBody().getMinY();
         float sizeX = tableMenuSettings.getBody().getSizeX();
 
-        tableMenuSettings.doTask(new StringElement(new ColorRect(new Rectangle(posX, posY, sizeX, StringTools.charSizeY())), new StringTimer("Settings"), Color.black, Element.PositionInBody.MIDDLE_MID));
+        tableMenuSettings.doTask(new StringElement(new ColorRect(new Rectangle(posX, posY, sizeX, FilesTools.charSizeY())), new StringTimer("Settings"), Color.black, Element.PositionInBody.MIDDLE_MID));
 
-        posY += (StringTools.charSizeY() * 2);
-        tableMenuSettings.doTask(new StringElement(new ColorRect(new Rectangle(posX, posY, tableMenuSettings.getBody().getSizeX() / 2, StringTools.charSizeY())), new StringTimer("Sounds"), Color.black, Element.PositionInBody.MIDDLE_MID));
-        posY += (StringTools.charSizeY() * 2);
-        tableMenuSettings.doTask(new StringElement(new ColorRect(new Rectangle(posX, posY, (int) (tableMenuSettings.getBody().getSizeX() / 1.1), StringTools.charSizeY())), new StringTimer(String.valueOf((int) (SoundController.getVolume() * 100))), Color.black, EnumOverlayElement.SOUNDS_VALUE.getValue(), Element.PositionInBody.RIGHT_MID));
+        posY += (FilesTools.charSizeY() * 2);
+        tableMenuSettings.doTask(new StringElement(new ColorRect(new Rectangle(posX, posY, tableMenuSettings.getBody().getSizeX() / 2, FilesTools.charSizeY())), new StringTimer("Sounds"), Color.black, Element.PositionInBody.MIDDLE_MID));
+        posY += (FilesTools.charSizeY() * 2);
+        tableMenuSettings.doTask(new StringElement(new ColorRect(new Rectangle(posX, posY, (int) (tableMenuSettings.getBody().getSizeX() / 1.1), FilesTools.charSizeY())), new StringTimer(String.valueOf((int) (SoundController.getVolume() * 100))), Color.black, EnumOverlayElement.SOUNDS_VALUE.getValue(), Element.PositionInBody.RIGHT_MID));
         tableMenuSettings.doTask(new ImageElement(new ColorRect(new Rectangle(posX + 10, posY + 4, 202, 12), ColorTools.get(ColorTools.Colors.TRANSPARENT_BLACK)), EnumOverlayElement.SOUNDS_GRAPH.getValue() + EnumOverlayElement.BORDER.getValue(), Element.PositionInBody.LEFT_MID));
         tableMenuSettings.doTask(new ImageElement(new ColorRect(new Rectangle(posX + 11, posY + 5, 200, 10), ColorTools.get(ColorTools.Colors.TRANSPARENT_BLUE)), EnumOverlayElement.SOUNDS_GRAPH.getValue(), Element.PositionInBody.LEFT_MID));
 
         posY += 50;
-        tableMenuSettings.doTask(new StringElement(new ColorRect(new Rectangle(posX, posY, tableMenuSettings.getBody().getSizeX() / 2, StringTools.charSizeY())), new StringTimer("Musics"), Color.black, Element.PositionInBody.MIDDLE_MID));
-        posY += (StringTools.charSizeY() * 2);
-        tableMenuSettings.doTask(new StringElement(new ColorRect(new Rectangle(posX, posY, (int) (tableMenuSettings.getBody().getSizeX() / 1.1), StringTools.charSizeY())), new StringTimer(String.valueOf((int) (MusicController.getVolume() * 100))), Color.black, EnumOverlayElement.MUSICS_VALUE.getValue(), Element.PositionInBody.RIGHT_MID));
+        tableMenuSettings.doTask(new StringElement(new ColorRect(new Rectangle(posX, posY, tableMenuSettings.getBody().getSizeX() / 2, FilesTools.charSizeY())), new StringTimer("Musics"), Color.black, Element.PositionInBody.MIDDLE_MID));
+        posY += (FilesTools.charSizeY() * 2);
+        tableMenuSettings.doTask(new StringElement(new ColorRect(new Rectangle(posX, posY, (int) (tableMenuSettings.getBody().getSizeX() / 1.1), FilesTools.charSizeY())), new StringTimer(String.valueOf((int) (MusicController.getVolume() * 100))), Color.black, EnumOverlayElement.MUSICS_VALUE.getValue(), Element.PositionInBody.RIGHT_MID));
         tableMenuSettings.doTask(new ImageElement(new ColorRect(new Rectangle(posX + 10, posY + 4, 202, 12), ColorTools.get(ColorTools.Colors.TRANSPARENT_BLACK)), EnumOverlayElement.MUSICS_GRAPH.getValue() + EnumOverlayElement.BORDER.getValue(), Element.PositionInBody.LEFT_MID));
         tableMenuSettings.doTask(new ImageElement(new ColorRect(new Rectangle(posX + 11, posY + 5, 200, 10), ColorTools.get(ColorTools.Colors.TRANSPARENT_BLUE)), EnumOverlayElement.MUSICS_GRAPH.getValue(), Element.PositionInBody.LEFT_MID));
 
