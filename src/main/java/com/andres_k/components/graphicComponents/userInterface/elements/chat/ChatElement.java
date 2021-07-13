@@ -17,7 +17,7 @@ import com.andres_k.utils.configs.CurrentUser;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.stockage.Tuple;
 import com.andres_k.utils.tools.ConsoleWrite;
-import com.andres_k.utils.tools.FilesTools;
+import com.andres_k.utils.tools.StringTools;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -46,7 +46,7 @@ public class ChatElement extends InterfaceElement {
     }
 
     private void childInit() {
-        this.selectionStringField = new SelectionStringField(new ColorRect(new Rectangle(this.body.getMinX() + 20, this.body.getMinY() + 170, 300, FilesTools.charSizeY()), new Color(0.2f, 0.2f, 0.3f, 0.6f)),
+        this.selectionStringField = new SelectionStringField(new ColorRect(new Rectangle(this.body.getMinX() + 20, this.body.getMinY() + 170, 300, StringTools.charSizeY()), new Color(0.2f, 0.2f, 0.3f, 0.6f)),
                 new StringElement(new StringTimer(""), Color.white, Element.PositionInBody.LEFT_MID), EnumOverlayElement.SELECT_FIELD.getValue() + "chat", true);
         float chatSizeY = 170;
         this.stringListElement = new StringListElement(new ColorRect(new Rectangle(this.body.getMinX(), this.body.getMinY(), this.body.getSizeX(), chatSizeY)));

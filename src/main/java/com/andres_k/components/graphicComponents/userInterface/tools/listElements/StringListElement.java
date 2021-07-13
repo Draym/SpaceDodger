@@ -6,7 +6,7 @@ import com.andres_k.components.graphicComponents.userInterface.tools.items.Color
 import com.andres_k.components.graphicComponents.userInterface.tools.items.StringTimer;
 import com.andres_k.utils.stockage.Tuple;
 import com.andres_k.utils.tools.ConsoleWrite;
-import com.andres_k.utils.tools.FilesTools;
+import com.andres_k.utils.tools.StringTools;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Rectangle;
@@ -39,14 +39,14 @@ public class StringListElement extends ListElement {
     @Override
     protected void updatePosition() {
         if (this.body != null) {
-            this.toPrint = (int) (body.getSizeY() / FilesTools.charSizeY());
-            this.maxLength = (int) (this.body.getSizeX() / FilesTools.charSizeX()) - 1;
+            this.toPrint = (int) (body.getSizeY() / StringTools.charSizeY());
+            this.maxLength = (int) (this.body.getSizeX() / StringTools.charSizeX()) - 1;
             int border = 10;
 
             int line = border;
             for (int i = 0; i < this.toPrint; ++i) {
-                this.positionMessages.add(0, new ColorRect(new Rectangle(this.body.getMinX() + border, this.body.getMinY() + line, this.body.getSizeX() - FilesTools.charSizeX(), FilesTools.charSizeY())));
-                line += FilesTools.charSizeY();
+                this.positionMessages.add(0, new ColorRect(new Rectangle(this.body.getMinX() + border, this.body.getMinY() + line, this.body.getSizeX() - StringTools.charSizeX(), StringTools.charSizeY())));
+                line += StringTools.charSizeY();
             }
         }
     }

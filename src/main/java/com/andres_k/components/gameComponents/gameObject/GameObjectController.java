@@ -16,7 +16,7 @@ import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.stockage.Tuple;
 import com.andres_k.utils.tools.ConsoleWrite;
 import com.andres_k.utils.tools.RandomTools;
-import com.andres_k.utils.tools.FilesTools;
+import com.andres_k.utils.tools.StringTools;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
@@ -144,7 +144,7 @@ public class GameObjectController extends Observable {
         String score = String.valueOf(player.getScore());
 
         ScoreData.setAvailableScore(player.getPseudo(), score);
-        score = FilesTools.addCharacterEach(score, " ", 3);
+        score = StringTools.addCharacterEach(score, " ", 3);
         Pair task = new Pair<>(EnumOverlayElement.SCORE.getValue() + player.getIdIndex(), new Tuple<>(EnumTask.SETTER, "value", player.getPseudo() + " - " + score));
 
         this.setChanged();

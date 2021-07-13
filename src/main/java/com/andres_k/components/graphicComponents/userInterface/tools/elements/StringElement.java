@@ -4,7 +4,7 @@ import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverl
 import com.andres_k.components.graphicComponents.userInterface.tools.items.ColorRect;
 import com.andres_k.components.graphicComponents.userInterface.tools.items.StringTimer;
 import com.andres_k.utils.stockage.Pair;
-import com.andres_k.utils.tools.FilesTools;
+import com.andres_k.utils.tools.StringTools;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
@@ -47,7 +47,7 @@ public class StringElement extends Element {
 
     public void draw(Graphics g) {
         if (this.body != null) {
-            int begin = this.stringTimer.getValue().length() - (int) (this.body.getSizeX() / FilesTools.charSizeX());
+            int begin = this.stringTimer.getValue().length() - (int) (this.body.getSizeX() / StringTools.charSizeX());
             begin = (begin < 0 ? 0 : begin);
 
             String value = this.stringTimer.getValue().substring(begin);
@@ -62,7 +62,7 @@ public class StringElement extends Element {
 
     @Override
     public void draw(Graphics g, ColorRect body) {
-        int begin = this.stringTimer.getValue().length() - (int) (body.getSizeX() / FilesTools.charSizeX());
+        int begin = this.stringTimer.getValue().length() - (int) (body.getSizeX() / StringTools.charSizeX());
         begin = (begin < 0 ? 0 : begin);
 
         String value = this.stringTimer.getValue().substring(begin);
@@ -84,12 +84,12 @@ public class StringElement extends Element {
         float y = body.getMinY();
 
         if (this.position == PositionInBody.MIDDLE_MID || this.position == PositionInBody.MIDDLE_UP) {
-            float sizeX = (body.getSizeX() / 2) - ((value.length() * FilesTools.charSizeX()) / 2);
+            float sizeX = (body.getSizeX() / 2) - ((value.length() * StringTools.charSizeX()) / 2);
 
             sizeX = (sizeX < 0 ? 0 : sizeX);
             x += sizeX;
         } else if (this.position == PositionInBody.RIGHT_MID || this.position == PositionInBody.RIGHT_UP) {
-            float sizeX = (body.getSizeX() - (value.length() * FilesTools.charSizeX()));
+            float sizeX = (body.getSizeX() - (value.length() * StringTools.charSizeX()));
 
             sizeX = (sizeX < 0 ? 0 : sizeX);
             x += sizeX;
@@ -154,12 +154,12 @@ public class StringElement extends Element {
 
     @Override
     public float getAbsoluteWidth() {
-        return this.stringTimer.getValue().length() * FilesTools.charSizeX();
+        return this.stringTimer.getValue().length() * StringTools.charSizeX();
     }
 
     @Override
     public float getAbsoluteHeight() {
-        return FilesTools.charSizeY();
+        return StringTools.charSizeY();
     }
 
     public String getValue() {

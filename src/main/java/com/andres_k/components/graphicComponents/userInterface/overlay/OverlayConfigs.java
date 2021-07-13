@@ -33,7 +33,7 @@ public class OverlayConfigs {
     }
 
     private void initPreference() throws JSONException {
-        this.configPreference = new JSONObject(FilesTools.readFile(this.filePreference));
+        this.configPreference = new JSONObject(FilesTools.readTempFile(this.filePreference));
         Iterator iterator = this.configPreference.keys();
         while (iterator.hasNext()) {
             String key = (String) iterator.next();
@@ -47,7 +47,7 @@ public class OverlayConfigs {
     }
 
     private void initData() throws JSONException {
-        this.configData = new JSONObject(FilesTools.readFile(this.fileData));
+        this.configData = new JSONObject(FilesTools.readTempFile(this.fileData));
         Iterator iterator = this.configData.keys();
         while (iterator.hasNext()) {
             String key = (String) iterator.next();
