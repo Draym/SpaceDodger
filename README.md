@@ -1,1 +1,3 @@
-SpaceDodger by andres_k
+<img src="README-images/space-home.PNG" width="900">
+
+# Space Dodger
