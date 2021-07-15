@@ -24,7 +24,7 @@ The asteroids are created in a random manners to create replayability and the di
 You will have to use world level dexterity and timing to reach the highest score 🥇
 
 
-<img src="README-images/space-1.PNG" width="300">  <img src="README-images/space-2.PNG" width="300">  <img src="README-images/space-3.PNG" width="300">
+<img src="README-images/space-1.PNG" width="295"> <img src="README-images/space-2.PNG" width="295"> <img src="README-images/space-3.PNG" width="295">
 
 -------------------------------------------------------------------------------------------  
 ## Features:
@@ -34,4 +34,4 @@ You will have to use world level dexterity and timing to reach the highest score
 - earn more points with asteroid's interaction, the closer you are the more your earn 💎
 
 
-<img src="README-images/space-4.PNG" width="480"> <img src="README-images/space-scores.PNG" width="480">
+<img src="README-images/space-4.PNG" width="450"> <img src="README-images/space-scores.PNG" width="450">
